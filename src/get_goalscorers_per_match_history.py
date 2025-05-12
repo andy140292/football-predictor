@@ -2,7 +2,7 @@ import pandas as pd
 import sqlite3
 
 # Load the merged CSV file
-df = pd.read_csv("results_with_goals.csv")
+df = pd.read_csv("data/results_with_goals.csv")
 
 # Create an SQLite connection (in-memory or a database file)
 conn = sqlite3.connect(":memory:")  # Use ":memory:" for temporary storage, or "database.db" for persistence.
