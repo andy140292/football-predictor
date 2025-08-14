@@ -1,0 +1,20 @@
+# Servidor API
+fastapi
+uvicorn[standard]
+pydantic
+requests
+python-dotenv
+
+# Supabase / auth
+supabase
+gotrue
+pyjwt
+
+# ML / modelos (para cargar tus .pkl sin romper)
+joblib
+numpy
+pandas
+scikit-learn
+xgboost
+catboost
+matplotlib.pyplot
