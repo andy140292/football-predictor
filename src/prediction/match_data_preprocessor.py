@@ -1,71 +1,71 @@
+
 import pandas as pd
+from utils.paths import RANKING_PATH
+from prediction.feature_engineering import FeatureEngineer
+import os
+import gzip
+from supabase_client import get_supabase_client
+
+supabase = get_supabase_client()
 
 class MatchDataPreprocessor:
-    def __init__(self, file_path, south_america_teams):
-        """
-        Initializes the preprocessor with the dataset file path and list of South American teams.
-        """
+    def __init__(self, file_path, from_supabase: bool = False, verbose=False):
         self.file_path = file_path
-        self.south_america_teams = south_america_teams
-        self.matches = None  # Placeholder for the dataset
-    
+        self.verbose = verbose
+        self.matches = None
+
+        if from_supabase:
+            self.file_path = self._download_and_extract_from_supabase(file_path)
+        else:
+            self.file_path = f"data/{file_path}.csv" if not file_path.startswith("data/") else file_path
+
+    def log(self, msg):
+        if self.verbose:
+            print(msg)
+
+    def _download_and_extract_from_supabase(self, remote_filename: str, local_dir="data"):
+        os.makedirs(local_dir, exist_ok=True)
+
+        # Archivo .csv.gz en Supabase
+        supabase_path = f"{remote_filename}.csv.gz"
+        local_gz_path = os.path.join(local_dir, supabase_path)
+        local_csv_path = os.path.join(local_dir, f"{remote_filename}.csv")
+
+        # Descargar desde Supabase
+        with open(local_gz_path, "wb") as f:
+            content = supabase.storage.from_("match-datasets").download(supabase_path)
+            f.write(content)
+
+        # Descomprimir
+        with gzip.open(local_gz_path, "rb") as f_in:
+            with open(local_csv_path, "wb") as f_out:
+                f_out.write(f_in.read())
+
+        print(f"✅ Archivo descargado y descomprimido en: {local_csv_path}")
+        return local_csv_path
+
     def load_and_filter_data(self):
-        """Loads the dataset and filters for FIFA World Cup qualification matches in South America."""
         self.matches = pd.read_csv(self.file_path)
 
-        # Filter for specific tournaments
-        self.matches = self.matches[self.matches['tournament'].isin([
-                'FIFA World Cup qualification',
-                'Copa America',
-                'FIFA World Cup',
-                'Friendly'
+        required_cols = ["date", "home_score", "away_score", "tournament"]
+        missing = [col for col in required_cols if col not in self.matches.columns]
+        if missing:
+            raise ValueError(f"Missing columns in data: {missing}")
+
+        self.matches = self.matches[
+            self.matches["tournament"].isin([
+                "FIFA World Cup qualification",
+                "Copa America",
+                "FIFA World Cup",
+                "Friendly"
             ])
         ]
-        
-        # Filter matches involving South American teams
-        self.matches = self.matches[self.matches['home_team'].isin(self.south_america_teams)]
-        self.matches = self.matches[self.matches['away_team'].isin(self.south_america_teams)]
 
-        # Convert 'date' column to datetime format
-        self.matches['date'] = pd.to_datetime(self.matches['date'])
+        self.matches["date"] = pd.to_datetime(self.matches["date"], errors="coerce")
+        self.matches = self.matches[self.matches["date"] >= "2000-01-01"]
 
-        # Filter matches played after the year 2000
-        self.matches = self.matches[self.matches['date'] >= '2000-01-01']
-    
-    def create_matchup_identifier(self):
-        """Creates a unique identifier for each matchup (regardless of home/away status)."""
-        self.matches['matchup_id'] = self.matches.apply(
-            lambda row: '_'.join(sorted([row['home_team'], row['away_team']])), axis=1
-        )
+        self.log(f"Loaded {len(self.matches)} matches after filtering.")
 
-    def merge_head_to_head_stats(self, head_to_head_stats):
-        """Merges head-to-head statistics into the dataset."""
-        self.matches = pd.merge(self.matches, head_to_head_stats, on='matchup_id', how='left')
-
-        # Fill missing values (for matchups with no history)
-        self.matches['head_to_head_goal_diff'] = self.matches['head_to_head_goal_diff'].fillna(0)
-
-    def calculate_rolling_averages(self, window_size=10):
-        """Computes rolling averages for goals scored and conceded for home and away teams."""
-        self.matches['home_team_avg_scored'] = self.matches.groupby('home_team')['home_score'] \
-            .transform(lambda x: x.shift(1).rolling(window=window_size, min_periods=1).mean())
-        self.matches['home_team_avg_conceded'] = self.matches.groupby('home_team')['away_score'] \
-            .transform(lambda x: x.shift(1).rolling(window=window_size, min_periods=1).mean())
-
-        self.matches['away_team_avg_scored'] = self.matches.groupby('away_team')['away_score'] \
-            .transform(lambda x: x.shift(1).rolling(window=window_size, min_periods=1).mean())
-        self.matches['away_team_avg_conceded'] = self.matches.groupby('away_team')['home_score'] \
-            .transform(lambda x: x.shift(1).rolling(window=window_size, min_periods=1).mean())
-
-    def encode_teams(self):
-        """Converts categorical team names into dummy variables (one-hot encoding)."""
-        self.matches = pd.get_dummies(self.matches, columns=['home_team', 'away_team'])
-
-    def encode_confederations(self):
-        """Converts categorical team names into dummy variables (one-hot encoding)."""
-        self.matches = pd.get_dummies(self.matches, columns=['home_team_confederation', 'away_team_confederation'])        
-
-    # Define the new multi-class target variable
     def get_match_outcome(self, row):
         if row['home_score'] > row['away_score']:
             return 2  # Home Win
@@ -75,37 +75,26 @@ class MatchDataPreprocessor:
             return 1  # Draw
 
     def finalize_dataset(self):
-        """Cleans NaN values, resets indices, and prepares X (features) and y (target)."""
-        self.matches = self.matches.sort_values('date')  # Sort by date
+        df = self.matches.copy()
+        df = df.sort_values("date").dropna().reset_index(drop=True)
+        y = df.apply(self.get_match_outcome, axis=1)
+        assert all(y.isin([0, 1, 2])), "Invalid match outcome detected."
 
-        # Drop rows with missing values
-        self.matches = self.matches.dropna().reset_index(drop=True)
+        columns_to_drop = [
+            "date", "home_score", "away_score", "tournament",
+            "city", "country", "matchup_id", "goal_diff",
+            "home_team_fifa_rank", "home_team_fifa_points",
+            "away_team_fifa_rank", "away_team_fifa_points",
+        ]
 
-        # Define feature matrix X and target variable y
-        X = self.matches.drop(columns=['date', 'home_score', 'away_score', 'tournament', 'neutral', 'city', 'country', 'matchup_id', 'goal_diff'])
-        y = self.matches.apply(self.get_match_outcome, axis=1)  # Apply match outcome function
-
+        self.X_Full = df
+        X = df.drop(columns=[col for col in columns_to_drop if col in df.columns])
+        print(X.columns)
         return X, y
-    
-    def get_head_to_head_stats(self):
- 
-        # Calculate goal difference for each match (from the perspective of the listed home team)
-        self.matches['goal_diff'] = self.matches['home_score'] - self.matches['away_score']
-
-        # Group by matchup_id and compute the average goal difference
-        head_to_head_stats = self.matches.groupby('matchup_id')['goal_diff'].mean().reset_index()
-        head_to_head_stats.rename(
-            columns={'goal_diff': 'head_to_head_goal_diff'}, inplace=True
-        )
-        return head_to_head_stats
 
     def preprocess(self):
-        """Runs the entire preprocessing pipeline and returns cleaned X, y datasets."""
         self.load_and_filter_data()
-        self.create_matchup_identifier()
-        head_to_head_stats = self.get_head_to_head_stats()
-        self.merge_head_to_head_stats(head_to_head_stats)
-        self.calculate_rolling_averages()
-        self.encode_teams()
-        self.encode_confederations()
+        feature_engineer = FeatureEngineer(self.matches)
+        self.matches = feature_engineer.generate_features()
+
         return self.finalize_dataset()

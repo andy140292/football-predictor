@@ -1,15 +1,16 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split, RandomizedSearchCV
+from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import log_loss, accuracy_score
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.calibration import CalibratedClassifierCV
 from xgboost import XGBClassifier
 from catboost import CatBoostClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-from sklearn.calibration import CalibratedClassifierCV
-import os
+from sklearn.neural_network import MLPClassifier
+from typing import Optional
 
 class FootballMatchPredictor:
     def __init__(self, model_type="random_forest"):
@@ -42,19 +43,38 @@ class FootballMatchPredictor:
         elif self.model_type == "catboost":
             return CatBoostClassifier(loss_function='MultiClass', verbose=0)
         elif self.model_type == "logistic_regression":
-            return LogisticRegression(solver='lbfgs', max_iter=1000)
+            base_model = LogisticRegression(solver='lbfgs', max_iter=1000)
+            return CalibratedClassifierCV(base_model, method='isotonic', cv=5)
+        elif self.model_type == "mlp":
+            return MLPClassifier(
+                hidden_layer_sizes=(64, 32),
+                activation='relu',
+                solver='adam',
+                alpha=0.01,
+                learning_rate='adaptive',
+                max_iter=1000,
+                early_stopping=True,
+                validation_fraction=0.1,
+                random_state=42,
+            )
+
         else:
             raise ValueError("Unsupported model type. Choose 'random_forest', 'xgboost', or 'catboost'.")
+    def train(self, X_train, y_train):
+        if self.model_type in ["logistic_regression", "mlp"]:
+            X_train_scaled = self.scaler.fit_transform(X_train)
+            self.X_train_columns = X_train.columns
 
-    def train(self, X_train, y_train, X=pd.DataFrame()):
-        """Trains the model on the provided dataset."""
-        self.X_train_columns = X_train.columns  # store for logistic regression feature importances
-        if self.model_type == "logistic_regression":
-            X_train_scaled = pd.DataFrame(self.scaler.fit_transform(X_train), columns=X.columns)
-            self.model.fit(X_train_scaled, y_train)  # train on scaled data
+            self.model.fit(X_train_scaled, y_train)
         else:
             self.model.fit(X_train, y_train)
-        print(f"{self.model_type} model trained successfully!")
+
+    def predict_proba(self, X):
+        if self.model_type in ["logistic_regression", "mlp"]:
+            X_scaled = self.scaler.transform(X)
+            return self.model.predict_proba(X_scaled)
+        else:
+            return self.model.predict_proba(X)
 
     def evaluate(self, X_test, y_test):
         """Evaluates the model and prints performance metrics."""
@@ -71,44 +91,40 @@ class FootballMatchPredictor:
 
         return logloss, accuracy
 
-    def feature_importance(self, X_train):
-        """Plots and saves feature importance or coefficients for supported models."""
-        if self.model_type in ["random_forest", "xgboost"]:
-            rf_best_model = self.model.best_estimator_
-            feature_importances = rf_best_model.feature_importances_
-            feature_df = pd.DataFrame({
-                'Feature': X_train.columns,
-                'Importance': feature_importances
-            }).sort_values(by='Importance', ascending=False)
+    def feature_importance(self, X_train, top_n: Optional[int] = None):
+        """Devuelve un gráfico de importancia de características.
 
-        elif self.model_type == "logistic_regression":
-            coef = self.model.coef_[0]
-            feature_df = pd.DataFrame({
-                'Feature': self.X_train_columns,
-                'Importance': coef
-            }).sort_values(by='Importance', key=abs, ascending=False)
+        Args:
+            X_train (pd.DataFrame): dataset de entrenamiento (solo usado para nombres).
+            top_n (int | None): cuántas características mostrar (None = todas)
+        """
+        # Extraer el estimator correcto
+        model = self.model.best_estimator_ if hasattr(self.model, "best_estimator_") else self.model
 
+        if self.model_type in ["random_forest", "xgboost"] and hasattr(model, "feature_importances_"):
+            importances = model.feature_importances_
+            names = X_train.columns
+        elif self.model_type == "logistic_regression" and hasattr(model, "coef_"):
+            importances = model.coef_[0]
+            names = self.X_train_columns
         else:
-            print("Feature importance is only available for tree-based models or logistic regression.")
-            return
+            print("Feature importance not supported for this model.")
+            return None
+
+        # Crear DataFrame y ordenar por valor absoluto
+        feat_df = pd.DataFrame({"Feature": names, "Importance": importances})
+        feat_df["abs"] = feat_df["Importance"].abs()
+        feat_df = feat_df.sort_values("abs", ascending=False)
+
+        if top_n is not None:
+            feat_df = feat_df.head(top_n)
 
         # Plot
         plt.figure(figsize=(12, 6))
-        plt.barh(feature_df['Feature'], feature_df['Importance'])
+        plt.barh(feat_df["Feature"], feat_df["Importance"])
         plt.xlabel("Importance")
         plt.ylabel("Feature")
-        plt.title(f"{self.model_type} Feature Importance")
+        plt.title(f"{self.model_type} Feature Importance (top {top_n if top_n else 'all'})")
         plt.gca().invert_yaxis()
         plt.tight_layout()
-        plt.show()
-
-    def predict_match(self, match_features):
-        """Predicts probabilities for a given match."""
-        if self.model_type == "logistic_regression":
-            match_features = pd.DataFrame(self.scaler.transform(match_features), columns=self.X_train_columns)
-        probabilities = self.model.predict_proba(match_features)[0]
-        return {
-            "Home Win Probability": probabilities[2],
-            "Draw Probability": probabilities[1],
-            "Away Win Probability": probabilities[0]
-        }
+        return plt.gcf()
