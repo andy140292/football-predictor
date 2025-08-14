@@ -17,4 +17,4 @@ pandas
 scikit-learn
 xgboost
 catboost
-matplotlib.pyplot
+streamlit-option-menu
