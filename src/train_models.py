@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 import io
 import tempfile
 from supabase_client import get_supabase_client
+import sys
 
 month_str = (datetime.today() - timedelta(days=30)).strftime("%Y_%m")
 
@@ -182,3 +183,5 @@ def train_all_models_if_needed():
     else:
         print("✅ Modelos ya entrenados. Usando existentes.")
         return None, None, None
+print(sys.path)    
+# train_models()

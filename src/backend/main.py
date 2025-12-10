@@ -16,14 +16,17 @@ load_dotenv()
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 API_ENV = os.getenv("API_ENV", "prod")
-ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "").split(",")
-# Ejemplo ALLOWED_ORIGINS: "https://<tu-app>.streamlit.app,https://<tu-dominio>"
 
 app = FastAPI()
 
+_raw = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173")
+ALLOWED_ORIGINS = [o.strip() for o in _raw.split(",") if o.strip()]
+
+print(">>> ALLOWED_ORIGINS:", ALLOWED_ORIGINS)  # 👀 Debe mostrar ["http://localhost:5173"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[o.strip() for o in ALLOWED_ORIGINS if o.strip()],
+    allow_origins=["http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
