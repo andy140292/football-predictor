@@ -1,6 +1,4 @@
-import pandas as pd
 import joblib
-import os
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -9,10 +7,8 @@ from prediction.football_match_predictor import FootballMatchPredictor
 from pathlib import Path
 from utils.paths import MODEL_PATHS, PROCESSED_X_PATH, PROCESSED_X__FULL_PATH, PROCESSED_y_PATH, MATCHES_PATH
 from datetime import datetime, timedelta
-import io
 import tempfile
 from supabase_client import get_supabase_client
-import sys
 
 month_str = (datetime.today() - timedelta(days=30)).strftime("%Y_%m")
 
@@ -183,5 +179,4 @@ def train_all_models_if_needed():
     else:
         print("✅ Modelos ya entrenados. Usando existentes.")
         return None, None, None
-print(sys.path)    
 # train_models()

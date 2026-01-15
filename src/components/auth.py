@@ -41,11 +41,8 @@ def register_user(email: str, password: str, subscribe: bool = False) -> bool:
         print(f"Error al registrar usuario: {e}")
         return False
 
-def login_user(email: str, password: str) -> bool:
-    """
-    Devuelve True si las credenciales son correctas,
-    False si son incorrectas o si ocurre cualquier otro error controlado.
-    """
+def login_user(email: str, password: str):
+    """Devuelve la respuesta de login o None si falla."""
     try:
         response = supabase.auth.sign_in_with_password(
             {"email": email, "password": password}
@@ -54,8 +51,8 @@ def login_user(email: str, password: str) -> bool:
     except AuthApiError as e:
         # Credenciales inválidas
         print(f"Login error: {e}")
-        return False
+        return None
     except Exception as e:
         # Otro error (conexión, configuración, etc.)
         print(f"Error inesperado en login: {e}")
-        return False
+        return None

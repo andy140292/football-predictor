@@ -2,17 +2,19 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import joblib
-from utils.paths import MATCHES_PATH, PROCESSED_X_PATH, MODEL_PATHS, PROCESSED_y_PATH
+import os
+from utils.paths import MATCHES_PATH, PROCESSED_X_PATH, MODEL_PATHS, PROCESSED_y_PATH, RANKING_PATH
 import requests
 from datetime import datetime, timedelta
 import io
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, log_loss
 from supabase_client import get_supabase_client
-from predict_match import get_remaining_predictions
+from predict_match import get_remaining_predictions, build_feature_vector
 
 
 API_URL = "https://futbolconu-predictor.fly.dev/predict"  # Puedes cambiar esto más adelante por el endpoint de producción
+LOCAL_MODEL_MODE = os.getenv("PREDICT_LOCAL_MODELS", "false").lower() == "true"
 
 supabase = get_supabase_client()
 
@@ -60,6 +62,23 @@ def load_trained_models():
     }
     return models, X, y
 
+def local_predict_outcome(home_team, away_team):
+    models, X, _ = load_trained_models()
+    fifa_rank = pd.read_csv(RANKING_PATH)
+    match_vector = build_feature_vector(home_team, away_team, X, fifa_rank)
+    results = {}
+
+    for model_name, predictor in models.items():
+        if predictor is None:
+            continue
+        probs = predictor.predict_proba(match_vector)[0]
+        results[model_name] = {
+            "home_win": probs[2],
+            "draw": probs[1],
+            "away_win": probs[0],
+        }
+
+    return results
 
 def show_predict():
     # Verifica si el usuario está autenticado
@@ -160,13 +179,19 @@ def show_predict():
             st.warning("Por favor selecciona dos equipos diferentes.")
             return
 
-        if "token" not in st.session_state or not st.session_state.token:
+        if not LOCAL_MODEL_MODE and ("token" not in st.session_state or not st.session_state.token):
             st.warning("Necesitas iniciar sesión para hacer predicciones.")
             return
         
+        if LOCAL_MODEL_MODE:
+            results = local_predict_outcome(team1, team2)
+            st.session_state["last_prediction_results"] = results
+            st.session_state["last_prediction_teams"] = (team1, team2)
+            st.rerun()
+
         headers = {
             "Authorization": f"Bearer {st.session_state.token}"
-        }        
+        }
 
         data = {
             "home_team": team1,

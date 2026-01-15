@@ -1,5 +1,39 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import List
 
 class MatchInput(BaseModel):
     home_team: str
     away_team: str
+
+
+class RecentFormInput(BaseModel):
+    home_team: str
+    away_team: str
+    last_matches: int = Field(gt=0, le=50)
+
+
+class HeadToHeadInput(BaseModel):
+    home_team: str
+    away_team: str
+    tournaments: List[str]
+
+
+class MatchOut(BaseModel):
+    home_team: str
+    away_team: str
+    home_score: int
+    away_score: int
+
+
+class TeamForm(BaseModel):
+    team: str
+    wins: int
+    draws: int
+    losses: int
+    goals: int
+
+
+class HeadToHeadResponse(BaseModel):
+    matches: List[MatchOut]
+    home_form: TeamForm
+    away_form: TeamForm

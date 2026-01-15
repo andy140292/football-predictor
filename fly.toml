@@ -1,0 +1,40 @@
+# fly.toml app configuration file generated for futbolconu-predictor on 2025-08-14T10:37:10-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "futbolconu-predictor"
+primary_region = "gru"
+
+[build]
+  dockerfile = "src/backend/Dockerfile"
+
+[env]
+  PORT = "8080"
+  WEB_CONCURRENCY = "2"
+  API_ENV = "prod"
+  PYTHONPATH = "/app:/app/src"
+  ALLOWED_ORIGINS = "http://localhost:5173,http://127.0.0.1:5173"
+
+[[services]]
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+  autostop = true
+  autostart = true
+  min_machines_running = 0
+  [services.concurrency]
+    type = "requests"
+    soft_limit = 50
+    hard_limit = 100
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1

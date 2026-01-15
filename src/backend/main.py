@@ -1,7 +1,14 @@
-from fastapi import FastAPI, HTTPException, Header, HTTPException, Depends, status
+from fastapi import FastAPI, HTTPException, Header, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 import requests
-from src.backend.schema import MatchInput
+from src.backend.schema import (
+    MatchInput,
+    RecentFormInput,
+    HeadToHeadInput,
+    HeadToHeadResponse,
+    MatchOut,
+)
+from src.backend.match_service import get_recent_matches, get_head_to_head
 from src.predict_match import predict_outcome
 from dotenv import load_dotenv
 import sys
@@ -26,7 +33,7 @@ print(">>> ALLOWED_ORIGINS:", ALLOWED_ORIGINS)  # 👀 Debe mostrar ["http://loc
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -73,5 +80,29 @@ def predict(input: MatchInput, user=Depends(verify_token)):
             token=user.get("token")
         )
         return {"predicción": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/recent-form", response_model=list[MatchOut])
+def recent_form(input: RecentFormInput, user=Depends(verify_token)):
+    try:
+        return get_recent_matches(
+            home_team=input.home_team,
+            away_team=input.away_team,
+            last_matches=input.last_matches,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/head-to-head", response_model=HeadToHeadResponse)
+def head_to_head(input: HeadToHeadInput, user=Depends(verify_token)):
+    try:
+        return get_head_to_head(
+            home_team=input.home_team,
+            away_team=input.away_team,
+            tournaments=input.tournaments,
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

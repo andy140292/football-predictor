@@ -1,9 +1,4 @@
 import pandas as pd
-from fuzzywuzzy import process
-
-# --- Load your files ---
-matches = pd.read_csv("data/matches.csv")
-fifa = pd.read_csv("data/ranking_fifa_2025.csv")
 
 # --- Manual name normalization ---
 team_name_map = {

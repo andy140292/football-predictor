@@ -1,14 +1,8 @@
 import pandas as pd
 
-# Load the match data
-matches = pd.read_csv('data/results.csv')
-
-# Load confederation mapping
-CONFED_MAP = pd.read_csv('data/unique_countries.csv')
-
-def add_confederation_to_matches(matches):
+def add_confederation_to_matches(matches, confed_path="data/unique_countries.csv"):
     matches_copy = matches.copy()
-    confed_copy = CONFED_MAP.copy()
+    confed_copy = pd.read_csv(confed_path)
     # Merge to get home_team_confederation
     matches_copy = matches_copy.merge(
         confed_copy.rename(columns={'country': 'home_team', 'confederation': 'home_team_confederation'}),

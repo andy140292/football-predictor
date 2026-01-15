@@ -1,5 +1,5 @@
-from utils.add_ranking_fifa_to_matches import add_ranking_fifa_to_matches
-from utils.confederation_mapping import add_confederation_to_matches
+from add_ranking_fifa_to_matches import add_ranking_fifa_to_matches
+from confederation_mapping import add_confederation_to_matches
 import pandas as pd
 from datetime import datetime
 import os

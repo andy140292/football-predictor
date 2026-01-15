@@ -1,5 +1,4 @@
 import pandas as pd
-from utils.paths import RANKING_PATH
 
 class FeatureEngineer:
     def __init__(self, matches_df, verbose=False):
@@ -19,9 +18,8 @@ class FeatureEngineer:
         )
 
     def compute_head_to_head_stats(self):
-         
-        # Calculate goal difference for each match (from the perspective of the listed home team)
-        self.df['goal_diff'] = self.df['home_score'] - self.df['away_score']
+        if "goal_diff" not in self.df.columns:
+            self.df["goal_diff"] = self.df["home_score"] - self.df["away_score"]
 
         # Group by matchup_id and compute the average goal difference
         head_to_head_stats = self.df.groupby('matchup_id')['goal_diff'].mean().reset_index()

@@ -3,28 +3,35 @@ import joblib
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from supabase import create_client, Client
-from dotenv import load_dotenv
-import io
 from datetime import datetime
-from datetime import datetime, timedelta
 import jwt
 from src.supabase_client import get_supabase_client
-from src.utils.paths import MODEL_PATHS, PROCESSED_X_PATH, PROCESSED_X__FULL_PATH, PROCESSED_y_PATH, MATCHES_PATH,RANKING_PATH
+from src.utils.paths import MODEL_PATHS, PROCESSED_X_PATH, RANKING_PATH
 
 supabase = get_supabase_client()
 API_ENV = os.getenv("API_ENV", "prod")
 
-month_str = (datetime.today() - timedelta(days=30)).strftime("%Y_%m")
-bucket = "model-artifacts"
+_assets = None
 
-def load_file_from_supabase(bucket: str, path: str, as_dataframe=False):
-    response = supabase.storage.from_(bucket).download(path)
-    if as_dataframe:
-        return pd.read_csv(io.BytesIO(response))
-    else:
-        return joblib.load(io.BytesIO(response))
-    
+def _load_assets():
+    global _assets
+    if _assets is None:
+        X = pd.read_csv(PROCESSED_X_PATH)
+        fifa_rank = pd.read_csv(RANKING_PATH)
+        rf_predictor = joblib.load(MODEL_PATHS["random_forest"])
+        lr_predictor = joblib.load(MODEL_PATHS["logistic_regression"])
+        mlp_predictor = joblib.load(MODEL_PATHS["mlp"])
+        _assets = {
+            "X": X,
+            "fifa_rank": fifa_rank,
+            "models": {
+                "random_forest": rf_predictor,
+                "logistic_regression": lr_predictor,
+                "mlp": mlp_predictor,
+            },
+        }
+    return _assets
+
 def extract_email_from_token(token: str) -> str:
     if API_ENV == "dev":
         # ✅ Email ficticio para pruebas
@@ -61,15 +68,6 @@ def register_prediction(email: str, home_team: str, away_team: str):
         "timestamp": datetime.utcnow().isoformat()
     }).execute()
 
-# Load feature columns
-X = pd.read_csv(PROCESSED_X_PATH)
-fifa_rank = pd.read_csv(RANKING_PATH)
-feature_columns = X.columns
-
-rf_predictor = joblib.load(MODEL_PATHS["random_forest"])
-lr_predictor = joblib.load(MODEL_PATHS["logistic_regression"])
-mlp_predictor = joblib.load(MODEL_PATHS["mlp"])
-
 def predict_outcome(home_team, away_team, token=None):
     email = extract_email_from_token(token)
     if not email:
@@ -79,10 +77,16 @@ def predict_outcome(home_team, away_team, token=None):
         raise ValueError("Límite diario de predicciones alcanzado (15)")
 
     register_prediction(email, home_team, away_team)
-    
+
+    assets = _load_assets()
+    X = assets["X"]
+    fifa_rank = assets["fifa_rank"]
+    models = assets["models"]
+
     match_vector = build_feature_vector(home_team, away_team, X, fifa_rank)
     results = {}
 
+    rf_predictor = models.get("random_forest")
     if rf_predictor:
         rf_probs = rf_predictor.predict_proba(match_vector)[0]
         results["random_forest"] = {
@@ -91,6 +95,7 @@ def predict_outcome(home_team, away_team, token=None):
             "away_win": rf_probs[0]
         }
 
+    lr_predictor = models.get("logistic_regression")
     if lr_predictor:
         lr_probs = lr_predictor.predict_proba(match_vector)[0]
         results["logistic_regression"] = {
@@ -99,6 +104,7 @@ def predict_outcome(home_team, away_team, token=None):
             "away_win": lr_probs[0]
         }
 
+    mlp_predictor = models.get("mlp")
     if mlp_predictor:
         mlp_probs = mlp_predictor.predict_proba(match_vector)[0]
         results["mlp"] = {
@@ -161,5 +167,4 @@ def build_feature_vector(home_team, away_team, feature_template_df, ranking_df):
         vector["neutral"] = int(home_info["confederation"] != away_info["confederation"])
 
     return vector
-
 
