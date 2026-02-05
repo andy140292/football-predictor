@@ -48,8 +48,8 @@ def extract_email_from_token(token: str) -> str:
         return None
 
 def get_remaining_predictions(email: str, limit=15):
-    # if email == "andresuribe1402@gmail.com":
-    #     return True  # No limit for this email
+    if email == "andresuribe1402@gmail.com":
+        return True  # No limit for this email
     
     today_start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
 
