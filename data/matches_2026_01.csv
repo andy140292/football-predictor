@@ -5190,7 +5190,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1960-11-23,Bulgaria,Germany,2,1,Friendly,Sofia,Bulgaria,False,UEFA,UEFA,85.0,1289.0,10.0,1717.0
 1960-11-23,England,Wales,5,1,British Home Championship,London,England,False,UEFA,UEFA,4.0,1819.0,29.0,1536.0
 1960-11-27,Bulgaria,Turkey,2,1,Friendly,Sofia,Bulgaria,False,UEFA,UEFA,85.0,1289.0,27.0,1551.0
-1960-11-27,Curacao,Suriname,0,0,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,137.0,1097.0
+1960-11-27,Curacao,Suriname,0,0,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,137.0,1097.0
 1960-11-27,Israel,Cyprus,6,1,FIFA World Cup qualification,Ramat Gan,Israel,False,UEFA,UEFA,78.0,1322.0,129.0,1128.0
 1960-12-04,Ecuador,Argentina,3,6,FIFA World Cup qualification,Guayaquil,Ecuador,False,CONMEBOL,CONMEBOL,24.0,1568.0,1.0,1886.0
 1960-12-04,Tunisia,German DR,0,3,Friendly,Tunis,Tunisia,False,CAF,UNKNOWN,49.0,1474.0,110.0,1000.0
@@ -5250,7 +5250,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1961-04-19,Netherlands,Mexico,1,2,Friendly,Amsterdam,Netherlands,False,UEFA,CONCACAF,6.0,1752.0,17.0,1647.0
 1961-04-19,Wales,Spain,1,2,FIFA World Cup qualification,Cardiff,Wales,False,UEFA,UEFA,29.0,1536.0,2.0,1855.0
 1961-04-22,Sierra Leone,Nigeria,1,4,Friendly,Freetown,Sierra Leone,False,CAF,CAF,124.0,1140.0,43.0,1481.0
-1961-04-23,Curacao,Costa Rica,2,0,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,54.0,1459.0
+1961-04-23,Curacao,Costa Rica,2,0,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,54.0,1459.0
 1961-04-25,Italy,Northern Ireland,3,2,Friendly,Bologna,Italy,False,UEFA,UEFA,9.0,1718.0,71.0,1349.0
 1961-04-29,Czechoslovakia,Mexico,2,1,Friendly,Ostrava,Czechoslovakia,False,UNKNOWN,CONCACAF,110.0,1000.0,17.0,1647.0
 1961-04-30,Colombia,Peru,1,0,FIFA World Cup qualification,Bogotá,Colombia,False,CONMEBOL,CONMEBOL,14.0,1679.0,42.0,1483.0
@@ -5275,7 +5275,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1961-05-17,Paraguay,Argentina,0,0,Friendly,Asunción,Paraguay,False,CONMEBOL,CONMEBOL,48.0,1476.0,1.0,1886.0
 1961-05-18,Spain,Wales,1,1,FIFA World Cup qualification,Madrid,Spain,False,UEFA,UEFA,2.0,1855.0,29.0,1536.0
 1961-05-20,Switzerland,Belgium,2,1,FIFA World Cup qualification,Lausanne,Switzerland,False,UEFA,UEFA,20.0,1625.0,8.0,1736.0
-1961-05-21,Curacao,Mexico,0,0,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,17.0,1647.0
+1961-05-21,Curacao,Mexico,0,0,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,17.0,1647.0
 1961-05-21,Poland,Russian Federation,1,0,Friendly,Warsaw,Poland,False,UEFA,UEFA,34.0,1517.0,35.0,1516.0
 1961-05-21,Portugal,England,1,1,FIFA World Cup qualification,Oeiras,Portugal,False,UEFA,UEFA,7.0,1750.0,4.0,1819.0
 1961-05-24,Italy,England,2,3,Friendly,Rome,Italy,False,UEFA,UEFA,9.0,1718.0,4.0,1819.0
@@ -7047,7 +7047,6 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1967-05-28,Russian Federation,Mexico,2,0,Friendly,Leningrad,Soviet Union,False,UEFA,CONCACAF,35.0,1516.0,17.0,1647.0
 1967-05-31,Spain,Turkey,2,0,UEFA Euro qualification,Bilbao,Spain,False,UEFA,UEFA,2.0,1855.0,27.0,1551.0
 1967-06-01,Finland,Norway,0,2,Nordic Championship,Helsinki,Finland,False,UEFA,UEFA,69.0,1360.0,38.0,1497.0
-1967-06-01,Russian Federation,Mexico,0,1,Friendly,Volgograd,Soviet Union,False,UEFA,CONCACAF,35.0,1516.0,17.0,1647.0
 1967-06-01,Sweden,Portugal,1,1,UEFA Euro qualification,Solna,Sweden,False,UEFA,UEFA,28.0,1536.0,7.0,1750.0
 1967-06-03,France,Russian Federation,2,4,Friendly,Paris,France,False,UEFA,UEFA,3.0,1853.0,35.0,1516.0
 1967-06-04,Belarus,Mexico,2,1,Friendly,Minsk,Soviet Union,False,UEFA,CONCACAF,98.0,1235.0,17.0,1647.0
@@ -9473,10 +9472,10 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1973-09-03,Myanmar,Vietnam Republic,3,2,Southeast Asian Peninsular Games,Singapore,Singapore,True,AFC,AFC,162.0,995.0,110.0,1000.0
 1973-09-04,Singapore,Malaysia,0,0,Southeast Asian Peninsular Games,Singapore,Singapore,False,AFC,AFC,161.0,1002.0,131.0,1124.0
 1973-09-04,Vietnam Republic,Laos,5,1,Southeast Asian Peninsular Games,Singapore,Singapore,True,AFC,AFC,110.0,1000.0,190.0,876.0
-1973-09-04,Singapore,Malaysia,0,3,Southeast Asian Peninsular Games,Singapore,Singapore,False,AFC,AFC,161.0,1002.0,131.0,1124.0
 1973-09-05,Russian Federation,Germany,0,1,Friendly,Moscow,Soviet Union,False,UEFA,UEFA,35.0,1516.0,10.0,1717.0
 1973-09-06,Myanmar,Malaysia,1,0,Southeast Asian Peninsular Games,Singapore,Singapore,True,AFC,AFC,162.0,995.0,131.0,1124.0
 1973-09-06,Singapore,Vietnam Republic,1,1,Southeast Asian Peninsular Games,Singapore,Singapore,False,AFC,AFC,161.0,1002.0,110.0,1000.0
+1973-09-07,Singapore,Malaysia,0,3,Southeast Asian Peninsular Games,Singapore,Singapore,False,AFC,AFC,161.0,1002.0,131.0,1124.0
 1973-09-08,France,Greece,3,1,Friendly,Paris,France,False,UEFA,UEFA,3.0,1853.0,40.0,1490.0
 1973-09-08,Myanmar,Vietnam Republic,3,2,Southeast Asian Peninsular Games,Singapore,Singapore,True,AFC,AFC,162.0,995.0,110.0,1000.0
 1973-09-09,Argentina,Bolivia,4,0,FIFA World Cup qualification,Buenos Aires,Argentina,False,CONMEBOL,CONMEBOL,1.0,1886.0,80.0,1308.0
@@ -9572,6 +9571,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1973-11-18,Netherlands,Belgium,0,0,FIFA World Cup qualification,Amsterdam,Netherlands,False,UEFA,UEFA,6.0,1752.0,8.0,1736.0
 1973-11-18,Turkey,Switzerland,2,0,FIFA World Cup qualification,İzmir,Turkey,False,UEFA,UEFA,27.0,1551.0,20.0,1625.0
 1973-11-19,Saint Vincent and the Grenadines,Dominica,2,2,Windward Islands Tournament,Kingstown,Saint Vincent and the Grenadines,False,CONCACAF,CONCACAF,172.0,966.0,184.0,900.0
+1973-11-21,Chile,Russian Federation,2,0,FIFA World Cup qualification,Santiago,Chile,False,CONMEBOL,UEFA,52.0,1462.0,35.0,1516.0
 1973-11-21,France,Denmark,3,0,Friendly,Paris,France,False,UEFA,UEFA,3.0,1853.0,21.0,1618.0
 1973-11-21,Grenada,Dominica,1,1,Windward Islands Tournament,St. George's,Grenada,False,CONCACAF,CONCACAF,174.0,954.0,184.0,900.0
 1973-11-21,Hungary,German DR,0,1,Friendly,Budapest,Hungary,False,UEFA,UNKNOWN,37.0,1503.0,110.0,1000.0
@@ -11169,14 +11169,14 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1977-10-20,El Salvador,Suriname,3,2,CONCACAF Championship,Monterrey,Mexico,True,CONCACAF,CONCACAF,81.0,1301.0,137.0,1097.0
 1977-10-21,Egypt,Nigeria,3,1,FIFA World Cup qualification,Cairo,Egypt,False,CAF,CAF,32.0,1519.0,43.0,1481.0
 1977-10-22,Guyana,Barbados,2,0,Friendly,Linden,Guyana,False,CONCACAF,CONCACAF,152.0,1038.0,176.0,933.0
-1977-10-22,Guyana,Barbados,0,0,Friendly,Georgetown,Guyana,False,CONCACAF,CONCACAF,152.0,1038.0,176.0,933.0
 1977-10-22,Mexico,Canada,3,1,CONCACAF Championship,Monterrey,Mexico,False,CONCACAF,CONCACAF,17.0,1647.0,30.0,1532.0
 1977-10-23,El Salvador,Guatemala,2,2,CONCACAF Championship,Mexico City,Mexico,True,CONCACAF,CONCACAF,81.0,1301.0,106.0,1197.0
 1977-10-23,Haiti,Suriname,1,0,CONCACAF Championship,Mexico City,Mexico,True,CONCACAF,CONCACAF,83.0,1292.0,137.0,1097.0
 1977-10-23,Jamaica,China PR,0,1,Friendly,Kingston,Jamaica,False,CONCACAF,AFC,63.0,1387.0,110.0,1000.0
 1977-10-23,South Korea,Australia,0,0,FIFA World Cup qualification,Seoul,South Korea,False,AFC,AFC,23.0,1575.0,26.0,1555.0
+1977-10-24,Guyana,Barbados,0,0,Friendly,Georgetown,Guyana,False,CONCACAF,CONCACAF,152.0,1038.0,176.0,933.0
 1977-10-26,Bulgaria,Greece,0,0,Friendly,Sofia,Bulgaria,False,UEFA,UEFA,85.0,1289.0,40.0,1490.0
-1977-10-26,Guyana,Barbados,0,0,Friendly,Georgetown,Guyana,False,CONCACAF,CONCACAF,152.0,1038.0,176.0,933.0
+1977-10-26,Guyana,Barbados,0,0,Friendly,Linden,Guyana,False,CONCACAF,CONCACAF,152.0,1038.0,176.0,933.0
 1977-10-26,Netherlands,Belgium,1,0,FIFA World Cup qualification,Amsterdam,Netherlands,False,UEFA,UEFA,6.0,1752.0,8.0,1736.0
 1977-10-26,Spain,Romania,2,0,FIFA World Cup qualification,Madrid,Spain,False,UEFA,UEFA,2.0,1855.0,45.0,1479.0
 1977-10-28,Iran,Kuwait,1,0,FIFA World Cup qualification,Tehran,Iran,False,AFC,CAF,18.0,1637.0,134.0,1112.0
@@ -12540,7 +12540,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1980-11-25,Singapore,Western Australia,1,1,King's Cup,Bangkok,Thailand,True,AFC,OFC,161.0,1002.0,110.0,1000.0
 1980-11-26,Costa Rica,Guatemala,0,3,CONCACAF Championship qualification,San José,Costa Rica,False,CONCACAF,CONCACAF,54.0,1459.0,106.0,1197.0
 1980-11-28,Sudan,Tanzania,1,0,CECAFA Cup,Khartoum,Sudan,False,CAF,CAF,114.0,1174.0,107.0,1196.0
-1980-11-29,Curacao,Trinidad and Tobago,0,0,CONCACAF Championship qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,100.0,1230.0
+1980-11-29,Curacao,Trinidad and Tobago,0,0,CONCACAF Championship qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,100.0,1230.0
 1980-11-30,Bolivia,Finland,3,0,Friendly,La Paz,Bolivia,False,CONMEBOL,UEFA,80.0,1308.0,69.0,1360.0
 1980-11-30,Congo,Angola,0,0,African Cup of Nations qualification,Brazzaville,Congo,False,CAF,CAF,110.0,1000.0,87.0,1280.0
 1980-11-30,Guyana,Cuba,0,3,CONCACAF Championship qualification,Linden,Guyana,False,CONCACAF,CONCACAF,152.0,1038.0,167.0,980.0
@@ -12568,7 +12568,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1980-12-10,Kenya,Zambia,2,0,Friendly,Nakuru,Kenya,False,CAF,CAF,111.0,1179.0,88.0,1276.0
 1980-12-11,Uruguay,Bolivia,5,0,Friendly,Maldonado,Uruguay,False,CONMEBOL,CONMEBOL,13.0,1679.0,80.0,1308.0
 1980-12-12,Algeria,Sudan,2,0,FIFA World Cup qualification,Constantine,Algeria,False,CAF,CAF,36.0,1507.0,114.0,1174.0
-1980-12-12,Curacao,Haiti,1,1,CONCACAF Championship qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,83.0,1292.0
+1980-12-12,Curacao,Haiti,1,1,CONCACAF Championship qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,83.0,1292.0
 1980-12-12,Kenya,Zambia,2,1,Friendly,Nairobi,Kenya,False,CAF,CAF,111.0,1179.0,88.0,1276.0
 1980-12-12,Saudi Arabia,Indonesia,8,0,Friendly,Riyadh,Saudi Arabia,False,AFC,AFC,58.0,1419.0,123.0,1143.0
 1980-12-14,Honduras,Panama,5,0,CONCACAF Championship qualification,Tegucigalpa,Honduras,False,CONCACAF,CONCACAF,75.0,1334.0,33.0,1518.0
@@ -13554,6 +13554,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1983-03-05,Barbados,Suriname,1,0,CFU Caribbean Cup qualification,Bridgetown,Barbados,False,CONCACAF,CONCACAF,176.0,933.0,137.0,1097.0
 1983-03-06,Dominica,Guadeloupe,1,2,CFU Caribbean Cup qualification,Roseau,Dominica,False,CONCACAF,CONCACAF,184.0,900.0,110.0,1000.0
 1983-03-06,Japan,South Korea,1,1,Friendly,Tokyo,Japan,False,AFC,AFC,15.0,1653.0,23.0,1575.0
+1983-03-07,Bulgaria,Switzerland,1,1,Friendly,Varna,Bulgaria,False,UEFA,UEFA,85.0,1289.0,20.0,1625.0
 1983-03-08,Barbados,Suriname,0,0,CFU Caribbean Cup qualification,Bridgetown,Barbados,False,CONCACAF,CONCACAF,176.0,933.0,137.0,1097.0
 1983-03-09,Romania,Turkey,3,1,Friendly,Târgu Mureș,Romania,False,UEFA,UEFA,45.0,1479.0,27.0,1551.0
 1983-03-09,Senegal,Morocco,1,0,Friendly,Dakar,Senegal,False,CAF,CAF,19.0,1630.0,12.0,1694.0
@@ -14316,7 +14317,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1984-09-26,Italy,Sweden,1,0,Friendly,Milan,Italy,False,UEFA,UEFA,9.0,1718.0,28.0,1536.0
 1984-09-26,Poland,Turkey,2,0,Friendly,Słupsk,Poland,False,UEFA,UEFA,34.0,1517.0,27.0,1551.0
 1984-09-26,Tunisia,Nigeria,5,0,Friendly,Tunis,Tunisia,False,CAF,CAF,49.0,1474.0,43.0,1481.0
-1984-09-29,Curacao,United States,0,0,CONCACAF Championship qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,16.0,1649.0
+1984-09-29,Curacao,United States,0,0,CONCACAF Championship qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,16.0,1649.0
 1984-09-29,Yugoslavia,Bulgaria,0,0,FIFA World Cup qualification,Belgrade,Yugoslavia,False,UNKNOWN,UEFA,110.0,1000.0,85.0,1289.0
 1984-09-30,Botswana,Angola,1,3,Friendly,Gaborone,Botswana,False,CAF,CAF,136.0,1101.0,87.0,1280.0
 1984-09-30,South Korea,Japan,1,2,Friendly,Seoul,South Korea,False,AFC,AFC,23.0,1575.0,15.0,1653.0
@@ -16255,7 +16256,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1988-07-27,Mali,Niger,1,0,Tournament Burkina Faso,Ouagadougou,Burkina Faso,True,CAF,CAF,53.0,1460.0,122.0,1143.0
 1988-07-28,Norway,Brazil,1,1,Friendly,Oslo,Norway,False,UEFA,CONMEBOL,38.0,1497.0,5.0,1776.0
 1988-07-29,Benin,Mali,0,1,Tournament Burkina Faso,Ouagadougou,Burkina Faso,True,CAF,CAF,95.0,1240.0,53.0,1460.0
-1988-07-29,Curacao,Antigua and Barbuda,3,1,CONCACAF Championship qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,159.0,1011.0
+1988-07-29,Curacao,Antigua and Barbuda,3,1,CONCACAF Championship qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,159.0,1011.0
 1988-07-29,Ghana,Niger,0,3,Tournament Burkina Faso,Ouagadougou,Burkina Faso,True,CAF,CAF,76.0,1333.0,122.0,1143.0
 1988-07-30,Malawi,Uganda,3,1,FIFA World Cup qualification,Lilongwe,Malawi,False,CAF,CAF,132.0,1118.0,89.0,1274.0
 1988-07-31,Burkina Faso,Benin,1,0,Tournament Burkina Faso,Ouagadougou,Burkina Faso,False,CAF,CAF,64.0,1385.0,95.0,1240.0
@@ -16318,7 +16319,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1988-09-28,Malawi,Mozambique,1,0,Friendly,Lilongwe,Malawi,False,CAF,CAF,132.0,1118.0,96.0,1239.0
 1988-09-29,Chile,Ecuador,0,0,Friendly,Asunción,Paraguay,True,CONMEBOL,CONMEBOL,52.0,1462.0,24.0,1568.0
 1988-09-29,Paraguay,Uruguay,3,1,Friendly,Asunción,Paraguay,False,CONMEBOL,CONMEBOL,48.0,1476.0,13.0,1679.0
-1988-10-01,Curacao,El Salvador,0,1,CONCACAF Championship qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,81.0,1301.0
+1988-10-01,Curacao,El Salvador,0,1,CONCACAF Championship qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,81.0,1301.0
 1988-10-01,Tanzania,Eswatini,1,1,African Cup of Nations qualification,Dar es Salaam,Tanzania,False,CAF,CAF,107.0,1196.0,155.0,1023.0
 1988-10-02,Indonesia,Qatar,0,1,Friendly,Jakarta,Indonesia,False,AFC,AFC,123.0,1143.0,55.0,1457.0
 1988-10-02,Liberia,Mali,0,1,African Cup of Nations qualification,Monrovia,Liberia,False,CAF,CAF,144.0,1068.0,53.0,1460.0
@@ -16358,18 +16359,18 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1988-10-19,Russian Federation,Austria,2,0,FIFA World Cup qualification,Kyiv,Soviet Union,True,UEFA,UEFA,35.0,1516.0,22.0,1580.0
 1988-10-19,Scotland,Yugoslavia,1,1,FIFA World Cup qualification,Glasgow,Scotland,False,UEFA,UNKNOWN,44.0,1480.0,110.0,1000.0
 1988-10-19,Wales,Finland,2,2,FIFA World Cup qualification,Swansea,Wales,False,UEFA,UEFA,29.0,1536.0,69.0,1360.0
-1988-10-21,Solomon Islands,Fiji,1,1,Friendly,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,150.0,1043.0
+1988-10-21,Solomon Islands,Fiji,1,1,Melanesia Cup,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,150.0,1043.0
 1988-10-22,Cyprus,France,1,1,FIFA World Cup qualification,Nicosia,Cyprus,False,UEFA,UEFA,129.0,1128.0,3.0,1853.0
 1988-10-23,Burkina Faso,Gabon,1,0,African Cup of Nations qualification,Ouagadougou,Burkina Faso,False,CAF,CAF,64.0,1385.0,79.0,1310.0
-1988-10-23,New Caledonia,Vanuatu,6,1,Friendly,Honiara,Solomon Islands,True,OFC,OFC,151.0,1040.0,163.0,992.0
-1988-10-24,Fiji,Vanuatu,8,0,Friendly,Honiara,Solomon Islands,True,OFC,OFC,150.0,1043.0,163.0,992.0
-1988-10-24,Solomon Islands,New Caledonia,1,0,Friendly,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,151.0,1040.0
+1988-10-23,New Caledonia,Vanuatu,6,1,Melanesia Cup,Honiara,Solomon Islands,True,OFC,OFC,151.0,1040.0,163.0,992.0
+1988-10-24,Fiji,Vanuatu,8,0,Melanesia Cup,Honiara,Solomon Islands,True,OFC,OFC,150.0,1043.0,163.0,992.0
+1988-10-24,Solomon Islands,New Caledonia,1,0,Melanesia Cup,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,151.0,1040.0
 1988-10-25,Chile,Peru,2,0,Copa del Pacífico,Arica,Chile,False,CONMEBOL,CONMEBOL,52.0,1462.0,42.0,1483.0
-1988-10-25,Fiji,New Caledonia,2,0,Friendly,Honiara,Solomon Islands,True,OFC,OFC,150.0,1043.0,151.0,1040.0
-1988-10-25,Solomon Islands,Vanuatu,5,0,Friendly,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,163.0,992.0
+1988-10-25,Fiji,New Caledonia,2,0,Melanesia Cup,Honiara,Solomon Islands,True,OFC,OFC,150.0,1043.0,151.0,1040.0
+1988-10-25,Solomon Islands,Vanuatu,5,0,Melanesia Cup,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,163.0,992.0
 1988-10-26,Japan,South Korea,0,1,Friendly,Tokyo,Japan,False,AFC,AFC,15.0,1653.0,23.0,1575.0
-1988-10-26,New Caledonia,Vanuatu,0,1,Friendly,Honiara,Solomon Islands,True,OFC,OFC,151.0,1040.0,163.0,992.0
-1988-10-26,Solomon Islands,Fiji,1,3,Friendly,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,150.0,1043.0
+1988-10-26,New Caledonia,Vanuatu,0,1,Melanesia Cup,Honiara,Solomon Islands,True,OFC,OFC,151.0,1040.0,163.0,992.0
+1988-10-26,Solomon Islands,Fiji,1,3,Melanesia Cup,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,150.0,1043.0
 1988-10-29,Algeria,Angola,1,1,Friendly,Mascara,Algeria,False,CAF,CAF,36.0,1507.0,87.0,1280.0
 1988-10-30,Trinidad and Tobago,Honduras,0,0,CONCACAF Championship qualification,Port of Spain,Trinidad and Tobago,False,CONCACAF,CONCACAF,100.0,1230.0,75.0,1334.0
 1988-11-01,Chile,Uruguay,1,1,Copa Juan Pinto Durán,Concepción,Chile,False,CONMEBOL,CONMEBOL,52.0,1462.0,13.0,1679.0
@@ -16665,7 +16666,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1989-04-23,Trinidad and Tobago,Aruba,11,0,CFU Caribbean Cup qualification,Arima,Trinidad and Tobago,False,CONCACAF,CONCACAF,100.0,1230.0,195.0,864.0
 1989-04-23,Zimbabwe,Mauritius,1,0,African Cup of Nations qualification,Harare,Zimbabwe,False,CAF,CAF,116.0,1161.0,178.0,922.0
 1989-04-26,Bulgaria,Denmark,0,2,FIFA World Cup qualification,Sofia,Bulgaria,False,UEFA,UEFA,85.0,1289.0,21.0,1618.0
-1989-04-26,Curacao,Martinique,3,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,110.0,1000.0
+1989-04-26,Curacao,Martinique,3,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,110.0,1000.0
 1989-04-26,England,Albania,5,0,FIFA World Cup qualification,London,England,False,UEFA,UEFA,4.0,1819.0,66.0,1376.0
 1989-04-26,Greece,Romania,0,0,FIFA World Cup qualification,Athens,Greece,False,UEFA,UEFA,40.0,1490.0,45.0,1479.0
 1989-04-26,Republic of Ireland,Spain,1,0,FIFA World Cup qualification,Dublin,Republic of Ireland,False,UEFA,UEFA,60.0,1412.0,2.0,1855.0
@@ -16755,7 +16756,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1989-06-02,Cape Verde,Guinea,0,1,Amílcar Cabral Cup,Bamako,Mali,True,CAF,CAF,72.0,1344.0,82.0,1293.0
 1989-06-02,Mali,Sierra Leone,1,0,Amílcar Cabral Cup,Bamako,Mali,False,CAF,CAF,53.0,1460.0,124.0,1140.0
 1989-06-03,Cape Verde,Sierra Leone,1,0,Amílcar Cabral Cup,Bamako,Mali,True,CAF,CAF,72.0,1344.0,124.0,1140.0
-1989-06-03,Curacao,British Virgin Islands,4,0,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,207.0,780.0
+1989-06-03,Curacao,British Virgin Islands,4,0,CFU Caribbean Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,207.0,780.0
 1989-06-03,Egypt,Chile,2,0,Friendly,Cairo,Egypt,False,CAF,CONMEBOL,32.0,1519.0,52.0,1462.0
 1989-06-03,England,Poland,3,0,FIFA World Cup qualification,London,England,False,UEFA,UEFA,4.0,1819.0,34.0,1517.0
 1989-06-03,Malawi,Tunisia,1,0,Friendly,Lilongwe,Malawi,False,CAF,CAF,132.0,1118.0,49.0,1474.0
@@ -17028,29 +17029,29 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1989-10-26,India,Nepal,2,1,South Asian Games,Islamabad,Pakistan,True,AFC,AFC,127.0,1132.0,175.0,936.0
 1989-10-26,Pakistan,Bangladesh,1,0,South Asian Games,Islamabad,Pakistan,False,AFC,AFC,198.0,838.0,183.0,904.0
 1989-10-28,Cyprus,Yugoslavia,1,2,FIFA World Cup qualification,Athens,Greece,True,UEFA,UNKNOWN,129.0,1128.0,110.0,1000.0
-1989-10-28,Fiji,Papua New Guinea,2,1,Friendly,Suva,Fiji,False,OFC,CAF,150.0,1043.0,171.0,969.0
+1989-10-28,Fiji,Papua New Guinea,2,1,Melanesia Cup,Suva,Fiji,False,OFC,CAF,150.0,1043.0,171.0,969.0
 1989-10-28,Qatar,China PR,2,1,FIFA World Cup qualification,Singapore,Singapore,True,AFC,AFC,55.0,1457.0,110.0,1000.0
 1989-10-28,Saudi Arabia,North Korea,2,0,FIFA World Cup qualification,Guangzhou,China PR,True,AFC,AFC,58.0,1419.0,118.0,1153.0
-1989-10-28,Solomon Islands,Vanuatu,2,0,Friendly,Suva,Fiji,True,OFC,OFC,149.0,1046.0,163.0,992.0
+1989-10-28,Solomon Islands,Vanuatu,2,0,Melanesia Cup,Suva,Fiji,True,OFC,OFC,149.0,1046.0,163.0,992.0
 1989-10-28,United Arab Emirates,South Korea,1,1,FIFA World Cup qualification,Kuala Lumpur,Malaysia,True,AFC,AFC,110.0,1000.0,23.0,1575.0
-1989-10-30,Fiji,Vanuatu,2,1,Friendly,Suva,Fiji,False,OFC,OFC,150.0,1043.0,163.0,992.0
+1989-10-30,Fiji,Vanuatu,2,1,Melanesia Cup,Suva,Fiji,False,OFC,OFC,150.0,1043.0,163.0,992.0
 1989-10-30,Israel,Colombia,0,0,FIFA World Cup qualification,Ramat Gan,Israel,False,UEFA,CONMEBOL,78.0,1322.0,14.0,1679.0
 1989-10-30,Kuwait,Lebanon,5,0,Friendly,Kuwait City,Kuwait,False,CAF,AFC,134.0,1112.0,112.0,1178.0
-1989-10-30,New Caledonia,Solomon Islands,2,0,Friendly,Suva,Fiji,True,OFC,OFC,151.0,1040.0,149.0,1046.0
-1989-10-31,Fiji,New Caledonia,3,0,Friendly,Suva,Fiji,False,OFC,OFC,150.0,1043.0,151.0,1040.0
+1989-10-30,New Caledonia,Solomon Islands,2,0,Melanesia Cup,Suva,Fiji,True,OFC,OFC,151.0,1040.0,149.0,1046.0
+1989-10-31,Fiji,New Caledonia,3,0,Melanesia Cup,Suva,Fiji,False,OFC,OFC,150.0,1043.0,151.0,1040.0
 1989-10-31,Guinea,Iraq,1,0,Friendly,Kuwait City,Kuwait,True,CAF,AFC,82.0,1293.0,59.0,1413.0
-1989-10-31,Papua New Guinea,Vanuatu,3,0,Friendly,Suva,Fiji,True,CAF,OFC,171.0,969.0,163.0,992.0
+1989-10-31,Papua New Guinea,Vanuatu,3,0,Melanesia Cup,Suva,Fiji,True,CAF,OFC,171.0,969.0,163.0,992.0
 1989-11-01,Iran,Yemen DPR,2,0,Friendly,Kuwait City,Kuwait,True,AFC,CAF,18.0,1637.0,110.0,1000.0
 1989-11-01,Tunisia,Algeria,0,0,Friendly,Tunis,Tunisia,False,CAF,CAF,49.0,1474.0,36.0,1507.0
 1989-11-02,Lebanon,Uganda,0,2,Friendly,Kuwait City,Kuwait,True,AFC,CAF,112.0,1178.0,89.0,1274.0
 1989-11-03,Guinea,Iran,1,1,Friendly,Kuwait City,Kuwait,True,CAF,AFC,82.0,1293.0,18.0,1637.0
 1989-11-03,Iraq,Yemen DPR,6,2,Friendly,Kuwait City,Kuwait,True,AFC,CAF,59.0,1413.0,110.0,1000.0
-1989-11-03,New Caledonia,Vanuatu,5,1,Friendly,Ba,Fiji,True,OFC,OFC,151.0,1040.0,163.0,992.0
-1989-11-03,Papua New Guinea,Solomon Islands,0,0,Friendly,Suva,Fiji,True,CAF,OFC,171.0,969.0,149.0,1046.0
+1989-11-03,New Caledonia,Vanuatu,5,1,Melanesia Cup,Ba,Fiji,True,OFC,OFC,151.0,1040.0,163.0,992.0
+1989-11-03,Papua New Guinea,Solomon Islands,0,0,Melanesia Cup,Suva,Fiji,True,CAF,OFC,171.0,969.0,149.0,1046.0
 1989-11-03,Qatar,Egypt,0,2,Friendly,Doha,Qatar,False,AFC,CAF,55.0,1457.0,32.0,1519.0
-1989-11-04,Fiji,Solomon Islands,0,0,Friendly,Suva,Fiji,False,OFC,OFC,150.0,1043.0,149.0,1046.0
+1989-11-04,Fiji,Solomon Islands,0,0,Melanesia Cup,Suva,Fiji,False,OFC,OFC,150.0,1043.0,149.0,1046.0
 1989-11-04,Kuwait,Uganda,1,1,Friendly,Kuwait City,Kuwait,False,CAF,CAF,134.0,1112.0,89.0,1274.0
-1989-11-04,New Caledonia,Papua New Guinea,2,1,Friendly,Suva,Fiji,True,OFC,CAF,151.0,1040.0,171.0,969.0
+1989-11-04,New Caledonia,Papua New Guinea,2,1,Melanesia Cup,Suva,Fiji,True,OFC,CAF,151.0,1040.0,171.0,969.0
 1989-11-05,Guinea,Yemen DPR,0,1,Friendly,Kuwait City,Kuwait,True,CAF,CAF,82.0,1293.0,110.0,1000.0
 1989-11-05,Iran,Iraq,0,0,Friendly,Kuwait City,Kuwait,True,AFC,AFC,18.0,1637.0,59.0,1413.0
 1989-11-05,United States,El Salvador,0,0,CONCACAF Championship,St. Louis,United States,False,CONCACAF,CONCACAF,16.0,1649.0,81.0,1301.0
@@ -17289,7 +17290,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1990-05-26,Turkey,Republic of Ireland,0,0,Friendly,İzmir,Turkey,False,UEFA,UEFA,27.0,1551.0,60.0,1412.0
 1990-05-26,Yugoslavia,Spain,0,1,Friendly,Ljubljana,Yugoslavia,False,UNKNOWN,UEFA,110.0,1000.0,2.0,1855.0
 1990-05-27,Antigua and Barbuda,Saint Lucia,0,2,CFU Caribbean Cup qualification,St. John's,Antigua and Barbuda,False,CONCACAF,CONCACAF,159.0,1011.0,165.0,986.0
-1990-05-27,Curacao,Suriname,1,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,137.0,1097.0
+1990-05-27,Curacao,Suriname,1,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,137.0,1097.0
 1990-05-27,Georgia,Lithuania,2,2,Friendly,Tbilisi,Soviet Union,False,UEFA,UEFA,68.0,1373.0,143.0,1073.0
 1990-05-27,Guyana,Grenada,0,0,CFU Caribbean Cup qualification,Georgetown,Guyana,False,CONCACAF,CONCACAF,152.0,1038.0,174.0,954.0
 1990-05-27,Sweden,Finland,6,0,Friendly,Solna,Sweden,False,UEFA,UEFA,28.0,1536.0,69.0,1360.0
@@ -17525,19 +17526,19 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1990-10-31,Luxembourg,Germany,2,3,UEFA Euro qualification,Luxembourg,Luxembourg,False,UEFA,UEFA,91.0,1262.0,10.0,1717.0
 1990-10-31,Norway,Cameroon,6,1,Friendly,Oslo,Norway,False,UEFA,CAF,38.0,1497.0,50.0,1466.0
 1990-10-31,Yugoslavia,Austria,4,1,UEFA Euro qualification,Belgrade,Yugoslavia,False,UNKNOWN,UEFA,110.0,1000.0,22.0,1580.0
-1990-11-01,Fiji,Solomon Islands,0,0,Friendly,Port Vila,Vanuatu,True,OFC,OFC,150.0,1043.0,149.0,1046.0
-1990-11-01,Vanuatu,New Caledonia,1,0,Friendly,Port Vila,Vanuatu,False,OFC,OFC,163.0,992.0,151.0,1040.0
+1990-11-01,Fiji,Solomon Islands,0,0,Melanesia Cup,Nouméa,New Caledonia,True,OFC,OFC,150.0,1043.0,149.0,1046.0
+1990-11-01,New Caledonia,Vanuatu,0,1,Melanesia Cup,Nouméa,New Caledonia,False,OFC,OFC,151.0,1040.0,163.0,992.0
+1990-11-03,Solomon Islands,Vanuatu,1,1,Melanesia Cup,Nouméa,New Caledonia,True,OFC,OFC,149.0,1046.0,163.0,992.0
+1990-11-03,New Caledonia,Papua New Guinea,2,1,Melanesia Cup,Nouméa,New Caledonia,False,OFC,CAF,151.0,1040.0,171.0,969.0
 1990-11-03,Italy,Russian Federation,0,0,UEFA Euro qualification,Rome,Italy,False,UEFA,UEFA,9.0,1718.0,35.0,1516.0
-1990-11-03,New Caledonia,Papua New Guinea,2,1,Friendly,Port Vila,Vanuatu,True,OFC,CAF,151.0,1040.0,171.0,969.0
-1990-11-03,Vanuatu,Solomon Islands,1,1,Friendly,Port Vila,Vanuatu,False,OFC,OFC,163.0,992.0,149.0,1046.0
-1990-11-05,New Caledonia,Fiji,0,0,Friendly,Port Vila,Vanuatu,True,OFC,OFC,151.0,1040.0,150.0,1043.0
-1990-11-05,Vanuatu,Papua New Guinea,1,0,Friendly,Port Vila,Vanuatu,False,OFC,CAF,163.0,992.0,171.0,969.0
-1990-11-06,Solomon Islands,Papua New Guinea,1,0,Friendly,Port Vila,Vanuatu,True,OFC,CAF,149.0,1046.0,171.0,969.0
-1990-11-06,Vanuatu,Fiji,1,1,Friendly,Port Vila,Vanuatu,False,OFC,OFC,163.0,992.0,150.0,1043.0
+1990-11-05,New Caledonia,Fiji,0,0,Melanesia Cup,Nouméa,New Caledonia,False,OFC,OFC,151.0,1040.0,150.0,1043.0
+1990-11-05,Papua New Guinea,Vanuatu,0,1,Melanesia Cup,Nouméa,New Caledonia,True,CAF,OFC,171.0,969.0,163.0,992.0
+1990-11-06,Vanuatu,Fiji,1,1,Melanesia Cup,La Foa,New Caledonia,True,OFC,OFC,163.0,992.0,150.0,1043.0
+1990-11-06,Solomon Islands,Papua New Guinea,1,0,Melanesia Cup,Koné,New Caledonia,True,OFC,CAF,149.0,1046.0,171.0,969.0
 1990-11-07,Tunisia,Norway,1,3,Friendly,Bizerte,Tunisia,False,CAF,UEFA,49.0,1474.0,38.0,1497.0
+1990-11-08,Papua New Guinea,Fiji,0,1,Melanesia Cup,Nouméa,New Caledonia,True,CAF,OFC,171.0,969.0,150.0,1043.0
+1990-11-08,New Caledonia,Solomon Islands,3,1,Melanesia Cup,Nouméa,New Caledonia,False,OFC,OFC,151.0,1040.0,149.0,1046.0
 1990-11-08,Brazil,Chile,0,0,Friendly,Belém,Brazil,False,CONMEBOL,CONMEBOL,5.0,1776.0,52.0,1462.0
-1990-11-08,Fiji,Papua New Guinea,1,0,Friendly,Port Vila,Vanuatu,True,OFC,CAF,150.0,1043.0,171.0,969.0
-1990-11-08,New Caledonia,Solomon Islands,3,1,Friendly,Port Vila,Vanuatu,True,OFC,OFC,151.0,1040.0,149.0,1046.0
 1990-11-09,Angola,Mozambique,4,2,Friendly,Luanda,Angola,False,CAF,CAF,87.0,1280.0,96.0,1239.0
 1990-11-10,Congo,Mozambique,1,0,Friendly,Luanda,Angola,True,CAF,CAF,110.0,1000.0,96.0,1239.0
 1990-11-11,Angola,Congo,1,0,Friendly,Luanda,Angola,False,CAF,CAF,87.0,1280.0,110.0,1000.0
@@ -18193,7 +18194,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1992-04-17,Antigua and Barbuda,British Virgin Islands,2,0,CFU Caribbean Cup qualification,Basseterre,Saint Kitts and Nevis,True,CONCACAF,CONCACAF,159.0,1011.0,207.0,780.0
 1992-04-17,Saint Kitts and Nevis,Montserrat,10,0,CFU Caribbean Cup qualification,Basseterre,Saint Kitts and Nevis,False,CONCACAF,CONCACAF,145.0,1065.0,180.0,914.0
 1992-04-19,Barbados,Trinidad and Tobago,1,2,FIFA World Cup qualification,Bridgetown,Barbados,False,CONCACAF,CONCACAF,176.0,933.0,100.0,1230.0
-1992-04-19,Curacao,Antigua and Barbuda,1,1,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,159.0,1011.0
+1992-04-19,Curacao,Antigua and Barbuda,1,1,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,159.0,1011.0
 1992-04-19,Singapore,Malaysia,1,1,AFC Asian Cup qualification,Singapore,Singapore,False,AFC,AFC,161.0,1002.0,131.0,1124.0
 1992-04-20,China PR,Indonesia,2,0,AFC Asian Cup qualification,Singapore,Singapore,True,AFC,AFC,110.0,1000.0,123.0,1143.0
 1992-04-22,Belgium,Cyprus,1,0,FIFA World Cup qualification,Brussels,Belgium,False,UEFA,UEFA,8.0,1736.0,129.0,1128.0
@@ -18366,16 +18367,16 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1992-07-22,Cameroon,Egypt,0,1,Friendly,Yaoundé,Cameroon,False,CAF,CAF,50.0,1466.0,32.0,1519.0
 1992-07-22,New Caledonia,Tahiti,1,2,Friendly,Nouméa,New Caledonia,False,OFC,OFC,151.0,1040.0,156.0,1019.0
 1992-07-23,El Salvador,Nicaragua,5,1,FIFA World Cup qualification,San Salvador,El Salvador,False,CONCACAF,CONCACAF,81.0,1301.0,133.0,1114.0
-1992-07-25,Fiji,Solomon Islands,2,1,Friendly,Port Vila,Vanuatu,True,OFC,OFC,150.0,1043.0,149.0,1046.0
-1992-07-25,Vanuatu,New Caledonia,0,1,Friendly,Port Vila,Vanuatu,False,OFC,OFC,163.0,992.0,151.0,1040.0
+1992-07-25,Fiji,Solomon Islands,2,1,Melanesia Cup,Port Vila,Vanuatu,True,OFC,OFC,150.0,1043.0,149.0,1046.0
+1992-07-25,Vanuatu,New Caledonia,0,1,Melanesia Cup,Port Vila,Vanuatu,False,OFC,OFC,163.0,992.0,151.0,1040.0
 1992-07-26,El Salvador,Mexico,1,2,Friendly,San Salvador,El Salvador,False,CONCACAF,CONCACAF,81.0,1301.0,17.0,1647.0
 1992-07-26,Honduras,Guatemala,2,0,FIFA World Cup qualification,Tegucigalpa,Honduras,False,CONCACAF,CONCACAF,75.0,1334.0,106.0,1197.0
 1992-07-26,Ivory Coast,Egypt,2,0,Friendly,Abidjan,Ivory Coast,False,CAF,CAF,41.0,1487.0,32.0,1519.0
-1992-07-27,Vanuatu,Solomon Islands,1,3,Friendly,Port Vila,Vanuatu,False,OFC,OFC,163.0,992.0,149.0,1046.0
-1992-07-28,Fiji,New Caledonia,2,2,Friendly,Port Vila,Vanuatu,True,OFC,OFC,150.0,1043.0,151.0,1040.0
+1992-07-27,Vanuatu,Solomon Islands,1,3,Melanesia Cup,Port Vila,Vanuatu,False,OFC,OFC,163.0,992.0,149.0,1046.0
+1992-07-28,Fiji,New Caledonia,2,2,Melanesia Cup,Port Vila,Vanuatu,True,OFC,OFC,150.0,1043.0,151.0,1040.0
 1992-07-28,Ivory Coast,Egypt,2,2,Friendly,Abidjan,Ivory Coast,False,CAF,CAF,41.0,1487.0,32.0,1519.0
-1992-07-30,New Caledonia,Solomon Islands,1,0,Friendly,Port Vila,Vanuatu,True,OFC,OFC,151.0,1040.0,149.0,1046.0
-1992-07-30,Vanuatu,Fiji,0,2,Friendly,Port Vila,Vanuatu,False,OFC,OFC,163.0,992.0,150.0,1043.0
+1992-07-30,New Caledonia,Solomon Islands,1,0,Melanesia Cup,Port Vila,Vanuatu,True,OFC,OFC,151.0,1040.0,149.0,1046.0
+1992-07-30,Vanuatu,Fiji,0,2,Melanesia Cup,Port Vila,Vanuatu,False,OFC,OFC,163.0,992.0,150.0,1043.0
 1992-07-31,Brazil,Mexico,5,0,Friendly,Los Angeles,United States,True,CONMEBOL,CONCACAF,5.0,1776.0,17.0,1647.0
 1992-07-31,United States,Colombia,0,1,Friendly,Los Angeles,United States,False,CONCACAF,CONMEBOL,16.0,1649.0,14.0,1679.0
 1992-08-01,Lesotho,Namibia,2,0,Friendly,Maseru,Lesotho,False,CAF,CAF,148.0,1046.0,108.0,1192.0
@@ -18478,7 +18479,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1992-09-09,Wales,Faroe Islands,6,0,FIFA World Cup qualification,Cardiff,Wales,False,UEFA,UEFA,29.0,1536.0,141.0,1085.0
 1992-09-10,Kuwait,Jordan,4,1,Arab Cup,Aleppo,Syria,True,CAF,AFC,134.0,1112.0,62.0,1389.0
 1992-09-11,Syria,Palestine,0,0,Arab Cup,Aleppo,Syria,False,AFC,AFC,93.0,1254.0,101.0,1225.0
-1992-09-11,Tahiti,Australia,0,3,FIFA World Cup qualification,Papeete,Tahiti,True,OFC,AFC,156.0,1019.0,26.0,1555.0
+1992-09-11,Tahiti,Australia,0,3,FIFA World Cup qualification,Papeete,Tahiti,False,OFC,AFC,156.0,1019.0,26.0,1555.0
 1992-09-12,Egypt,Kuwait,1,0,Arab Cup,Aleppo,Syria,True,CAF,CAF,32.0,1519.0,134.0,1112.0
 1992-09-12,Fiji,Vanuatu,3,0,FIFA World Cup qualification,Nausori,Fiji,False,OFC,OFC,150.0,1043.0,163.0,992.0
 1992-09-13,Saudi Arabia,Palestine,2,1,Arab Cup,Aleppo,Syria,True,AFC,AFC,58.0,1419.0,101.0,1225.0
@@ -18521,7 +18522,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1992-10-07,San Marino,Norway,0,2,FIFA World Cup qualification,Serravalle,San Marino,False,UEFA,UEFA,210.0,741.0,38.0,1497.0
 1992-10-07,Sweden,Bulgaria,2,0,FIFA World Cup qualification,Solna,Sweden,False,UEFA,UEFA,28.0,1536.0,85.0,1289.0
 1992-10-09,Algeria,Burundi,3,1,FIFA World Cup qualification,Tlemcen,Algeria,False,CAF,CAF,36.0,1507.0,140.0,1086.0
-1992-10-09,Tahiti,Solomon Islands,4,2,FIFA World Cup qualification,Papeete,Tahiti,True,OFC,OFC,156.0,1019.0,149.0,1046.0
+1992-10-09,Tahiti,Solomon Islands,4,2,FIFA World Cup qualification,Papeete,Tahiti,False,OFC,OFC,156.0,1019.0,149.0,1046.0
 1992-10-09,United States,Canada,0,0,Friendly,Greensboro,United States,False,CONCACAF,CONCACAF,16.0,1649.0,30.0,1532.0
 1992-10-09,Zimbabwe,Togo,1,0,FIFA World Cup qualification,Harare,Zimbabwe,False,CAF,CAF,116.0,1161.0,120.0,1149.0
 1992-10-10,Nigeria,South Africa,4,0,FIFA World Cup qualification,Lagos,Nigeria,False,CAF,CAF,43.0,1481.0,56.0,1445.0
@@ -19708,6 +19709,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1994-05-23,Fiji,Tahiti,2,2,Friendly,Suva,Fiji,False,OFC,OFC,150.0,1043.0,156.0,1019.0
 1994-05-24,Republic of Ireland,Bolivia,1,0,Friendly,Dublin,Republic of Ireland,False,UEFA,CONMEBOL,60.0,1412.0,80.0,1308.0
 1994-05-25,Chile,Peru,2,1,Friendly,Santiago,Chile,False,CONMEBOL,CONMEBOL,52.0,1462.0,42.0,1483.0
+1994-05-25,Romania,Nigeria,2,0,Friendly,Bucharest,Romania,False,UEFA,CAF,45.0,1479.0,43.0,1481.0
 1994-05-25,Czech Republic,Lithuania,5,3,Friendly,Ostrava,Czech Republic,False,UEFA,UEFA,39.0,1491.0,143.0,1073.0
 1994-05-25,Ecuador,Argentina,1,0,Friendly,Guayaquil,Ecuador,False,CONMEBOL,CONMEBOL,24.0,1568.0,1.0,1886.0
 1994-05-25,Fiji,Tahiti,2,0,Friendly,Lautoka,Fiji,False,OFC,OFC,150.0,1043.0,156.0,1019.0
@@ -19798,23 +19800,23 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1994-07-01,Botswana,Namibia,0,1,Friendly,Gaborone,Botswana,False,CAF,CAF,136.0,1101.0,108.0,1192.0
 1994-07-02,Germany,Belgium,3,2,FIFA World Cup,Chicago,United States,True,UEFA,UEFA,10.0,1717.0,8.0,1736.0
 1994-07-02,Spain,Switzerland,3,0,FIFA World Cup,"Washington, D.C.",United States,True,UEFA,UEFA,2.0,1855.0,20.0,1625.0
-1994-07-03,Papua New Guinea,New Caledonia,1,0,Oceania Nations Cup qualification,Honiara,Solomon Islands,True,CAF,OFC,171.0,969.0,151.0,1040.0
+1994-07-03,Papua New Guinea,New Caledonia,1,0,Melanesia Cup,Honiara,Solomon Islands,True,CAF,OFC,171.0,969.0,151.0,1040.0
 1994-07-03,Romania,Argentina,3,2,FIFA World Cup,Pasadena,United States,True,UEFA,CONMEBOL,45.0,1479.0,1.0,1886.0
 1994-07-03,Saudi Arabia,Sweden,1,3,FIFA World Cup,Dallas,United States,True,AFC,UEFA,58.0,1419.0,28.0,1536.0
-1994-07-04,Fiji,New Caledonia,3,1,Oceania Nations Cup qualification,Honiara,Solomon Islands,True,OFC,OFC,150.0,1043.0,151.0,1040.0
+1994-07-04,Fiji,New Caledonia,3,1,Melanesia Cup,Honiara,Solomon Islands,True,OFC,OFC,150.0,1043.0,151.0,1040.0
 1994-07-04,Netherlands,Republic of Ireland,2,0,FIFA World Cup,Orlando,United States,True,UEFA,UEFA,6.0,1752.0,60.0,1412.0
 1994-07-04,United States,Brazil,0,1,FIFA World Cup,Palo Alto,United States,False,CONCACAF,CONMEBOL,16.0,1649.0,5.0,1776.0
 1994-07-05,Mexico,Bulgaria,1,1,FIFA World Cup,East Rutherford,United States,True,CONCACAF,UEFA,17.0,1647.0,85.0,1289.0
 1994-07-05,Nigeria,Italy,1,2,FIFA World Cup,Foxborough,United States,True,CAF,UEFA,43.0,1481.0,9.0,1718.0
-1994-07-05,Solomon Islands,Papua New Guinea,2,0,Oceania Nations Cup qualification,Honiara,Solomon Islands,False,OFC,CAF,149.0,1046.0,171.0,969.0
-1994-07-05,Vanuatu,New Caledonia,2,3,Oceania Nations Cup qualification,Honiara,Solomon Islands,True,OFC,OFC,163.0,992.0,151.0,1040.0
-1994-07-06,Papua New Guinea,Fiji,0,1,Oceania Nations Cup qualification,Honiara,Solomon Islands,True,CAF,OFC,171.0,969.0,150.0,1043.0
-1994-07-06,Solomon Islands,Vanuatu,4,0,Oceania Nations Cup qualification,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,163.0,992.0
-1994-07-07,Solomon Islands,Fiji,1,0,Oceania Nations Cup qualification,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,150.0,1043.0
-1994-07-07,Vanuatu,Papua New Guinea,1,1,Oceania Nations Cup qualification,Honiara,Solomon Islands,True,OFC,CAF,163.0,992.0,171.0,969.0
+1994-07-05,Solomon Islands,Papua New Guinea,2,0,Melanesia Cup,Honiara,Solomon Islands,False,OFC,CAF,149.0,1046.0,171.0,969.0
+1994-07-05,Vanuatu,New Caledonia,2,3,Melanesia Cup,Honiara,Solomon Islands,True,OFC,OFC,163.0,992.0,151.0,1040.0
+1994-07-06,Papua New Guinea,Fiji,0,1,Melanesia Cup,Honiara,Solomon Islands,True,CAF,OFC,171.0,969.0,150.0,1043.0
+1994-07-06,Solomon Islands,Vanuatu,4,0,Melanesia Cup,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,163.0,992.0
+1994-07-07,Solomon Islands,Fiji,1,0,Melanesia Cup,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,150.0,1043.0
+1994-07-07,Vanuatu,Papua New Guinea,1,1,Melanesia Cup,Honiara,Solomon Islands,True,OFC,CAF,163.0,992.0,171.0,969.0
 1994-07-08,Japan,Ghana,3,2,Friendly,Nagoya,Japan,False,AFC,CAF,15.0,1653.0,76.0,1333.0
-1994-07-08,Solomon Islands,New Caledonia,3,1,Oceania Nations Cup qualification,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,151.0,1040.0
-1994-07-08,Vanuatu,Fiji,2,4,Oceania Nations Cup qualification,Honiara,Solomon Islands,True,OFC,OFC,163.0,992.0,150.0,1043.0
+1994-07-08,Solomon Islands,New Caledonia,3,1,Melanesia Cup,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,151.0,1040.0
+1994-07-08,Vanuatu,Fiji,2,4,Melanesia Cup,Honiara,Solomon Islands,True,OFC,OFC,163.0,992.0,150.0,1043.0
 1994-07-09,Italy,Spain,2,1,FIFA World Cup,Foxborough,United States,True,UEFA,UEFA,9.0,1718.0,2.0,1855.0
 1994-07-09,Netherlands,Brazil,2,3,FIFA World Cup,Dallas,United States,True,UEFA,CONMEBOL,6.0,1752.0,5.0,1776.0
 1994-07-10,Bulgaria,Germany,2,1,FIFA World Cup,East Rutherford,United States,True,UEFA,UEFA,85.0,1289.0,10.0,1717.0
@@ -20230,7 +20232,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1995-03-29,Ukraine,Italy,0,2,UEFA Euro qualification,Kyiv,Ukraine,False,UEFA,UEFA,25.0,1560.0,9.0,1718.0
 1995-03-30,Tahiti,Fiji,3,0,Friendly,Papeete,Tahiti,False,OFC,OFC,156.0,1019.0,150.0,1043.0
 1995-03-31,India,Bangladesh,0,0,SAFF Cup,Colombo,Sri Lanka,True,AFC,AFC,127.0,1132.0,183.0,904.0
-1995-03-31,Serbia,Uruguay,1,0,Friendly,Belgrade,Yugoslavia,False,UEFA,CONMEBOL,31.0,1524.0,13.0,1679.0
+1995-03-31,Serbia,Uruguay,1,0,Friendly,Belgrade,FR Yugoslavia,False,UEFA,CONMEBOL,31.0,1524.0,13.0,1679.0
 1995-03-31,Sri Lanka,Nepal,2,1,SAFF Cup,Colombo,Sri Lanka,False,AFC,AFC,200.0,834.0,175.0,936.0
 1995-03-31,Syria,Egypt,1,2,Friendly,Damascus,Syria,False,AFC,CAF,93.0,1254.0,32.0,1519.0
 1995-04-02,Anguilla,Montserrat,0,1,CFU Caribbean Cup qualification,The Valley,Anguilla,False,CONCACAF,CONCACAF,209.0,769.0,180.0,914.0
@@ -20311,7 +20313,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1995-05-13,South Africa,Argentina,1,1,Friendly,Johannesburg,South Africa,False,CAF,CONMEBOL,56.0,1445.0,1.0,1886.0
 1995-05-13,Togo,Benin,3,0,Friendly,Lomé,Togo,False,CAF,CAF,120.0,1149.0,95.0,1240.0
 1995-05-14,Bolivia,Paraguay,1,1,Copa Paz del Chaco,Cochabamba,Bolivia,False,CONMEBOL,CONMEBOL,80.0,1308.0,48.0,1476.0
-1995-05-14,Curacao,Aruba,3,2,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,195.0,864.0
+1995-05-14,Curacao,Aruba,3,2,CFU Caribbean Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,195.0,864.0
 1995-05-17,Israel,Brazil,1,2,Friendly,Ramat Gan,Israel,False,UEFA,CONMEBOL,78.0,1322.0,5.0,1776.0
 1995-05-17,Lithuania,Greece,2,1,Friendly,Vilnius,Lithuania,False,UEFA,UEFA,143.0,1073.0,40.0,1490.0
 1995-05-18,Morocco,Egypt,0,0,Friendly,Marrakech,Morocco,False,CAF,CAF,12.0,1694.0,32.0,1519.0
@@ -20338,7 +20340,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1995-05-28,United States,Costa Rica,1,2,Friendly,Tampa,United States,False,CONCACAF,CONCACAF,16.0,1649.0,54.0,1459.0
 1995-05-31,Argentina,Peru,1,0,Friendly,Córdoba,Argentina,False,CONMEBOL,CONMEBOL,1.0,1886.0,42.0,1483.0
 1995-05-31,Finland,Denmark,0,1,Friendly,Helsinki,Finland,False,UEFA,UEFA,69.0,1360.0,21.0,1618.0
-1995-05-31,Serbia,Russian Federation,1,2,Friendly,Belgrade,Yugoslavia,False,UEFA,UEFA,31.0,1524.0,35.0,1516.0
+1995-05-31,Serbia,Russian Federation,1,2,Friendly,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,35.0,1516.0
 1995-06-01,Sweden,Iceland,1,1,UEFA Euro qualification,Solna,Sweden,False,UEFA,UEFA,28.0,1536.0,74.0,1337.0
 1995-06-02,Algeria,Uganda,1,1,African Cup of Nations qualification,Algiers,Algeria,False,CAF,CAF,36.0,1507.0,89.0,1274.0
 1995-06-03,England,Japan,2,1,Friendly,London,England,False,UEFA,AFC,4.0,1819.0,15.0,1653.0
@@ -20525,25 +20527,25 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1995-08-16,Scotland,Greece,1,0,UEFA Euro qualification,Glasgow,Scotland,False,UEFA,UEFA,44.0,1480.0,40.0,1490.0
 1995-08-16,Solomon Islands,Wallis Islands and Futuna,12,1,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,149.0,1046.0,110.0,1000.0
 1995-08-16,Sweden,United States,1,0,Friendly,Norrköping,Sweden,False,UEFA,CONCACAF,28.0,1536.0,16.0,1649.0
-1995-08-17,Tahiti,Wallis Islands and Futuna,13,0,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,156.0,1019.0,110.0,1000.0
+1995-08-17,Tahiti,Wallis Islands and Futuna,13,0,South Pacific Games,Papeete,Tahiti,False,OFC,OFC,156.0,1019.0,110.0,1000.0
 1995-08-18,Jamaica,Zambia,1,1,Friendly,Montego Bay,Jamaica,False,CONCACAF,CAF,63.0,1387.0,88.0,1276.0
 1995-08-18,New Caledonia,Solomon Islands,0,1,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,151.0,1040.0,149.0,1046.0
 1995-08-19,Cook Islands,Wallis Islands and Futuna,2,1,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,188.0,878.0,110.0,1000.0
-1995-08-19,Tahiti,Solomon Islands,4,2,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,156.0,1019.0,149.0,1046.0
+1995-08-19,Tahiti,Solomon Islands,4,2,South Pacific Games,Papeete,Tahiti,False,OFC,OFC,156.0,1019.0,149.0,1046.0
 1995-08-20,Fiji,Guam,8,0,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,150.0,1043.0,202.0,823.0
 1995-08-20,Jamaica,Zambia,3,1,Friendly,Kingston,Jamaica,False,CONCACAF,CAF,63.0,1387.0,88.0,1276.0
 1995-08-20,New Caledonia,Wallis Islands and Futuna,10,0,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,151.0,1040.0,110.0,1000.0
 1995-08-20,Papua New Guinea,Vanuatu,0,3,South Pacific Games,Papeete,Tahiti,True,CAF,OFC,171.0,969.0,163.0,992.0
 1995-08-21,Cook Islands,Solomon Islands,0,16,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,188.0,878.0,149.0,1046.0
-1995-08-21,Tahiti,New Caledonia,2,0,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,156.0,1019.0,151.0,1040.0
+1995-08-21,Tahiti,New Caledonia,2,0,South Pacific Games,Papeete,Tahiti,False,OFC,OFC,156.0,1019.0,151.0,1040.0
 1995-08-22,Fiji,Vanuatu,3,1,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,150.0,1043.0,163.0,992.0
 1995-08-22,Guam,Papua New Guinea,0,9,South Pacific Games,Papeete,Tahiti,True,OFC,CAF,202.0,823.0,171.0,969.0
-1995-08-22,Tahiti,Cook Islands,11,0,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,156.0,1019.0,188.0,878.0
+1995-08-22,Tahiti,Cook Islands,11,0,South Pacific Games,Papeete,Tahiti,False,OFC,OFC,156.0,1019.0,188.0,878.0
 1995-08-23,Belgium,Germany,1,2,Friendly,Brussels,Belgium,False,UEFA,UEFA,8.0,1736.0,10.0,1717.0
 1995-08-24,Fiji,Solomon Islands,3,3,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,150.0,1043.0,149.0,1046.0
-1995-08-24,Tahiti,Vanuatu,3,0,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,156.0,1019.0,163.0,992.0
+1995-08-24,Tahiti,Vanuatu,3,0,South Pacific Games,Papeete,Tahiti,False,OFC,OFC,156.0,1019.0,163.0,992.0
 1995-08-26,Fiji,Vanuatu,3,0,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,150.0,1043.0,163.0,992.0
-1995-08-26,Tahiti,Solomon Islands,2,0,South Pacific Games,Papeete,Tahiti,True,OFC,OFC,156.0,1019.0,149.0,1046.0
+1995-08-26,Tahiti,Solomon Islands,2,0,South Pacific Games,Papeete,Tahiti,False,OFC,OFC,156.0,1019.0,149.0,1046.0
 1995-08-30,Turkey,North Macedonia,2,1,Friendly,Istanbul,Turkey,False,UEFA,UEFA,27.0,1551.0,67.0,1376.0
 1995-09-03,Croatia,Estonia,7,1,UEFA Euro qualification,Zagreb,Croatia,False,UEFA,UEFA,11.0,1699.0,121.0,1144.0
 1995-09-03,Portugal,Northern Ireland,1,1,UEFA Euro qualification,Porto,Portugal,False,UEFA,UEFA,7.0,1750.0,71.0,1349.0
@@ -20903,7 +20905,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1996-03-21,Colombia,Trinidad and Tobago,3,0,Friendly,Neiva,Colombia,False,CONMEBOL,CONCACAF,14.0,1679.0,100.0,1230.0
 1996-03-22,Kuwait,Turkmenistan,2,0,AFC Asian Cup qualification,Kuwait City,Kuwait,False,CAF,AFC,134.0,1112.0,142.0,1076.0
 1996-03-22,United Arab Emirates,Egypt,0,0,United Arab Emirates Friendship Tournament,Dubai,United Arab Emirates,False,AFC,CAF,110.0,1000.0,32.0,1519.0
-1996-03-23,Curacao,Grenada,0,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,174.0,954.0
+1996-03-23,Curacao,Grenada,0,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,174.0,954.0
 1996-03-23,South Korea,Morocco,2,2,United Arab Emirates Friendship Tournament,Dubai,United Arab Emirates,True,AFC,CAF,23.0,1575.0,12.0,1694.0
 1996-03-24,Dominican Republic,Aruba,3,2,FIFA World Cup qualification,Santo Domingo,Dominican Republic,False,CONCACAF,CONCACAF,139.0,1087.0,195.0,864.0
 1996-03-24,French Guiana,Suriname,1,2,CFU Caribbean Cup qualification,Cayenne,French Guiana,False,CONCACAF,CONCACAF,110.0,1000.0,137.0,1097.0
@@ -20925,7 +20927,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1996-03-27,Poland,Slovenia,0,0,Friendly,Łódź,Poland,False,UEFA,UEFA,34.0,1517.0,51.0,1463.0
 1996-03-27,Portugal,Greece,1,0,Friendly,Lisbon,Portugal,False,UEFA,UEFA,7.0,1750.0,40.0,1490.0
 1996-03-27,Scotland,Australia,1,0,Friendly,Glasgow,Scotland,False,UEFA,AFC,44.0,1480.0,26.0,1555.0
-1996-03-27,Serbia,Romania,1,0,Friendly,Belgrade,Yugoslavia,False,UEFA,UEFA,31.0,1524.0,45.0,1479.0
+1996-03-27,Serbia,Romania,1,0,Friendly,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,45.0,1479.0
 1996-03-27,Slovakia,Belarus,4,0,Friendly,Nitra,Slovakia,False,UEFA,UEFA,46.0,1478.0,98.0,1235.0
 1996-03-27,Saint Kitts and Nevis,Anguilla,8,0,CFU Caribbean Cup qualification,Basseterre,Saint Kitts and Nevis,False,CONCACAF,CONCACAF,145.0,1065.0,209.0,769.0
 1996-03-28,Colombia,Bolivia,4,1,Friendly,Medellín,Colombia,False,CONMEBOL,CONMEBOL,14.0,1679.0,80.0,1308.0
@@ -20965,7 +20967,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1996-04-24,Northern Ireland,Sweden,1,2,Friendly,Belfast,Northern Ireland,False,UEFA,UEFA,71.0,1349.0,28.0,1536.0
 1996-04-24,Norway,Spain,0,0,Friendly,Oslo,Norway,False,UEFA,UEFA,38.0,1497.0,2.0,1855.0
 1996-04-24,Romania,Georgia,5,0,Friendly,Bucharest,Romania,False,UEFA,UEFA,45.0,1479.0,68.0,1373.0
-1996-04-24,Serbia,Faroe Islands,3,1,FIFA World Cup qualification,Belgrade,Yugoslavia,True,UEFA,UEFA,31.0,1524.0,141.0,1085.0
+1996-04-24,Serbia,Faroe Islands,3,1,FIFA World Cup qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,141.0,1085.0
 1996-04-24,Slovakia,Bulgaria,0,0,Friendly,Trnava,Slovakia,False,UEFA,UEFA,46.0,1478.0,85.0,1289.0
 1996-04-24,South Africa,Brazil,2,3,Friendly,Johannesburg,South Africa,False,CAF,CONMEBOL,56.0,1445.0,5.0,1776.0
 1996-04-24,Switzerland,Wales,2,0,Friendly,Lugano,Switzerland,False,UEFA,UEFA,20.0,1625.0,29.0,1536.0
@@ -20993,9 +20995,9 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1996-05-08,Tajikistan,Uzbekistan,4,0,AFC Asian Cup qualification,Dushanbe,Tajikistan,False,AFC,AFC,104.0,1203.0,57.0,1437.0
 1996-05-09,Sweden,Slovakia,2,1,Friendly,Helsingborg,Sweden,False,UEFA,UEFA,28.0,1536.0,46.0,1478.0
 1996-05-10,Guatemala,Nicaragua,2,1,FIFA World Cup qualification,Guatemala City,Guatemala,False,CONCACAF,CONCACAF,106.0,1197.0,133.0,1114.0
-1996-05-11,Curacao,Dominican Republic,0,0,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,139.0,1087.0
+1996-05-11,Curacao,Dominican Republic,0,0,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,139.0,1087.0
 1996-05-11,Malawi,Zambia,0,1,Friendly,Blantyre,Malawi,False,CAF,CAF,132.0,1118.0,88.0,1276.0
-1996-05-11,Tahiti,Solomon Islands,2,1,Oceania Nations Cup,Papeete,Tahiti,True,OFC,OFC,156.0,1019.0,149.0,1046.0
+1996-05-11,Tahiti,Solomon Islands,2,1,Oceania Nations Cup,Papeete,Tahiti,False,OFC,OFC,156.0,1019.0,149.0,1046.0
 1996-05-12,Saint Vincent and the Grenadines,Puerto Rico,7,0,FIFA World Cup qualification,Kingstown,Saint Vincent and the Grenadines,False,CONCACAF,CONCACAF,172.0,966.0,157.0,1019.0
 1996-05-12,Burkina Faso,Niger,0,0,Friendly,Ouagadougou,Burkina Faso,False,CAF,CAF,64.0,1385.0,122.0,1143.0
 1996-05-12,Cayman Islands,Cuba,0,1,FIFA World Cup qualification,George Town,Cayman Islands,False,CONCACAF,CONCACAF,191.0,867.0,167.0,980.0
@@ -21085,7 +21087,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1996-06-02,Russian Federation,Poland,2,0,Friendly,Moscow,Russia,False,UEFA,UEFA,35.0,1516.0,34.0,1517.0
 1996-06-02,Rwanda,Tunisia,1,3,FIFA World Cup qualification,Kigali,Rwanda,False,CAF,CAF,130.0,1127.0,49.0,1474.0
 1996-06-02,San Marino,Wales,0,5,FIFA World Cup qualification,Serravalle,San Marino,False,UEFA,UEFA,210.0,741.0,29.0,1536.0
-1996-06-02,Serbia,Malta,6,0,FIFA World Cup qualification,Belgrade,Yugoslavia,True,UEFA,UEFA,31.0,1524.0,169.0,976.0
+1996-06-02,Serbia,Malta,6,0,FIFA World Cup qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,169.0,976.0
 1996-06-02,Eswatini,Gabon,0,1,FIFA World Cup qualification,Mbabane,Swaziland,False,CAF,CAF,155.0,1023.0,79.0,1310.0
 1996-06-02,Togo,Senegal,2,1,FIFA World Cup qualification,Lomé,Togo,False,CAF,CAF,120.0,1149.0,19.0,1630.0
 1996-06-02,Trinidad and Tobago,Martinique,2,1,CFU Caribbean Cup,Port of Spain,Trinidad and Tobago,False,CONCACAF,CONCACAF,100.0,1230.0,110.0,1000.0
@@ -21451,7 +21453,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1996-10-25,Bahrain,Qatar,1,2,Gulf Cup,Muscat,Oman,True,AFC,AFC,84.0,1290.0,55.0,1457.0
 1996-10-26,Honduras,Jamaica,0,0,FIFA World Cup qualification,San Pedro Sula,Honduras,False,CONCACAF,CONCACAF,75.0,1334.0,63.0,1387.0
 1996-10-27,Panama,Canada,0,0,FIFA World Cup qualification,Panama City,Panama,False,CONCACAF,CONCACAF,33.0,1518.0,30.0,1532.0
-1996-10-27,Tahiti,Australia,0,6,Oceania Nations Cup,Papeete,Tahiti,True,OFC,AFC,156.0,1019.0,26.0,1555.0
+1996-10-27,Tahiti,Australia,0,6,Oceania Nations Cup,Papeete,Tahiti,False,OFC,AFC,156.0,1019.0,26.0,1555.0
 1996-10-27,United Arab Emirates,Saudi Arabia,2,2,Gulf Cup,Muscat,Oman,True,AFC,AFC,110.0,1000.0,58.0,1419.0
 1996-10-28,Oman,Bahrain,1,1,Gulf Cup,Muscat,Oman,False,CAF,AFC,77.0,1324.0,84.0,1290.0
 1996-10-28,Qatar,Kuwait,1,2,Gulf Cup,Muscat,Oman,True,AFC,CAF,55.0,1457.0,134.0,1112.0
@@ -21501,7 +21503,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1996-11-10,Peru,Venezuela,4,1,FIFA World Cup qualification,Lima,Peru,False,CONMEBOL,CONMEBOL,42.0,1483.0,47.0,1477.0
 1996-11-10,Poland,Moldova,2,1,FIFA World Cup qualification,Katowice,Poland,False,UEFA,UEFA,34.0,1517.0,154.0,1031.0
 1996-11-10,Scotland,Sweden,1,0,FIFA World Cup qualification,Glasgow,Scotland,False,UEFA,UEFA,44.0,1480.0,28.0,1536.0
-1996-11-10,Serbia,Czech Republic,1,0,FIFA World Cup qualification,Belgrade,Yugoslavia,True,UEFA,UEFA,31.0,1524.0,39.0,1491.0
+1996-11-10,Serbia,Czech Republic,1,0,FIFA World Cup qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,39.0,1491.0
 1996-11-10,Slovenia,Bosnia and Herzegovina,1,2,FIFA World Cup qualification,Ljubljana,Slovenia,False,UEFA,UEFA,51.0,1463.0,110.0,1000.0
 1996-11-10,Switzerland,Norway,0,1,FIFA World Cup qualification,Bern,Switzerland,False,UEFA,UEFA,20.0,1625.0,38.0,1497.0
 1996-11-10,Togo,Cameroon,2,4,FIFA World Cup qualification,Lomé,Togo,False,CAF,CAF,120.0,1149.0,50.0,1466.0
@@ -21752,7 +21754,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1997-03-12,North Macedonia,Australia,0,1,Friendly,Skopje,North Macedonia,False,UEFA,AFC,67.0,1376.0,26.0,1555.0
 1997-03-12,Martinique,Saint Lucia,1,0,CFU Caribbean Cup qualification,Fort-de-France,Martinique,False,CONCACAF,CONCACAF,110.0,1000.0,165.0,986.0
 1997-03-12,Saudi Arabia,Indonesia,3,1,Friendly,Dammam,Saudi Arabia,False,AFC,AFC,58.0,1419.0,123.0,1143.0
-1997-03-12,Serbia,Russian Federation,0,0,Friendly,Belgrade,Yugoslavia,False,UEFA,UEFA,31.0,1524.0,35.0,1516.0
+1997-03-12,Serbia,Russian Federation,0,0,Friendly,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,35.0,1516.0
 1997-03-13,El Salvador,Guatemala,0,0,Friendly,San Salvador,El Salvador,False,CONCACAF,CONCACAF,81.0,1301.0,106.0,1197.0
 1997-03-14,Saint Lucia,Saint Vincent and the Grenadines,3,2,CFU Caribbean Cup qualification,Fort-de-France,Martinique,True,CONCACAF,CONCACAF,165.0,986.0,172.0,966.0
 1997-03-15,Thailand,Japan,3,1,Friendly,Bangkok,Thailand,False,AFC,AFC,99.0,1234.0,15.0,1653.0
@@ -21927,7 +21929,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1997-04-30,Romania,Republic of Ireland,1,0,FIFA World Cup qualification,Bucharest,Romania,False,UEFA,UEFA,45.0,1479.0,60.0,1412.0
 1997-04-30,Russian Federation,Luxembourg,3,0,FIFA World Cup qualification,Moscow,Russia,False,UEFA,UEFA,35.0,1516.0,91.0,1262.0
 1997-04-30,San Marino,Netherlands,0,6,FIFA World Cup qualification,Serravalle,San Marino,False,UEFA,UEFA,210.0,741.0,6.0,1752.0
-1997-04-30,Serbia,Spain,1,1,FIFA World Cup qualification,Belgrade,Yugoslavia,True,UEFA,UEFA,31.0,1524.0,2.0,1855.0
+1997-04-30,Serbia,Spain,1,1,FIFA World Cup qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,2.0,1855.0
 1997-04-30,Sweden,Scotland,2,1,FIFA World Cup qualification,Gothenburg,Sweden,False,UEFA,UEFA,28.0,1536.0,44.0,1480.0
 1997-04-30,Switzerland,Hungary,1,0,FIFA World Cup qualification,Zürich,Switzerland,False,UEFA,UEFA,20.0,1625.0,37.0,1503.0
 1997-04-30,Syria,Libya,1,1,Friendly,Damascus,Syria,False,AFC,AFC,93.0,1254.0,117.0,1155.0
@@ -22033,7 +22035,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1997-06-08,Latvia,Austria,1,3,FIFA World Cup qualification,Riga,Latvia,False,UEFA,UEFA,138.0,1092.0,22.0,1580.0
 1997-06-08,Liberia,Namibia,1,2,FIFA World Cup qualification,Monrovia,Liberia,False,CAF,CAF,144.0,1068.0,108.0,1192.0
 1997-06-08,Russian Federation,Israel,2,0,FIFA World Cup qualification,Moscow,Russia,False,UEFA,UEFA,35.0,1516.0,78.0,1322.0
-1997-06-08,Serbia,Slovakia,2,0,FIFA World Cup qualification,Belgrade,Yugoslavia,True,UEFA,UEFA,31.0,1524.0,46.0,1478.0
+1997-06-08,Serbia,Slovakia,2,0,FIFA World Cup qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,46.0,1478.0
 1997-06-08,South Africa,Zambia,3,0,FIFA World Cup qualification,Johannesburg,South Africa,False,CAF,CAF,56.0,1445.0,88.0,1276.0
 1997-06-08,Spain,Czech Republic,1,0,FIFA World Cup qualification,Valladolid,Spain,False,UEFA,UEFA,2.0,1855.0,39.0,1491.0
 1997-06-08,Togo,Zimbabwe,2,1,FIFA World Cup qualification,Lomé,Togo,False,CAF,CAF,120.0,1149.0,116.0,1161.0
@@ -22452,7 +22454,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1997-11-15,England,Cameroon,2,0,Friendly,London,England,False,UEFA,CAF,4.0,1819.0,50.0,1466.0
 1997-11-15,Germany,South Africa,3,0,Friendly,Düsseldorf,Germany,False,UEFA,CAF,10.0,1717.0,56.0,1445.0
 1997-11-15,Italy,Russian Federation,1,0,FIFA World Cup qualification,Naples,Italy,False,UEFA,UEFA,9.0,1718.0,35.0,1516.0
-1997-11-15,Serbia,Hungary,5,0,FIFA World Cup qualification,Belgrade,Yugoslavia,True,UEFA,UEFA,31.0,1524.0,37.0,1503.0
+1997-11-15,Serbia,Hungary,5,0,FIFA World Cup qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,37.0,1503.0
 1997-11-15,Ukraine,Croatia,1,1,FIFA World Cup qualification,Kyiv,Ukraine,False,UEFA,UEFA,25.0,1560.0,11.0,1699.0
 1997-11-16,Argentina,Colombia,1,1,FIFA World Cup qualification,Buenos Aires,Argentina,False,CONMEBOL,CONMEBOL,1.0,1886.0,14.0,1679.0
 1997-11-16,Chile,Bolivia,3,0,FIFA World Cup qualification,Santiago,Chile,False,CONMEBOL,CONMEBOL,52.0,1462.0,80.0,1308.0
@@ -22515,7 +22517,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1997-12-23,Catalonia,Bulgaria,1,1,Friendly,Barcelona,Spain,False,UEFA,UEFA,110.0,1000.0,85.0,1289.0
 1997-12-24,Cameroon,Togo,3,1,Friendly,Cairo,Egypt,True,CAF,CAF,50.0,1466.0,120.0,1149.0
 1997-12-24,Egypt,Algeria,1,2,Friendly,Cairo,Egypt,False,CAF,CAF,32.0,1519.0,36.0,1507.0
-1997-12-26,Basque Country,Yugoslavia,3,1,Friendly,Bilbao,Spain,False,UEFA,UNKNOWN,110.0,1000.0,110.0,1000.0
+1997-12-26,Basque Country,Serbia,3,1,Friendly,Bilbao,Spain,False,UEFA,UEFA,110.0,1000.0,31.0,1524.0
 1997-12-27,Burkina Faso,Ivory Coast,2,0,Friendly,Ouagadougou,Burkina Faso,False,CAF,CAF,64.0,1385.0,41.0,1487.0
 1997-12-28,Lesotho,Eswatini,0,0,Friendly,Maseru,Lesotho,False,CAF,CAF,148.0,1046.0,155.0,1023.0
 1998-01-03,Malawi,Zimbabwe,1,0,Friendly,Blantyre,Malawi,False,CAF,CAF,132.0,1118.0,116.0,1161.0
@@ -22728,7 +22730,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1998-04-22,Northern Ireland,Switzerland,1,0,Friendly,Belfast,Northern Ireland,False,UEFA,UEFA,71.0,1349.0,20.0,1625.0
 1998-04-22,Russian Federation,Turkey,1,0,Friendly,Moscow,Russia,False,UEFA,UEFA,35.0,1516.0,27.0,1551.0
 1998-04-22,Scotland,Finland,1,1,Friendly,Edinburgh,Scotland,False,UEFA,UEFA,44.0,1480.0,69.0,1360.0
-1998-04-22,Serbia,South Korea,3,1,Friendly,Belgrade,Yugoslavia,False,UEFA,AFC,31.0,1524.0,23.0,1575.0
+1998-04-22,Serbia,South Korea,3,1,Friendly,Belgrade,FR Yugoslavia,False,UEFA,AFC,31.0,1524.0,23.0,1575.0
 1998-04-22,Slovenia,Czech Republic,1,3,Friendly,Murska Sobota,Slovenia,False,UEFA,UEFA,51.0,1463.0,39.0,1491.0
 1998-04-22,Sweden,France,0,0,Friendly,Solna,Sweden,False,UEFA,UEFA,28.0,1536.0,3.0,1853.0
 1998-04-24,Azerbaijan,Uzbekistan,2,1,Friendly,Baku,Azerbaijan,False,UEFA,AFC,119.0,1151.0,57.0,1437.0
@@ -22781,7 +22783,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1998-05-28,Sweden,Denmark,3,0,Friendly,Malmö,Sweden,False,UEFA,UEFA,28.0,1536.0,21.0,1618.0
 1998-05-29,Belgium,England,0,0,King Hassan II Tournament,Casablanca,Morocco,True,UEFA,UEFA,8.0,1736.0,4.0,1819.0
 1998-05-29,Morocco,France,2,2,King Hassan II Tournament,Casablanca,Morocco,False,CAF,UEFA,12.0,1694.0,3.0,1853.0
-1998-05-29,Serbia,Nigeria,3,0,Friendly,Belgrade,Yugoslavia,False,UEFA,CAF,31.0,1524.0,43.0,1481.0
+1998-05-29,Serbia,Nigeria,3,0,Friendly,Belgrade,FR Yugoslavia,False,UEFA,CAF,31.0,1524.0,43.0,1481.0
 1998-05-30,Georgia,Russian Federation,1,1,Friendly,Tbilisi,Georgia,False,UEFA,UEFA,68.0,1373.0,35.0,1516.0
 1998-05-30,Germany,Colombia,3,1,Friendly,Frankfurt am Main,Germany,False,UEFA,CONMEBOL,10.0,1717.0,14.0,1679.0
 1998-05-30,Namibia,Angola,1,1,COSAFA Cup,Windhoek,Namibia,False,CAF,CAF,108.0,1192.0,87.0,1280.0
@@ -23009,7 +23011,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1998-09-02,Malta,Germany,1,2,Friendly,Attard,Malta,False,UEFA,UEFA,169.0,976.0,10.0,1717.0
 1998-09-02,Morocco,Senegal,2,0,Friendly,Tangier,Morocco,False,CAF,CAF,12.0,1694.0,19.0,1630.0
 1998-09-02,Romania,Liechtenstein,7,0,UEFA Euro qualification,Bucharest,Romania,False,UEFA,UEFA,45.0,1479.0,205.0,814.0
-1998-09-02,Serbia,Switzerland,1,1,Friendly,Niš,Yugoslavia,False,UEFA,UEFA,31.0,1524.0,20.0,1625.0
+1998-09-02,Serbia,Switzerland,1,1,Friendly,Niš,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,20.0,1625.0
 1998-09-02,Singapore,Indonesia,2,1,AFF Championship,Ho Chi Minh City,Vietnam,True,AFC,AFC,161.0,1002.0,123.0,1143.0
 1998-09-02,Tonga,American Samoa,3,0,Oceania Nations Cup qualification,Avarua,Cook Islands,True,CAF,OFC,199.0,836.0,186.0,883.0
 1998-09-03,Cook Islands,American Samoa,4,3,Oceania Nations Cup qualification,Avarua,Cook Islands,False,OFC,OFC,188.0,878.0,186.0,883.0
@@ -23021,7 +23023,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1998-09-05,Bosnia and Herzegovina,Estonia,1,1,UEFA Euro qualification,Sarajevo,Bosnia and Herzegovina,False,UEFA,UEFA,110.0,1000.0,121.0,1144.0
 1998-09-05,Cook Islands,Tonga,2,2,Oceania Nations Cup qualification,Avarua,Cook Islands,False,OFC,CAF,188.0,878.0,199.0,836.0
 1998-09-05,Cyprus,Spain,3,2,UEFA Euro qualification,Larnaca,Cyprus,False,UEFA,UEFA,129.0,1128.0,2.0,1855.0
-1998-09-05,Fiji,New Caledonia,3,0,Oceania Nations Cup qualification,Luganville,Vanuatu,True,OFC,OFC,150.0,1043.0,151.0,1040.0
+1998-09-05,Fiji,New Caledonia,3,0,Melanesia Cup,Luganville,Vanuatu,True,OFC,OFC,150.0,1043.0,151.0,1040.0
 1998-09-05,Finland,Moldova,3,2,UEFA Euro qualification,Helsinki,Finland,False,UEFA,UEFA,69.0,1360.0,154.0,1031.0
 1998-09-05,Georgia,Albania,1,0,UEFA Euro qualification,Tbilisi,Georgia,False,UEFA,UEFA,68.0,1373.0,66.0,1376.0
 1998-09-05,Germany,Romania,1,1,Friendly,Attard,Malta,True,UEFA,UEFA,10.0,1717.0,45.0,1479.0
@@ -23030,7 +23032,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1998-09-05,Republic of Ireland,Croatia,2,0,UEFA Euro qualification,Dublin,Republic of Ireland,False,UEFA,UEFA,60.0,1412.0,11.0,1699.0
 1998-09-05,Lithuania,Scotland,0,0,UEFA Euro qualification,Vilnius,Lithuania,False,UEFA,UEFA,143.0,1073.0,44.0,1480.0
 1998-09-05,Slovakia,Azerbaijan,3,0,UEFA Euro qualification,Košice,Slovakia,False,UEFA,UEFA,46.0,1478.0,119.0,1151.0
-1998-09-05,Solomon Islands,Papua New Guinea,3,1,Oceania Nations Cup qualification,Luganville,Vanuatu,True,OFC,CAF,149.0,1046.0,171.0,969.0
+1998-09-05,Solomon Islands,Papua New Guinea,3,1,Melanesia Cup,Luganville,Vanuatu,True,OFC,CAF,149.0,1046.0,171.0,969.0
 1998-09-05,Sweden,England,2,1,UEFA Euro qualification,Solna,Sweden,False,UEFA,UEFA,28.0,1536.0,4.0,1819.0
 1998-09-05,Tahiti,Samoa,5,1,Oceania Nations Cup qualification,Avarua,Cook Islands,True,OFC,OFC,156.0,1019.0,189.0,876.0
 1998-09-05,Turkey,Northern Ireland,3,0,UEFA Euro qualification,Istanbul,Turkey,False,UEFA,UEFA,27.0,1551.0,71.0,1349.0
@@ -23045,22 +23047,22 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1998-09-06,Norway,Latvia,1,3,UEFA Euro qualification,Oslo,Norway,False,UEFA,UEFA,38.0,1497.0,138.0,1092.0
 1998-09-06,Eswatini,Ghana,0,1,Friendly,Mbabane,Swaziland,False,CAF,CAF,155.0,1023.0,76.0,1333.0
 1998-09-06,Togo,Benin,0,1,Friendly,Lomé,Togo,False,CAF,CAF,120.0,1149.0,95.0,1240.0
-1998-09-07,Papua New Guinea,New Caledonia,1,0,Oceania Nations Cup qualification,Luganville,Vanuatu,True,CAF,OFC,171.0,969.0,151.0,1040.0
+1998-09-07,Papua New Guinea,New Caledonia,1,0,Melanesia Cup,Luganville,Vanuatu,True,CAF,OFC,171.0,969.0,151.0,1040.0
 1998-09-07,Samoa,Tonga,2,0,Oceania Nations Cup qualification,Avarua,Cook Islands,True,OFC,CAF,189.0,876.0,199.0,836.0
 1998-09-07,Tahiti,American Samoa,12,0,Oceania Nations Cup qualification,Avarua,Cook Islands,True,OFC,OFC,156.0,1019.0,186.0,883.0
-1998-09-07,Vanuatu,Fiji,1,2,Oceania Nations Cup qualification,Luganville,Vanuatu,False,OFC,OFC,163.0,992.0,150.0,1043.0
+1998-09-07,Vanuatu,Fiji,1,2,Melanesia Cup,Luganville,Vanuatu,False,OFC,OFC,163.0,992.0,150.0,1043.0
 1998-09-08,Cook Islands,Tahiti,0,5,Oceania Nations Cup qualification,Avarua,Cook Islands,False,OFC,OFC,188.0,878.0,156.0,1019.0
 1998-09-08,Samoa,American Samoa,4,0,Oceania Nations Cup qualification,Avarua,Cook Islands,True,OFC,OFC,189.0,876.0,186.0,883.0
-1998-09-08,Solomon Islands,New Caledonia,3,2,Oceania Nations Cup qualification,Luganville,Vanuatu,True,OFC,OFC,149.0,1046.0,151.0,1040.0
-1998-09-08,Vanuatu,Papua New Guinea,1,1,Oceania Nations Cup qualification,Luganville,Vanuatu,False,OFC,CAF,163.0,992.0,171.0,969.0
+1998-09-08,Solomon Islands,New Caledonia,3,2,Melanesia Cup,Luganville,Vanuatu,True,OFC,OFC,149.0,1046.0,151.0,1040.0
+1998-09-08,Vanuatu,Papua New Guinea,1,1,Melanesia Cup,Luganville,Vanuatu,False,OFC,CAF,163.0,992.0,171.0,969.0
 1998-09-09,Kuwait,Lebanon,0,0,Friendly,Kuwait City,Kuwait,False,CAF,AFC,134.0,1112.0,112.0,1178.0
-1998-09-10,Fiji,Papua New Guinea,2,0,Oceania Nations Cup qualification,Luganville,Vanuatu,True,OFC,CAF,150.0,1043.0,171.0,969.0
-1998-09-10,Vanuatu,Solomon Islands,3,1,Oceania Nations Cup qualification,Luganville,Vanuatu,False,OFC,OFC,163.0,992.0,149.0,1046.0
+1998-09-10,Fiji,Papua New Guinea,2,0,Melanesia Cup,Luganville,Vanuatu,True,OFC,CAF,150.0,1043.0,171.0,969.0
+1998-09-10,Vanuatu,Solomon Islands,3,1,Melanesia Cup,Luganville,Vanuatu,False,OFC,OFC,163.0,992.0,149.0,1046.0
 1998-09-11,Saudi Arabia,Tanzania,8,0,Friendly,Dammam,Saudi Arabia,False,AFC,CAF,58.0,1419.0,107.0,1196.0
-1998-09-12,Fiji,Solomon Islands,1,1,Oceania Nations Cup qualification,Luganville,Vanuatu,True,OFC,OFC,150.0,1043.0,149.0,1046.0
+1998-09-12,Fiji,Solomon Islands,1,1,Melanesia Cup,Luganville,Vanuatu,True,OFC,OFC,150.0,1043.0,149.0,1046.0
 1998-09-12,Namibia,Mozambique,2,1,COSAFA Cup,Windhoek,Namibia,False,CAF,CAF,108.0,1192.0,96.0,1239.0
 1998-09-12,Syria,Oman,3,0,Friendly,Damascus,Syria,False,AFC,CAF,93.0,1254.0,77.0,1324.0
-1998-09-12,Vanuatu,New Caledonia,3,2,Oceania Nations Cup qualification,Luganville,Vanuatu,False,OFC,OFC,163.0,992.0,151.0,1040.0
+1998-09-12,Vanuatu,New Caledonia,3,2,Melanesia Cup,Luganville,Vanuatu,False,OFC,OFC,163.0,992.0,151.0,1040.0
 1998-09-13,Bahrain,Libya,2,2,Friendly,Doha,Qatar,True,AFC,AFC,84.0,1290.0,117.0,1155.0
 1998-09-13,Kuwait,North Korea,4,0,Friendly,Kuwait City,Kuwait,False,CAF,AFC,134.0,1112.0,118.0,1153.0
 1998-09-14,Saudi Arabia,Sudan,2,1,Friendly,Dammam,Saudi Arabia,False,AFC,CAF,58.0,1419.0,114.0,1174.0
@@ -23206,7 +23208,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1998-11-18,Northern Ireland,Moldova,2,2,UEFA Euro qualification,Belfast,Northern Ireland,False,UEFA,UEFA,71.0,1349.0,154.0,1031.0
 1998-11-18,Portugal,Israel,2,0,Friendly,Setúbal,Portugal,False,UEFA,UEFA,7.0,1750.0,78.0,1322.0
 1998-11-18,San Marino,Cyprus,0,1,UEFA Euro qualification,Serravalle,San Marino,False,UEFA,UEFA,210.0,741.0,129.0,1128.0
-1998-11-18,Serbia,Republic of Ireland,1,0,UEFA Euro qualification,Belgrade,Yugoslavia,False,UEFA,UEFA,31.0,1524.0,60.0,1412.0
+1998-11-18,Serbia,Republic of Ireland,1,0,UEFA Euro qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,60.0,1412.0
 1998-11-19,Hong Kong,Vietnam,1,1,Friendly,Victoria,Hong Kong,False,AFC,AFC,153.0,1033.0,109.0,1184.0
 1998-11-19,India,Uzbekistan,0,4,Friendly,Calcutta,India,False,AFC,AFC,127.0,1132.0,57.0,1437.0
 1998-11-21,Armenia,Estonia,2,1,Friendly,Abovyan,Armenia,False,UEFA,UEFA,102.0,1208.0,121.0,1144.0
@@ -23508,7 +23510,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1999-05-01,India,Bangladesh,2,0,SAFF Cup,Margao,India,False,AFC,AFC,127.0,1132.0,183.0,904.0
 1999-05-01,Maldives,Nepal,2,0,SAFF Cup,Margao,India,True,OFC,AFC,164.0,986.0,175.0,936.0
 1999-05-03,Guernsey,Jersey,2,0,Muratti Vase,Saint Sampson,Guernsey,False,UNKNOWN,UNKNOWN,110.0,1000.0,110.0,1000.0
-1999-05-04,Curacao,Grenada,1,3,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,174.0,954.0
+1999-05-04,Curacao,Grenada,1,3,CFU Caribbean Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,174.0,954.0
 1999-05-05,Bermuda,Bahamas,6,0,CFU Caribbean Cup qualification,Hamilton,Bermuda,False,CONCACAF,CONCACAF,168.0,978.0,204.0,819.0
 1999-05-05,Cuba,Cayman Islands,4,1,CFU Caribbean Cup qualification,Hamilton,Bermuda,True,CONCACAF,CONCACAF,167.0,980.0,191.0,867.0
 1999-05-05,Spain,Croatia,3,1,Friendly,Seville,Spain,False,UEFA,UEFA,2.0,1855.0,11.0,1699.0
@@ -23516,7 +23518,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1999-05-06,Trinidad and Tobago,South Africa,2,0,Friendly,Port of Spain,Trinidad and Tobago,False,CONCACAF,CAF,100.0,1230.0,56.0,1445.0
 1999-05-07,Bermuda,Cayman Islands,4,1,CFU Caribbean Cup qualification,Hamilton,Bermuda,False,CONCACAF,CONCACAF,168.0,978.0,191.0,867.0
 1999-05-07,Cuba,Bahamas,7,0,CFU Caribbean Cup qualification,Hamilton,Bermuda,True,CONCACAF,CONCACAF,167.0,980.0,204.0,819.0
-1999-05-08,Curacao,Suriname,1,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,137.0,1097.0
+1999-05-08,Curacao,Suriname,1,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,137.0,1097.0
 1999-05-08,Namibia,Mali,0,0,African Cup of Nations qualification,Windhoek,Namibia,False,CAF,CAF,108.0,1192.0,53.0,1460.0
 1999-05-09,Bermuda,Cuba,1,2,CFU Caribbean Cup qualification,Hamilton,Bermuda,False,CONCACAF,CONCACAF,168.0,978.0,167.0,980.0
 1999-05-09,Cayman Islands,Bahamas,4,1,CFU Caribbean Cup qualification,Hamilton,Bermuda,True,CONCACAF,CONCACAF,191.0,867.0,204.0,819.0
@@ -23817,7 +23819,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1999-08-18,Norway,Lithuania,1,0,Friendly,Oslo,Norway,False,UEFA,UEFA,38.0,1497.0,143.0,1073.0
 1999-08-18,Poland,Spain,1,2,Friendly,Warsaw,Poland,False,UEFA,UEFA,34.0,1517.0,2.0,1855.0
 1999-08-18,Portugal,Andorra,4,0,Friendly,Oeiras,Portugal,False,UEFA,UEFA,7.0,1750.0,173.0,957.0
-1999-08-18,Serbia,Croatia,0,0,UEFA Euro qualification,Belgrade,Yugoslavia,False,UEFA,UEFA,31.0,1524.0,11.0,1699.0
+1999-08-18,Serbia,Croatia,0,0,UEFA Euro qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,11.0,1699.0
 1999-08-18,Slovakia,Israel,1,0,Friendly,Bratislava,Slovakia,False,UEFA,UEFA,46.0,1478.0,78.0,1322.0
 1999-08-18,Slovenia,Albania,2,0,UEFA Euro qualification,Ljubljana,Slovenia,False,UEFA,UEFA,51.0,1463.0,66.0,1376.0
 1999-08-18,Sweden,Austria,0,0,Friendly,Malmö,Sweden,False,UEFA,UEFA,28.0,1536.0,22.0,1580.0
@@ -23854,7 +23856,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1999-09-04,Sweden,Bulgaria,1,0,UEFA Euro qualification,Solna,Sweden,False,UEFA,UEFA,28.0,1536.0,85.0,1289.0
 1999-09-04,Ukraine,France,0,0,UEFA Euro qualification,Kyiv,Ukraine,False,UEFA,UEFA,25.0,1560.0,3.0,1853.0
 1999-09-05,Cyprus,Israel,3,2,UEFA Euro qualification,Limassol,Cyprus,False,UEFA,UEFA,129.0,1128.0,78.0,1322.0
-1999-09-05,Serbia,North Macedonia,3,1,UEFA Euro qualification,Belgrade,Yugoslavia,False,UEFA,UEFA,31.0,1524.0,67.0,1376.0
+1999-09-05,Serbia,North Macedonia,3,1,UEFA Euro qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,67.0,1376.0
 1999-09-07,Belgium,Morocco,4,0,Friendly,Liège,Belgium,False,UEFA,CAF,8.0,1736.0,12.0,1694.0
 1999-09-07,Brazil,Argentina,4,2,Friendly,Porto Alegre,Brazil,False,CONMEBOL,CONMEBOL,5.0,1776.0,1.0,1886.0
 1999-09-08,Andorra,Russian Federation,1,2,UEFA Euro qualification,Sant Julià de Lòria,Andorra,False,UEFA,UEFA,173.0,957.0,35.0,1516.0
@@ -24047,7 +24049,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 1999-12-21,Morocco,Senegal,0,0,Friendly,Agadir,Morocco,False,CAF,CAF,12.0,1694.0,19.0,1630.0
 1999-12-22,Tunisia,Ghana,2,0,Friendly,Sfax,Tunisia,False,CAF,CAF,49.0,1474.0,76.0,1333.0
 1999-12-23,Libya,Gabon,2,0,Friendly,Benghazi,Libya,False,AFC,CAF,117.0,1155.0,79.0,1310.0
-1999-12-23,Catalonia,Yugoslavia,1,0,Friendly,Barcelona,Spain,False,UEFA,UNKNOWN,110.0,1000.0,110.0,1000.0
+1999-12-23,Catalonia,Serbia,1,0,Friendly,Barcelona,Spain,False,UEFA,UEFA,110.0,1000.0,31.0,1524.0
 1999-12-27,Gabon,Togo,3,2,Friendly,Benghazi,Libya,True,CAF,CAF,79.0,1310.0,120.0,1149.0
 1999-12-28,Malaysia,Singapore,1,0,Friendly,Dubai,United Arab Emirates,True,AFC,AFC,131.0,1124.0,161.0,1002.0
 1999-12-28,Andalusia,Estonia,1,0,Friendly,Granada,Spain,False,UNKNOWN,UEFA,110.0,1000.0,121.0,1144.0
@@ -24268,7 +24270,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2000-03-15,Jordan,Bosnia and Herzegovina,1,2,Friendly,Zarqa,Jordan,False,AFC,UEFA,62.0,1389.0,110.0,1000.0
 2000-03-16,Venezuela,Bolivia,0,0,Friendly,Maracaibo,Venezuela,False,CONMEBOL,CONMEBOL,47.0,1477.0,80.0,1308.0
 2000-03-17,Jordan,Syria,0,0,Friendly,Amman,Jordan,False,AFC,AFC,62.0,1389.0,93.0,1254.0
-2000-03-18,Curacao,Trinidad and Tobago,1,1,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,100.0,1230.0
+2000-03-18,Curacao,Trinidad and Tobago,1,1,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,100.0,1230.0
 2000-03-18,Grenada,Barbados,2,3,FIFA World Cup qualification,St. George's,Grenada,False,CONCACAF,CONCACAF,174.0,954.0,176.0,933.0
 2000-03-18,Puerto Rico,Aruba,2,2,FIFA World Cup qualification,San Juan,Puerto Rico,False,CONCACAF,CONCACAF,157.0,1019.0,195.0,864.0
 2000-03-18,Saint Kitts and Nevis,Turks and Caicos Islands,8,0,FIFA World Cup qualification,Basseterre,Saint Kitts and Nevis,False,CONCACAF,CONCACAF,145.0,1065.0,206.0,804.0
@@ -24301,7 +24303,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2000-03-28,Colombia,Brazil,0,0,FIFA World Cup qualification,Bogotá,Colombia,False,CONMEBOL,CONMEBOL,14.0,1679.0,5.0,1776.0
 2000-03-28,El Salvador,Haiti,3,1,Friendly,San Salvador,El Salvador,False,CONCACAF,CONCACAF,81.0,1301.0,83.0,1292.0
 2000-03-28,Malta,Northern Ireland,0,3,Friendly,Attard,Malta,False,UEFA,UEFA,169.0,976.0,71.0,1349.0
-2000-03-28,Serbia,China PR,1,0,Friendly,Belgrade,Yugoslavia,False,UEFA,AFC,31.0,1524.0,110.0,1000.0
+2000-03-28,Serbia,China PR,1,0,Friendly,Belgrade,FR Yugoslavia,False,UEFA,AFC,31.0,1524.0,110.0,1000.0
 2000-03-29,Argentina,Chile,4,1,FIFA World Cup qualification,Buenos Aires,Argentina,False,CONMEBOL,CONMEBOL,1.0,1886.0,52.0,1462.0
 2000-03-29,Austria,Sweden,1,1,Friendly,Graz,Austria,False,UEFA,UEFA,22.0,1580.0,28.0,1536.0
 2000-03-29,Belgium,Netherlands,2,2,Friendly,Brussels,Belgium,False,UEFA,UEFA,8.0,1736.0,6.0,1752.0
@@ -24355,11 +24357,11 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2000-04-07,Mauritania,Tunisia,1,2,FIFA World Cup qualification,Nouakchott,Mauritania,False,CAF,CAF,110.0,1180.0,49.0,1474.0
 2000-04-08,Central African Republic,Zimbabwe,0,1,FIFA World Cup qualification,Bangui,Central African Republic,False,CAF,CAF,135.0,1102.0,116.0,1161.0
 2000-04-08,Botswana,Zambia,0,1,FIFA World Cup qualification,Gaborone,Botswana,False,CAF,CAF,136.0,1101.0,88.0,1276.0
-2000-04-08,Fiji,Papua New Guinea,5,0,Oceania Nations Cup qualification,Suva,Fiji,False,OFC,CAF,150.0,1043.0,171.0,969.0
+2000-04-08,Fiji,Papua New Guinea,5,0,Melanesia Cup,Suva,Fiji,False,OFC,CAF,150.0,1043.0,171.0,969.0
 2000-04-08,Guinea-Bissau,Togo,0,0,FIFA World Cup qualification,Bissau,Guinea-Bissau,False,CAF,CAF,128.0,1128.0,120.0,1149.0
 2000-04-08,Madagascar,Gabon,2,0,FIFA World Cup qualification,Antananarivo,Madagascar,False,CAF,CAF,115.0,1163.0,79.0,1310.0
 2000-04-08,Malawi,Kenya,2,0,FIFA World Cup qualification,Blantyre,Malawi,False,CAF,CAF,132.0,1118.0,111.0,1179.0
-2000-04-08,New Caledonia,Solomon Islands,4,2,Oceania Nations Cup qualification,Suva,Fiji,True,OFC,OFC,151.0,1040.0,149.0,1046.0
+2000-04-08,New Caledonia,Solomon Islands,4,2,Melanesia Cup,Suva,Fiji,True,OFC,OFC,151.0,1040.0,149.0,1046.0
 2000-04-08,Pakistan,Kazakhstan,0,4,AFC Asian Cup qualification,Doha,Qatar,True,AFC,AFC,198.0,838.0,113.0,1178.0
 2000-04-08,Qatar,Jordan,2,2,AFC Asian Cup qualification,Doha,Qatar,False,AFC,AFC,55.0,1457.0,62.0,1389.0
 2000-04-08,São Tomé and Príncipe,Sierra Leone,2,0,FIFA World Cup qualification,São Tomé,São Tomé and Príncipe,False,CONCACAF,CAF,110.0,1000.0,124.0,1140.0
@@ -24384,20 +24386,20 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2000-04-09,Eswatini,Angola,0,1,FIFA World Cup qualification,Lobamba,Swaziland,False,CAF,CAF,155.0,1023.0,87.0,1280.0
 2000-04-09,Syria,Maldives,2,1,AFC Asian Cup qualification,Tehran,Iran,True,AFC,OFC,93.0,1254.0,164.0,986.0
 2000-04-09,Egypt,Mauritius,2,0,FIFA World Cup qualification,Cairo,Egypt,False,CAF,CAF,32.0,1519.0,178.0,922.0
-2000-04-10,Fiji,New Caledonia,2,1,Oceania Nations Cup qualification,Suva,Fiji,False,OFC,OFC,150.0,1043.0,151.0,1040.0
-2000-04-10,Solomon Islands,Vanuatu,2,1,Oceania Nations Cup qualification,Suva,Fiji,True,OFC,OFC,149.0,1046.0,163.0,992.0
+2000-04-10,Fiji,New Caledonia,2,1,Melanesia Cup,Suva,Fiji,False,OFC,OFC,150.0,1043.0,151.0,1040.0
+2000-04-10,Solomon Islands,Vanuatu,2,1,Melanesia Cup,Suva,Fiji,True,OFC,OFC,149.0,1046.0,163.0,992.0
 2000-04-11,Bahrain,Maldives,1,0,AFC Asian Cup qualification,Tehran,Iran,True,AFC,OFC,84.0,1290.0,164.0,986.0
-2000-04-11,Fiji,Vanuatu,4,1,Oceania Nations Cup qualification,Suva,Fiji,False,OFC,OFC,150.0,1043.0,163.0,992.0
+2000-04-11,Fiji,Vanuatu,4,1,Melanesia Cup,Suva,Fiji,False,OFC,OFC,150.0,1043.0,163.0,992.0
 2000-04-11,Iran,Syria,1,1,AFC Asian Cup qualification,Tehran,Iran,False,AFC,AFC,18.0,1637.0,93.0,1254.0
-2000-04-11,New Caledonia,Papua New Guinea,6,1,Oceania Nations Cup qualification,Suva,Fiji,True,OFC,CAF,151.0,1040.0,171.0,969.0
+2000-04-11,New Caledonia,Papua New Guinea,6,1,Melanesia Cup,Suva,Fiji,True,OFC,CAF,151.0,1040.0,171.0,969.0
 2000-04-12,Ethiopia,Congo DR,1,2,Friendly,Addis Ababa,Ethiopia,False,CAF,CAF,147.0,1061.0,61.0,1407.0
 2000-04-13,Bahrain,Syria,0,1,AFC Asian Cup qualification,Tehran,Iran,True,AFC,AFC,84.0,1290.0,93.0,1254.0
 2000-04-13,Iran,Maldives,3,0,AFC Asian Cup qualification,Tehran,Iran,False,AFC,OFC,18.0,1637.0,164.0,986.0
-2000-04-13,Solomon Islands,Papua New Guinea,4,2,Oceania Nations Cup qualification,Suva,Fiji,True,OFC,CAF,149.0,1046.0,171.0,969.0
-2000-04-13,Vanuatu,New Caledonia,6,0,Oceania Nations Cup qualification,Suva,Fiji,True,OFC,OFC,163.0,992.0,151.0,1040.0
-2000-04-15,Fiji,Solomon Islands,2,2,Oceania Nations Cup qualification,Suva,Fiji,False,OFC,OFC,150.0,1043.0,149.0,1046.0
+2000-04-13,Solomon Islands,Papua New Guinea,4,2,Melanesia Cup,Suva,Fiji,True,OFC,CAF,149.0,1046.0,171.0,969.0
+2000-04-13,Vanuatu,New Caledonia,6,0,Melanesia Cup,Suva,Fiji,True,OFC,OFC,163.0,992.0,151.0,1040.0
+2000-04-15,Fiji,Solomon Islands,2,2,Melanesia Cup,Suva,Fiji,False,OFC,OFC,150.0,1043.0,149.0,1046.0
 2000-04-15,Malawi,Mozambique,2,1,COSAFA Cup,Blantyre,Malawi,False,CAF,CAF,132.0,1118.0,96.0,1239.0
-2000-04-15,Papua New Guinea,Vanuatu,1,4,Oceania Nations Cup qualification,Suva,Fiji,True,CAF,OFC,171.0,969.0,163.0,992.0
+2000-04-15,Papua New Guinea,Vanuatu,1,4,Melanesia Cup,Suva,Fiji,True,CAF,OFC,171.0,969.0,163.0,992.0
 2000-04-16,Antigua and Barbuda,Bermuda,0,0,FIFA World Cup qualification,St. John's,Antigua and Barbuda,False,CONCACAF,CONCACAF,159.0,1011.0,168.0,978.0
 2000-04-16,Bahamas,Haiti,0,4,FIFA World Cup qualification,Nassau,Bahamas,False,CONCACAF,CONCACAF,204.0,819.0,83.0,1292.0
 2000-04-16,Barbados,Aruba,4,0,FIFA World Cup qualification,Bridgetown,Barbados,False,CONCACAF,CONCACAF,176.0,933.0,195.0,864.0
@@ -24658,7 +24660,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2000-06-21,Serbia,Spain,3,4,UEFA Euro,Bruges,Belgium,True,UEFA,UEFA,31.0,1524.0,2.0,1855.0
 2000-06-21,Slovenia,Norway,0,0,UEFA Euro,Arnhem,Netherlands,True,UEFA,UEFA,51.0,1463.0,38.0,1497.0
 2000-06-21,Solomon Islands,Cook Islands,5,1,Oceania Nations Cup,Papeete,Tahiti,True,OFC,OFC,149.0,1046.0,188.0,878.0
-2000-06-22,Tahiti,Vanuatu,2,3,Oceania Nations Cup,Papeete,Tahiti,True,OFC,OFC,156.0,1019.0,163.0,992.0
+2000-06-22,Tahiti,Vanuatu,2,3,Oceania Nations Cup,Papeete,Tahiti,False,OFC,OFC,156.0,1019.0,163.0,992.0
 2000-06-23,Gabon,Congo,0,2,Friendly,Libreville,Gabon,False,CAF,CAF,79.0,1310.0,110.0,1000.0
 2000-06-23,Solomon Islands,Australia,0,6,Oceania Nations Cup,Papeete,Tahiti,True,OFC,AFC,149.0,1046.0,26.0,1555.0
 2000-06-24,Italy,Romania,2,0,UEFA Euro,Brussels,Belgium,True,UEFA,UEFA,9.0,1718.0,45.0,1479.0
@@ -25335,7 +25337,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2001-03-24,Russian Federation,Slovenia,1,1,FIFA World Cup qualification,Moscow,Russia,False,UEFA,UEFA,35.0,1516.0,51.0,1463.0
 2001-03-24,Scotland,Belgium,2,2,FIFA World Cup qualification,Glasgow,Scotland,False,UEFA,UEFA,44.0,1480.0,8.0,1736.0
 2001-03-24,Senegal,Uganda,3,0,African Cup of Nations qualification,Dakar,Senegal,False,CAF,CAF,19.0,1630.0,89.0,1274.0
-2001-03-24,Serbia,Switzerland,1,1,FIFA World Cup qualification,Belgrade,Yugoslavia,True,UEFA,UEFA,31.0,1524.0,20.0,1625.0
+2001-03-24,Serbia,Switzerland,1,1,FIFA World Cup qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,20.0,1625.0
 2001-03-24,South Africa,Mauritius,3,0,African Cup of Nations qualification,Port Elizabeth,South Africa,False,CAF,CAF,56.0,1445.0,178.0,922.0
 2001-03-24,Spain,Liechtenstein,5,0,FIFA World Cup qualification,Alicante,Spain,False,UEFA,UEFA,2.0,1855.0,205.0,814.0
 2001-03-24,Sweden,North Macedonia,1,0,FIFA World Cup qualification,Gothenburg,Sweden,False,UEFA,UEFA,28.0,1536.0,67.0,1376.0
@@ -25485,7 +25487,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2001-04-25,Norway,Bulgaria,2,1,Friendly,Oslo,Norway,False,UEFA,UEFA,38.0,1497.0,85.0,1289.0
 2001-04-25,Poland,Scotland,1,1,Friendly,Bydgoszcz,Poland,False,UEFA,UEFA,34.0,1517.0,44.0,1480.0
 2001-04-25,Romania,Slovakia,0,0,Friendly,Ploiești,Romania,False,UEFA,UEFA,45.0,1479.0,46.0,1478.0
-2001-04-25,Serbia,Russian Federation,0,1,FIFA World Cup qualification,Belgrade,Yugoslavia,True,UEFA,UEFA,31.0,1524.0,35.0,1516.0
+2001-04-25,Serbia,Russian Federation,0,1,FIFA World Cup qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,35.0,1516.0
 2001-04-25,Spain,Japan,1,0,Friendly,Córdoba,Spain,False,UEFA,AFC,2.0,1855.0,15.0,1653.0
 2001-04-25,Switzerland,Sweden,0,2,Friendly,Geneva,Switzerland,False,UEFA,UEFA,20.0,1625.0,28.0,1536.0
 2001-04-25,Trinidad and Tobago,Mexico,1,1,FIFA World Cup qualification,Port of Spain,Trinidad and Tobago,False,CONCACAF,CONCACAF,100.0,1230.0,17.0,1647.0
@@ -25869,7 +25871,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2001-08-15,Norway,Turkey,1,1,Friendly,Oslo,Norway,False,UEFA,UEFA,38.0,1497.0,27.0,1551.0
 2001-08-15,Portugal,Moldova,3,0,Friendly,Faro,Portugal,False,UEFA,UEFA,7.0,1750.0,154.0,1031.0
 2001-08-15,Russian Federation,Greece,0,0,Friendly,Moscow,Russia,False,UEFA,UEFA,35.0,1516.0,40.0,1490.0
-2001-08-15,Serbia,Faroe Islands,2,0,FIFA World Cup qualification,Belgrade,Yugoslavia,True,UEFA,UEFA,31.0,1524.0,141.0,1085.0
+2001-08-15,Serbia,Faroe Islands,2,0,FIFA World Cup qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,141.0,1085.0
 2001-08-15,Slovakia,Iran,3,4,Friendly,Bratislava,Slovakia,False,UEFA,AFC,46.0,1478.0,18.0,1637.0
 2001-08-15,Slovenia,Romania,2,2,Friendly,Ljubljana,Slovenia,False,UEFA,UEFA,51.0,1463.0,45.0,1479.0
 2001-08-15,Sweden,South Africa,3,0,Friendly,Solna,Sweden,False,UEFA,CAF,28.0,1536.0,56.0,1445.0
@@ -25941,7 +25943,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2001-09-05,Norway,Wales,3,2,FIFA World Cup qualification,Oslo,Norway,False,UEFA,UEFA,38.0,1497.0,29.0,1536.0
 2001-09-05,Paraguay,Bolivia,5,1,FIFA World Cup qualification,Asunción,Paraguay,False,CONMEBOL,CONMEBOL,48.0,1476.0,80.0,1308.0
 2001-09-05,San Marino,Croatia,0,4,FIFA World Cup qualification,Serravalle,San Marino,False,UEFA,UEFA,210.0,741.0,11.0,1699.0
-2001-09-05,Serbia,Slovenia,1,1,FIFA World Cup qualification,Belgrade,Yugoslavia,True,UEFA,UEFA,31.0,1524.0,51.0,1463.0
+2001-09-05,Serbia,Slovenia,1,1,FIFA World Cup qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,51.0,1463.0
 2001-09-05,Slovakia,Moldova,4,2,FIFA World Cup qualification,Trenčín,Slovakia,False,UEFA,UEFA,46.0,1478.0,154.0,1031.0
 2001-09-05,Turkey,Sweden,1,2,FIFA World Cup qualification,Istanbul,Turkey,False,UEFA,UEFA,27.0,1551.0,28.0,1536.0
 2001-09-05,Ukraine,Armenia,3,0,FIFA World Cup qualification,Lviv,Ukraine,False,UEFA,UEFA,25.0,1560.0,102.0,1208.0
@@ -25991,7 +25993,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2001-10-06,Romania,Georgia,1,1,FIFA World Cup qualification,Bucharest,Romania,False,UEFA,UEFA,45.0,1479.0,68.0,1373.0
 2001-10-06,Russian Federation,Switzerland,4,0,FIFA World Cup qualification,Moscow,Russia,False,UEFA,UEFA,35.0,1516.0,20.0,1625.0
 2001-10-06,Scotland,Latvia,2,1,FIFA World Cup qualification,Glasgow,Scotland,False,UEFA,UEFA,44.0,1480.0,138.0,1092.0
-2001-10-06,Serbia,Luxembourg,6,2,FIFA World Cup qualification,Belgrade,Yugoslavia,True,UEFA,UEFA,31.0,1524.0,91.0,1262.0
+2001-10-06,Serbia,Luxembourg,6,2,FIFA World Cup qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,91.0,1262.0
 2001-10-06,Slovenia,Faroe Islands,3,0,FIFA World Cup qualification,Ljubljana,Slovenia,False,UEFA,UEFA,51.0,1463.0,141.0,1085.0
 2001-10-06,Venezuela,Peru,3,0,FIFA World Cup qualification,San Cristóbal,Venezuela,False,CONMEBOL,CONMEBOL,47.0,1477.0,42.0,1483.0
 2001-10-06,Wales,Belarus,1,0,FIFA World Cup qualification,Cardiff,Wales,False,UEFA,UEFA,29.0,1536.0,98.0,1235.0
@@ -26359,7 +26361,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2002-04-17,Poland,Romania,1,2,Friendly,Bydgoszcz,Poland,False,UEFA,UEFA,34.0,1517.0,45.0,1479.0
 2002-04-17,Portugal,Brazil,1,1,Friendly,Lisbon,Portugal,False,UEFA,CONMEBOL,7.0,1750.0,5.0,1776.0
 2002-04-17,Scotland,Nigeria,1,2,Friendly,Aberdeen,Scotland,False,UEFA,CAF,44.0,1480.0,43.0,1481.0
-2002-04-17,Serbia,Lithuania,4,1,Friendly,Smederevo,Yugoslavia,False,UEFA,UEFA,31.0,1524.0,143.0,1073.0
+2002-04-17,Serbia,Lithuania,4,1,Friendly,Smederevo,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,143.0,1073.0
 2002-04-17,Slovenia,Tunisia,1,0,Friendly,Ljubljana,Slovenia,False,UEFA,CAF,51.0,1463.0,49.0,1474.0
 2002-04-17,Turkey,Chile,2,0,Friendly,Kerkrade,Netherlands,True,UEFA,CONMEBOL,27.0,1551.0,52.0,1462.0
 2002-04-17,Ukraine,Georgia,2,1,Friendly,Kyiv,Ukraine,False,UEFA,UEFA,25.0,1560.0,68.0,1373.0
@@ -26738,7 +26740,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2002-10-16,Norway,Bosnia and Herzegovina,2,0,UEFA Euro qualification,Oslo,Norway,False,UEFA,UEFA,38.0,1497.0,110.0,1000.0
 2002-10-16,Poland,New Zealand,2,0,Friendly,Ostrowiec Świętokrzyski,Poland,False,UEFA,OFC,34.0,1517.0,86.0,1285.0
 2002-10-16,Russian Federation,Albania,4,1,UEFA Euro qualification,Volgograd,Russia,False,UEFA,UEFA,35.0,1516.0,66.0,1376.0
-2002-10-16,Serbia,Finland,2,0,UEFA Euro qualification,Belgrade,Yugoslavia,False,UEFA,UEFA,31.0,1524.0,69.0,1360.0
+2002-10-16,Serbia,Finland,2,0,UEFA Euro qualification,Belgrade,FR Yugoslavia,False,UEFA,UEFA,31.0,1524.0,69.0,1360.0
 2002-10-16,Spain,Paraguay,0,0,Friendly,Logroño,Spain,False,UEFA,CONMEBOL,2.0,1855.0,48.0,1476.0
 2002-10-16,Sweden,Portugal,2,3,Friendly,Gothenburg,Sweden,False,UEFA,UEFA,28.0,1536.0,7.0,1750.0
 2002-10-16,Turkey,Liechtenstein,5,0,UEFA Euro qualification,Istanbul,Turkey,False,UEFA,UEFA,27.0,1551.0,205.0,814.0
@@ -26957,7 +26959,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2003-02-12,Northern Ireland,Finland,0,1,Friendly,Belfast,Northern Ireland,False,UEFA,UEFA,71.0,1349.0,69.0,1360.0
 2003-02-12,Romania,Slovakia,2,1,Cyprus International Tournament,Larnaca,Cyprus,True,UEFA,UEFA,45.0,1479.0,46.0,1478.0
 2003-02-12,Scotland,Republic of Ireland,0,2,Friendly,Glasgow,Scotland,False,UEFA,UEFA,44.0,1480.0,60.0,1412.0
-2003-02-12,Serbia,Azerbaijan,2,2,UEFA Euro qualification,Podgorica,Serbia and Montenegro,True,UEFA,UEFA,31.0,1524.0,119.0,1151.0
+2003-02-12,Serbia,Azerbaijan,2,2,UEFA Euro qualification,Podgorica,Serbia and Montenegro,False,UEFA,UEFA,31.0,1524.0,119.0,1151.0
 2003-02-12,Slovenia,Switzerland,1,5,Friendly,Nova Gorica,Slovenia,False,UEFA,UEFA,51.0,1463.0,20.0,1625.0
 2003-02-12,Spain,Germany,3,1,Friendly,Palma de Mallorca,Spain,False,UEFA,UEFA,2.0,1855.0,10.0,1717.0
 2003-02-12,Tunisia,Sweden,1,0,Friendly,Radès,Tunisia,False,CAF,UEFA,49.0,1474.0,28.0,1536.0
@@ -28028,7 +28030,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2004-03-31,Bermuda,Nicaragua,3,0,Friendly,Hamilton,Bermuda,False,CONCACAF,CONCACAF,168.0,978.0,133.0,1114.0
 2004-03-31,Bulgaria,Russian Federation,2,2,Friendly,Sofia,Bulgaria,False,UEFA,UEFA,85.0,1289.0,35.0,1516.0
 2004-03-31,Croatia,Turkey,2,2,Friendly,Zagreb,Croatia,False,UEFA,UEFA,11.0,1699.0,27.0,1551.0
-2004-03-31,Curacao,Antigua and Barbuda,3,0,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,159.0,1011.0
+2004-03-31,Curacao,Antigua and Barbuda,3,0,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,159.0,1011.0
 2004-03-31,Egypt,Trinidad and Tobago,2,1,Friendly,Cairo,Egypt,False,CAF,CONCACAF,32.0,1519.0,100.0,1230.0
 2004-03-31,El Salvador,Guatemala,0,3,Friendly,San Salvador,El Salvador,False,CONCACAF,CONCACAF,81.0,1301.0,106.0,1197.0
 2004-03-31,Germany,Belgium,3,0,Friendly,Cologne,Germany,False,UEFA,UEFA,10.0,1717.0,8.0,1736.0
@@ -28289,7 +28291,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2004-06-10,Syria,Tajikistan,2,1,FIFA World Cup qualification,Homs,Syria,False,AFC,AFC,93.0,1254.0,104.0,1203.0
 2004-06-11,Estonia,North Macedonia,2,4,Friendly,Tallinn,Estonia,False,UEFA,UEFA,121.0,1144.0,67.0,1376.0
 2004-06-12,Cuba,Costa Rica,2,2,FIFA World Cup qualification,Havana,Cuba,False,CONCACAF,CONCACAF,167.0,980.0,54.0,1459.0
-2004-06-12,Curacao,Honduras,1,2,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,75.0,1334.0
+2004-06-12,Curacao,Honduras,1,2,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,75.0,1334.0
 2004-06-12,Haiti,Jamaica,1,1,FIFA World Cup qualification,Miami,United States,True,CONCACAF,CONCACAF,83.0,1292.0,63.0,1387.0
 2004-06-12,Portugal,Greece,1,2,UEFA Euro,Porto,Portugal,False,UEFA,UEFA,7.0,1750.0,40.0,1490.0
 2004-06-12,Spain,Russian Federation,1,0,UEFA Euro,Faro,Portugal,True,UEFA,UEFA,2.0,1855.0,35.0,1516.0
@@ -28719,7 +28721,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2004-10-13,Paraguay,Peru,1,1,FIFA World Cup qualification,Asunción,Paraguay,False,CONMEBOL,CONMEBOL,48.0,1476.0,42.0,1483.0
 2004-10-13,Portugal,Russian Federation,7,1,FIFA World Cup qualification,Lisbon,Portugal,False,UEFA,UEFA,7.0,1750.0,35.0,1516.0
 2004-10-13,Qatar,Iran,2,3,FIFA World Cup qualification,Doha,Qatar,False,AFC,AFC,55.0,1457.0,18.0,1637.0
-2004-10-13,Serbia,San Marino,5,0,FIFA World Cup qualification,Belgrade,Serbia and Montenegro,True,UEFA,UEFA,31.0,1524.0,210.0,741.0
+2004-10-13,Serbia,San Marino,5,0,FIFA World Cup qualification,Belgrade,Serbia and Montenegro,False,UEFA,UEFA,31.0,1524.0,210.0,741.0
 2004-10-13,Singapore,India,2,0,FIFA World Cup qualification,Singapore,Singapore,False,AFC,AFC,161.0,1002.0,127.0,1132.0
 2004-10-13,Saint Kitts and Nevis,Saint Vincent and the Grenadines,0,3,FIFA World Cup qualification,Basseterre,Saint Kitts and Nevis,False,CONCACAF,CONCACAF,145.0,1065.0,172.0,966.0
 2004-10-13,Syria,Bahrain,2,2,FIFA World Cup qualification,Damascus,Syria,False,AFC,AFC,93.0,1254.0,84.0,1290.0
@@ -29129,7 +29131,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2005-03-30,Peru,Ecuador,2,2,FIFA World Cup qualification,Lima,Peru,False,CONMEBOL,CONMEBOL,42.0,1483.0,24.0,1568.0
 2005-03-30,Poland,Northern Ireland,1,0,FIFA World Cup qualification,Warsaw,Poland,False,UEFA,UEFA,34.0,1517.0,71.0,1349.0
 2005-03-30,San Marino,Belgium,1,2,FIFA World Cup qualification,Serravalle,San Marino,False,UEFA,UEFA,210.0,741.0,8.0,1736.0
-2005-03-30,Serbia,Spain,0,0,FIFA World Cup qualification,Belgrade,Serbia and Montenegro,True,UEFA,UEFA,31.0,1524.0,2.0,1855.0
+2005-03-30,Serbia,Spain,0,0,FIFA World Cup qualification,Belgrade,Serbia and Montenegro,False,UEFA,UEFA,31.0,1524.0,2.0,1855.0
 2005-03-30,Slovakia,Portugal,1,1,FIFA World Cup qualification,Bratislava,Slovakia,False,UEFA,UEFA,46.0,1478.0,7.0,1750.0
 2005-03-30,Slovenia,Belarus,1,1,FIFA World Cup qualification,Celje,Slovenia,False,UEFA,UEFA,51.0,1463.0,98.0,1235.0
 2005-03-30,Switzerland,Cyprus,1,0,FIFA World Cup qualification,Zürich,Switzerland,False,UEFA,UEFA,20.0,1625.0,129.0,1128.0
@@ -29205,7 +29207,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2005-06-04,Russian Federation,Latvia,2,0,FIFA World Cup qualification,Saint Petersburg,Russia,False,UEFA,UEFA,35.0,1516.0,138.0,1092.0
 2005-06-04,San Marino,Bosnia and Herzegovina,1,3,FIFA World Cup qualification,Serravalle,San Marino,False,UEFA,UEFA,210.0,741.0,110.0,1000.0
 2005-06-04,Scotland,Moldova,2,0,FIFA World Cup qualification,Glasgow,Scotland,False,UEFA,UEFA,44.0,1480.0,154.0,1031.0
-2005-06-04,Serbia,Belgium,0,0,FIFA World Cup qualification,Belgrade,Serbia and Montenegro,True,UEFA,UEFA,31.0,1524.0,8.0,1736.0
+2005-06-04,Serbia,Belgium,0,0,FIFA World Cup qualification,Belgrade,Serbia and Montenegro,False,UEFA,UEFA,31.0,1524.0,8.0,1736.0
 2005-06-04,Singapore,Malaysia,2,0,Friendly,Singapore,Singapore,False,AFC,AFC,161.0,1002.0,131.0,1124.0
 2005-06-04,Spain,Lithuania,1,0,FIFA World Cup qualification,Valencia,Spain,False,UEFA,UEFA,2.0,1855.0,143.0,1073.0
 2005-06-04,Sweden,Malta,6,0,FIFA World Cup qualification,Gothenburg,Sweden,False,UEFA,UEFA,28.0,1536.0,169.0,976.0
@@ -29447,7 +29449,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2005-09-03,Romania,Czech Republic,2,0,FIFA World Cup qualification,Constanţa,Romania,False,UEFA,UEFA,45.0,1479.0,39.0,1491.0
 2005-09-03,Russian Federation,Liechtenstein,2,0,FIFA World Cup qualification,Moscow,Russia,False,UEFA,UEFA,35.0,1516.0,205.0,814.0
 2005-09-03,Scotland,Italy,1,1,FIFA World Cup qualification,Glasgow,Scotland,False,UEFA,UEFA,44.0,1480.0,9.0,1718.0
-2005-09-03,Serbia,Lithuania,2,0,FIFA World Cup qualification,Belgrade,Serbia and Montenegro,True,UEFA,UEFA,31.0,1524.0,143.0,1073.0
+2005-09-03,Serbia,Lithuania,2,0,FIFA World Cup qualification,Belgrade,Serbia and Montenegro,False,UEFA,UEFA,31.0,1524.0,143.0,1073.0
 2005-09-03,Slovakia,Germany,2,0,Friendly,Bratislava,Slovakia,False,UEFA,UEFA,46.0,1478.0,10.0,1717.0
 2005-09-03,Slovenia,Norway,2,3,FIFA World Cup qualification,Celje,Slovenia,False,UEFA,UEFA,51.0,1463.0,38.0,1497.0
 2005-09-03,Spain,Canada,2,1,Friendly,Santander,Spain,False,UEFA,CONCACAF,2.0,1855.0,30.0,1532.0
@@ -29586,7 +29588,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2005-10-12,Peru,Bolivia,4,1,FIFA World Cup qualification,Tacna,Peru,False,CONMEBOL,CONMEBOL,42.0,1483.0,80.0,1308.0
 2005-10-12,Portugal,Latvia,3,0,FIFA World Cup qualification,Porto,Portugal,False,UEFA,UEFA,7.0,1750.0,138.0,1092.0
 2005-10-12,San Marino,Spain,0,6,FIFA World Cup qualification,Serravalle,San Marino,False,UEFA,UEFA,210.0,741.0,2.0,1855.0
-2005-10-12,Serbia,Bosnia and Herzegovina,1,0,FIFA World Cup qualification,Belgrade,Serbia and Montenegro,True,UEFA,UEFA,31.0,1524.0,110.0,1000.0
+2005-10-12,Serbia,Bosnia and Herzegovina,1,0,FIFA World Cup qualification,Belgrade,Serbia and Montenegro,False,UEFA,UEFA,31.0,1524.0,110.0,1000.0
 2005-10-12,Slovakia,Russian Federation,0,0,FIFA World Cup qualification,Bratislava,Slovakia,False,UEFA,UEFA,46.0,1478.0,35.0,1516.0
 2005-10-12,Slovenia,Scotland,0,3,FIFA World Cup qualification,Celje,Slovenia,False,UEFA,UEFA,51.0,1463.0,44.0,1480.0
 2005-10-12,Sweden,Iceland,3,1,FIFA World Cup qualification,Solna,Sweden,False,UEFA,UEFA,28.0,1536.0,74.0,1337.0
@@ -30249,7 +30251,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2006-09-06,Bosnia and Herzegovina,Hungary,1,3,UEFA Euro qualification,Zenica,Bosnia and Herzegovina,False,UEFA,UEFA,110.0,1000.0,37.0,1503.0
 2006-09-06,Bulgaria,Slovenia,3,0,UEFA Euro qualification,Sofia,Bulgaria,False,UEFA,UEFA,85.0,1289.0,51.0,1463.0
 2006-09-06,Cuba,Cayman Islands,7,0,CFU Caribbean Cup qualification,Havana,Cuba,False,CONCACAF,CONCACAF,167.0,980.0,191.0,867.0
-2006-09-06,Curacao,Grenada,1,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,174.0,954.0
+2006-09-06,Curacao,Grenada,1,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,174.0,954.0
 2006-09-06,Ecuador,Peru,1,1,Friendly,East Rutherford,United States,True,CONMEBOL,CONMEBOL,24.0,1568.0,42.0,1483.0
 2006-09-06,Finland,Portugal,1,1,UEFA Euro qualification,Helsinki,Finland,False,UEFA,UEFA,69.0,1360.0,7.0,1750.0
 2006-09-06,France,Italy,3,1,UEFA Euro qualification,Saint-Denis,France,False,UEFA,UEFA,3.0,1853.0,9.0,1718.0
@@ -30283,9 +30285,9 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2006-09-06,Ukraine,Georgia,3,2,UEFA Euro qualification,Kyiv,Ukraine,False,UEFA,UEFA,25.0,1560.0,68.0,1373.0
 2006-09-06,United Arab Emirates,Jordan,0,0,AFC Asian Cup qualification,Sharjah,United Arab Emirates,False,AFC,AFC,110.0,1000.0,62.0,1389.0
 2006-09-06,Yemen,Japan,0,1,AFC Asian Cup qualification,Sana'a,Yemen,False,CAF,AFC,158.0,1018.0,15.0,1653.0
-2006-09-08,Curacao,Guyana,0,5,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,152.0,1038.0
+2006-09-08,Curacao,Guyana,0,5,CFU Caribbean Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,152.0,1038.0
 2006-09-08,Suriname,Grenada,1,0,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,137.0,1097.0,174.0,954.0
-2006-09-10,Curacao,Suriname,0,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,137.0,1097.0
+2006-09-10,Curacao,Suriname,0,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,137.0,1097.0
 2006-09-10,Grenada,Guyana,0,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,174.0,954.0,152.0,1038.0
 2006-09-15,Haiti,Dominican Republic,3,1,Friendly,Saint-Marc,Haiti,False,CONCACAF,CONCACAF,83.0,1292.0,139.0,1087.0
 2006-09-17,Dominica,Barbados,0,5,Friendly,Grand Bay,Dominica,False,CONCACAF,CONCACAF,184.0,900.0,176.0,933.0
@@ -30488,7 +30490,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2006-11-19,Tibet,Tajikistan,0,3,ELF Cup,Güzelyurt,Northern Cyprus,True,UNKNOWN,AFC,110.0,1000.0,104.0,1203.0
 2006-11-19,Northern Cyprus,Crimea,5,0,ELF Cup,Lefkoşa,Northern Cyprus,False,UEFA,UNKNOWN,110.0,1000.0,110.0,1000.0
 2006-11-20,Cambodia,Timor Leste,4,1,AFF Championship qualification,Bacolod,Philippines,True,AFC,AFC,181.0,913.0,197.0,840.0
-2006-11-20,Philippines,Brunei,4,1,AFF Championship qualification,Bacolod,Philippines,True,AFC,AFC,146.0,1063.0,110.0,1000.0
+2006-11-20,Philippines,Brunei,4,1,AFF Championship qualification,Bacolod,Philippines,False,AFC,AFC,146.0,1063.0,110.0,1000.0
 2006-11-20,Monaco,Ambazonia,3,0,Viva World Cup,Costebelle,France,True,UNKNOWN,UNKNOWN,110.0,1000.0,110.0,1000.0
 2006-11-20,Occitania,Sápmi,0,7,Viva World Cup,Costebelle,France,False,UNKNOWN,UNKNOWN,110.0,1000.0,110.0,1000.0
 2006-11-20,Găgăuzia,Kyrgyzstan,1,6,ELF Cup,Gazimağusa,Northern Cyprus,True,UNKNOWN,AFC,110.0,1000.0,103.0,1206.0
@@ -31734,7 +31736,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2008-03-26,Brazil,Sweden,1,0,Friendly,London,England,True,CONMEBOL,UEFA,5.0,1776.0,28.0,1536.0
 2008-03-26,Bulgaria,Finland,2,1,Friendly,Sofia,Bulgaria,False,UEFA,UEFA,85.0,1289.0,69.0,1360.0
 2008-03-26,China PR,Australia,0,0,FIFA World Cup qualification,Kunming,China PR,False,AFC,AFC,110.0,1000.0,26.0,1555.0
-2008-03-26,Curacao,Nicaragua,2,0,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,133.0,1114.0
+2008-03-26,Curacao,Nicaragua,2,0,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,133.0,1114.0
 2008-03-26,Denmark,Czech Republic,1,1,Friendly,Herning,Denmark,False,UEFA,UEFA,21.0,1618.0,39.0,1491.0
 2008-03-26,Ecuador,Haiti,3,1,Friendly,Latacunga,Ecuador,False,CONMEBOL,CONCACAF,24.0,1568.0,83.0,1292.0
 2008-03-26,Egypt,Argentina,0,2,Friendly,Cairo,Egypt,False,CAF,CONMEBOL,32.0,1519.0,1.0,1886.0
@@ -32102,7 +32104,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2008-06-22,Congo,Chad,2,0,FIFA World Cup qualification,Brazzaville,Congo,False,CAF,CAF,110.0,1000.0,177.0,925.0
 2008-06-22,Congo DR,Djibouti,5,1,FIFA World Cup qualification,Kinshasa,DR Congo,False,CAF,CAF,61.0,1407.0,192.0,866.0
 2008-06-22,Cuba,Antigua and Barbuda,4,0,FIFA World Cup qualification,Havana,Cuba,False,CONCACAF,CONCACAF,167.0,980.0,159.0,1011.0
-2008-06-22,Curacao,Haiti,0,1,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,83.0,1292.0
+2008-06-22,Curacao,Haiti,0,1,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,83.0,1292.0
 2008-06-22,Egypt,Malawi,2,0,FIFA World Cup qualification,Cairo,Egypt,False,CAF,CAF,32.0,1519.0,132.0,1118.0
 2008-06-22,El Salvador,Panama,3,1,FIFA World Cup qualification,San Salvador,El Salvador,False,CONCACAF,CONCACAF,81.0,1301.0,33.0,1518.0
 2008-06-22,Ghana,Gabon,2,0,FIFA World Cup qualification,Accra,Ghana,False,CAF,CAF,76.0,1333.0,79.0,1310.0
@@ -32159,7 +32161,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2008-07-26,El Salvador,Jamaica,0,0,Friendly,Frisco,United States,True,CONCACAF,CONCACAF,81.0,1301.0,63.0,1387.0
 2008-07-26,South Africa,Namibia,1,0,COSAFA Cup,Witbank,South Africa,False,CAF,CAF,56.0,1445.0,108.0,1192.0
 2008-07-27,Botswana,Mozambique,0,2,COSAFA Cup,Secunda,South Africa,True,CAF,CAF,136.0,1101.0,96.0,1239.0
-2008-07-27,Curacao,Aruba,0,0,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,90.0,1265.0,195.0,864.0
+2008-07-27,Curacao,Aruba,0,0,CFU Caribbean Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,195.0,864.0
 2008-07-27,Zambia,Zimbabwe,0,0,COSAFA Cup,Secunda,South Africa,True,CAF,CAF,88.0,1276.0,116.0,1161.0
 2008-07-29,Grenada,Aruba,3,1,CFU Caribbean Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,174.0,954.0,195.0,864.0
 2008-07-30,India,Afghanistan,1,0,AFC Challenge Cup,Hyderabad,India,False,AFC,AFC,127.0,1132.0,160.0,1008.0
@@ -36217,7 +36219,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2012-09-11,Saint Martin,Bermuda,0,8,CFU Caribbean Cup qualification,Port-au-Prince,Haiti,True,CONCACAF,CONCACAF,110.0,1000.0,168.0,978.0
 2012-09-11,Sweden,Kazakhstan,2,0,FIFA World Cup qualification,Malmö,Sweden,False,UEFA,AFC,28.0,1536.0,113.0,1178.0
 2012-09-11,Switzerland,Albania,2,0,FIFA World Cup qualification,Lucerne,Switzerland,False,UEFA,UEFA,20.0,1625.0,66.0,1376.0
-2012-09-11,Tahiti,New Caledonia,0,4,FIFA World Cup qualification,Pirae,Tahiti,True,OFC,OFC,156.0,1019.0,151.0,1040.0
+2012-09-11,Tahiti,New Caledonia,0,4,FIFA World Cup qualification,Pirae,Tahiti,False,OFC,OFC,156.0,1019.0,151.0,1040.0
 2012-09-11,Turkey,Estonia,3,0,FIFA World Cup qualification,Istanbul,Turkey,False,UEFA,UEFA,27.0,1551.0,121.0,1144.0
 2012-09-11,United Arab Emirates,Kuwait,3,0,Friendly,Dubai,United Arab Emirates,False,AFC,CAF,110.0,1000.0,134.0,1112.0
 2012-09-11,Uruguay,Ecuador,1,1,FIFA World Cup qualification,Montevideo,Uruguay,False,CONMEBOL,CONMEBOL,13.0,1679.0,24.0,1568.0
@@ -36305,7 +36307,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2012-10-12,Slovenia,Cyprus,2,1,FIFA World Cup qualification,Maribor,Slovenia,False,UEFA,UEFA,51.0,1463.0,129.0,1128.0
 2012-10-12,Solomon Islands,New Caledonia,2,6,FIFA World Cup qualification,Honiara,Solomon Islands,False,OFC,OFC,149.0,1046.0,151.0,1040.0
 2012-10-12,Switzerland,Norway,1,1,FIFA World Cup qualification,Bern,Switzerland,False,UEFA,UEFA,20.0,1625.0,38.0,1497.0
-2012-10-12,Tahiti,New Zealand,0,2,FIFA World Cup qualification,Pirae,Tahiti,True,OFC,OFC,156.0,1019.0,86.0,1285.0
+2012-10-12,Tahiti,New Zealand,0,2,FIFA World Cup qualification,Pirae,Tahiti,False,OFC,OFC,156.0,1019.0,86.0,1285.0
 2012-10-12,Turkey,Romania,0,1,FIFA World Cup qualification,Istanbul,Turkey,False,UEFA,UEFA,27.0,1551.0,45.0,1479.0
 2012-10-12,United Arab Emirates,Uzbekistan,2,2,Friendly,Dubai,United Arab Emirates,False,AFC,AFC,110.0,1000.0,57.0,1437.0
 2012-10-12,Wales,Scotland,2,1,FIFA World Cup qualification,Cardiff,Wales,False,UEFA,UEFA,29.0,1536.0,44.0,1480.0
@@ -36496,6 +36498,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2012-11-30,Uganda,South Sudan,4,0,CECAFA Cup,Kampala,Uganda,False,CAF,CAF,89.0,1274.0,170.0,976.0
 2012-12-01,Eritrea,Rwanda,0,2,CECAFA Cup,Kampala,Uganda,True,CAF,CAF,110.0,1000.0,130.0,1127.0
 2012-12-01,Hong Kong,Guam,2,1,EAFF Championship,Kowloon,Hong Kong,False,AFC,OFC,153.0,1033.0,202.0,823.0
+2012-12-01,Taiwan,North Korea,1,6,EAFF Championship,Kowloon,Hong Kong,True,AFC,AFC,110.0,1000.0,118.0,1153.0
 2012-12-01,Malawi,Zanzibar,2,0,CECAFA Cup,Kampala,Uganda,True,CAF,UNKNOWN,132.0,1118.0,110.0,1000.0
 2012-12-01,Malaysia,Indonesia,2,0,AFF Championship,Kuala Lumpur,Malaysia,False,AFC,AFC,131.0,1124.0,123.0,1143.0
 2012-12-01,Singapore,Laos,4,3,AFF Championship,Shah Alam,Malaysia,True,AFC,AFC,161.0,1002.0,190.0,876.0
@@ -36508,6 +36511,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2012-12-04,Kenya,Malawi,1,0,CECAFA Cup,Kampala,Uganda,True,CAF,CAF,111.0,1179.0,132.0,1118.0
 2012-12-04,Uganda,Ethiopia,2,0,CECAFA Cup,Kampala,Uganda,False,CAF,CAF,89.0,1274.0,147.0,1061.0
 2012-12-05,North Korea,Australia,1,1,EAFF Championship,So Kon Po,Hong Kong,True,AFC,AFC,118.0,1153.0,26.0,1555.0
+2012-12-05,Taiwan,Guam,1,1,EAFF Championship,So Kon Po,Hong Kong,True,AFC,OFC,110.0,1000.0,202.0,823.0
 2012-12-06,Uganda,Tanzania,3,0,CECAFA Cup,Kampala,Uganda,False,CAF,CAF,89.0,1274.0,107.0,1196.0
 2012-12-06,Zanzibar,Kenya,2,2,CECAFA Cup,Kampala,Uganda,True,UNKNOWN,CAF,110.0,1000.0,111.0,1179.0
 2012-12-07,Antigua and Barbuda,Dominican Republic,1,2,CFU Caribbean Cup,St. John's,Antigua and Barbuda,False,CONCACAF,CONCACAF,159.0,1011.0,139.0,1087.0
@@ -36793,7 +36797,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2013-03-22,Slovenia,Iceland,1,2,FIFA World Cup qualification,Ljubljana,Slovenia,False,UEFA,UEFA,51.0,1463.0,74.0,1337.0
 2013-03-22,Spain,Finland,1,1,FIFA World Cup qualification,Gijón,Spain,False,UEFA,UEFA,2.0,1855.0,69.0,1360.0
 2013-03-22,Sweden,Republic of Ireland,0,0,FIFA World Cup qualification,Solna,Sweden,False,UEFA,UEFA,28.0,1536.0,60.0,1412.0
-2013-03-22,Tahiti,Solomon Islands,2,0,FIFA World Cup qualification,Pirae,Tahiti,True,OFC,OFC,156.0,1019.0,149.0,1046.0
+2013-03-22,Tahiti,Solomon Islands,2,0,FIFA World Cup qualification,Pirae,Tahiti,False,OFC,OFC,156.0,1019.0,149.0,1046.0
 2013-03-22,Turkmenistan,Cambodia,7,0,AFC Challenge Cup qualification,Manila,Philippines,True,AFC,AFC,142.0,1076.0,181.0,913.0
 2013-03-22,United Arab Emirates,Uzbekistan,2,1,AFC Asian Cup qualification,Abu Dhabi,United Arab Emirates,False,AFC,AFC,110.0,1000.0,57.0,1437.0
 2013-03-22,Uruguay,Paraguay,1,1,FIFA World Cup qualification,Montevideo,Uruguay,False,CONMEBOL,CONMEBOL,13.0,1679.0,48.0,1476.0
@@ -37782,6 +37786,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2014-06-04,Jamaica,Egypt,2,2,Friendly,London,England,True,CONCACAF,CAF,63.0,1387.0,32.0,1519.0
 2014-06-04,Netherlands,Wales,2,0,Friendly,Amsterdam,Netherlands,False,UEFA,UEFA,6.0,1752.0,29.0,1536.0
 2014-06-04,Romania,Algeria,1,2,Friendly,Lancy,Switzerland,True,UEFA,CAF,45.0,1479.0,36.0,1507.0
+2014-06-04,Uruguay,Slovenia,2,0,Friendly,Montevideo,Uruguay,False,CONMEBOL,UEFA,13.0,1679.0,51.0,1463.0
 2014-06-04,Padania,County of Nice,1,2,CONIFA World Football Cup,Östersund,Sweden,True,UNKNOWN,UNKNOWN,110.0,1000.0,110.0,1000.0
 2014-06-04,Abkhazia,South Ossetia,0,0,CONIFA World Football Cup,Östersund,Sweden,True,UNKNOWN,UNKNOWN,110.0,1000.0,110.0,1000.0
 2014-06-04,Arameans Suryoye,Occitania,0,0,CONIFA World Football Cup,Östersund,Sweden,True,UNKNOWN,UNKNOWN,110.0,1000.0,110.0,1000.0
@@ -39635,6 +39640,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2016-05-27,Northern Ireland,Belarus,3,0,Friendly,Belfast,Northern Ireland,False,UEFA,UEFA,71.0,1349.0,98.0,1235.0
 2016-05-27,Slovakia,Georgia,3,1,Friendly,Wels,Austria,True,UEFA,UEFA,46.0,1478.0,68.0,1373.0
 2016-05-27,Togo,Zambia,1,0,Friendly,Lomé,Togo,False,CAF,CAF,120.0,1149.0,88.0,1276.0
+2016-05-27,Uruguay,Trinidad and Tobago,3,1,Friendly,Montevideo,Uruguay,False,CONMEBOL,CONCACAF,13.0,1679.0,100.0,1230.0
 2016-05-27,Corsica,Basque Country,1,1,Friendly,Ajaccio,France,False,UNKNOWN,UEFA,110.0,1000.0,110.0,1000.0
 2016-05-28,Myanmar,Malaysia,0,0,Friendly,Yangon,Myanmar,False,AFC,AFC,162.0,995.0,131.0,1124.0
 2016-05-28,Costa Rica,Venezuela,2,1,Friendly,San José,Costa Rica,False,CONCACAF,CONMEBOL,54.0,1459.0,47.0,1477.0
@@ -40193,7 +40199,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2016-11-06,North Korea,Taiwan,2,0,EAFF Championship,Kowloon,Hong Kong,True,AFC,AFC,118.0,1153.0,110.0,1000.0
 2016-11-06,Laos,Macau,1,4,AFC Challenge Cup,Kuching,Malaysia,True,AFC,AFC,190.0,876.0,193.0,865.0
 2016-11-06,Mongolia,Sri Lanka,2,0,AFC Challenge Cup,Kuching,Malaysia,True,AFC,AFC,187.0,880.0,200.0,834.0
-2016-11-07,Tahiti,Solomon Islands,3,0,FIFA World Cup qualification,Pirae,Tahiti,True,OFC,OFC,156.0,1019.0,149.0,1046.0
+2016-11-07,Tahiti,Solomon Islands,3,0,FIFA World Cup qualification,Pirae,Tahiti,False,OFC,OFC,156.0,1019.0,149.0,1046.0
 2016-11-08,Nepal,Brunei,3,0,AFC Challenge Cup,Kuching,Malaysia,True,AFC,AFC,175.0,936.0,110.0,1000.0
 2016-11-08,Uganda,Zambia,0,1,Friendly,Kampala,Uganda,False,CAF,CAF,89.0,1274.0,88.0,1276.0
 2016-11-08,Vietnam,Indonesia,3,2,Friendly,Hanoi,Vietnam,False,AFC,AFC,109.0,1184.0,123.0,1143.0
@@ -45434,7 +45440,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2022-08-31,Mexico,Paraguay,0,1,Friendly,Atlanta,United States,True,CONCACAF,CONMEBOL,17.0,1647.0,48.0,1476.0
 2022-09-17,Fiji,New Caledonia,1,0,MSG Prime Minister's Cup,Luganville,Vanuatu,True,OFC,OFC,150.0,1043.0,151.0,1040.0
 2022-09-21,Solomon Islands,New Caledonia,1,0,MSG Prime Minister's Cup,Luganville,Vanuatu,True,OFC,OFC,149.0,1046.0,151.0,1040.0
-2022-09-21,Brunei,Maldives,0,3,Friendly,Bandar Seri Begawan,Brunei,True,AFC,OFC,110.0,1000.0,164.0,986.0
+2022-09-21,Brunei,Maldives,0,3,Friendly,Bandar Seri Begawan,Brunei,False,AFC,OFC,110.0,1000.0,164.0,986.0
 2022-09-21,Hong Kong,Myanmar,2,0,Friendly,Hong Kong,Hong Kong,False,AFC,AFC,153.0,1033.0,162.0,995.0
 2022-09-21,Libya,Uganda,0,0,Friendly,Benghazi,Libya,False,AFC,CAF,117.0,1155.0,89.0,1274.0
 2022-09-21,San Marino,Seychelles,0,0,Friendly,Serravalle,San Marino,False,UEFA,CAF,210.0,741.0,203.0,821.0
@@ -45536,7 +45542,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2022-09-27,Argentina,Jamaica,3,0,Friendly,Harrison,United States,True,CONMEBOL,CONCACAF,1.0,1886.0,63.0,1387.0
 2022-09-27,Bahrain,Panama,0,2,Friendly,Riffa,Bahrain,False,AFC,CONCACAF,84.0,1290.0,33.0,1518.0
 2022-09-27,Brazil,Tunisia,5,1,Friendly,Paris,France,True,CONMEBOL,CAF,5.0,1776.0,49.0,1474.0
-2022-09-27,Brunei,Laos,1,0,Friendly,Bandar Seri Begawan,Brunei,True,AFC,AFC,110.0,1000.0,190.0,876.0
+2022-09-27,Brunei,Laos,1,0,Friendly,Bandar Seri Begawan,Brunei,False,AFC,AFC,110.0,1000.0,190.0,876.0
 2022-09-27,Burkina Faso,Comoros,2,1,Friendly,Casablanca,Morocco,True,CAF,CAF,64.0,1385.0,105.0,1203.0
 2022-09-27,Canada,Uruguay,0,2,Friendly,Bratislava,Slovakia,True,CONCACAF,CONMEBOL,30.0,1532.0,13.0,1679.0
 2022-09-27,Congo DR,Sierra Leone,3,0,Friendly,Casablanca,Morocco,True,CAF,CAF,61.0,1407.0,124.0,1140.0
@@ -46610,7 +46616,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2023-11-15,Ethiopia,Sierra Leone,0,0,FIFA World Cup qualification,El Jadida,Morocco,True,CAF,CAF,147.0,1061.0,124.0,1140.0
 2023-11-15,Congo DR,Mauritania,2,0,FIFA World Cup qualification,Kinshasa,DR Congo,False,CAF,CAF,61.0,1407.0,110.0,1180.0
 2023-11-15,Rwanda,Zimbabwe,0,0,FIFA World Cup qualification,Butare,Rwanda,False,CAF,CAF,130.0,1127.0,116.0,1161.0
-2023-11-15,Equatorial Guinea,Namibia,1,0,FIFA World Cup qualification,Malabo,Equatorial Guinea,False,CAF,CAF,92.0,1256.0,108.0,1192.0
+2023-11-15,Equatorial Guinea,Namibia,0,3,FIFA World Cup qualification,Malabo,Equatorial Guinea,False,CAF,CAF,92.0,1256.0,108.0,1192.0
 2023-11-15,Belgium,Serbia,1,0,Friendly,Leuven,Belgium,False,UEFA,UEFA,8.0,1736.0,31.0,1524.0
 2023-11-15,Israel,Switzerland,1,1,UEFA Euro qualification,Felcsút,Hungary,True,UEFA,UEFA,78.0,1322.0,20.0,1625.0
 2023-11-16,Sint Maarten,Guadeloupe,0,2,CONCACAF Nations League,Bridgetown,Barbados,True,CONCACAF,CONCACAF,110.0,1000.0,110.0,1000.0
@@ -46728,7 +46734,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2023-11-20,Djibouti,Guinea-Bissau,0,1,FIFA World Cup qualification,Cairo,Egypt,True,CAF,CAF,192.0,866.0,128.0,1128.0
 2023-11-20,Gambia,Ivory Coast,0,2,FIFA World Cup qualification,Dar es Salaam,Tanzania,True,CAF,CAF,110.0,1000.0,41.0,1487.0
 2023-11-20,Seychelles,Kenya,0,5,FIFA World Cup qualification,Abidjan,Ivory Coast,True,CAF,CAF,203.0,821.0,111.0,1179.0
-2023-11-20,Liberia,Equatorial Guinea,0,1,FIFA World Cup qualification,Monrovia,Liberia,False,CAF,CAF,144.0,1068.0,92.0,1256.0
+2023-11-20,Liberia,Equatorial Guinea,3,0,FIFA World Cup qualification,Monrovia,Liberia,False,CAF,CAF,144.0,1068.0,92.0,1256.0
 2023-11-20,Mali,Central African Republic,1,1,FIFA World Cup qualification,Bamako,Mali,False,CAF,CAF,53.0,1460.0,135.0,1102.0
 2023-11-20,Chad,Madagascar,0,3,FIFA World Cup qualification,Oujda,Morocco,True,CAF,CAF,177.0,925.0,115.0,1163.0
 2023-11-20,Curacao,El Salvador,1,1,Friendly,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,81.0,1301.0
@@ -47138,6 +47144,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2024-04-26,Guatemala,Nicaragua,1,1,Friendly,San Jose,United States,True,CONCACAF,CONCACAF,106.0,1197.0,133.0,1114.0
 2024-05-31,Bolivia,Mexico,0,1,Friendly,Chicago,United States,True,CONMEBOL,CONCACAF,80.0,1308.0,17.0,1647.0
 2024-05-31,Costa Rica,Uruguay,0,0,Friendly,San José,Costa Rica,False,CONCACAF,CONMEBOL,54.0,1459.0,13.0,1679.0
+2024-06-01,Greenland,Turkmenistan,0,5,Friendly,Antalya,Turkey,True,UEFA,AFC,110.0,1000.0,142.0,1076.0
 2024-06-02,Indonesia,Tanzania,0,0,Friendly,Jakarta,Indonesia,False,AFC,CAF,123.0,1143.0,107.0,1196.0
 2024-06-03,Albania,Liechtenstein,3,0,Friendly,Szombathely,Hungary,True,UEFA,UEFA,66.0,1376.0,205.0,814.0
 2024-06-03,Croatia,North Macedonia,3,0,Friendly,Rijeka,Croatia,False,UEFA,UEFA,11.0,1699.0,67.0,1376.0
@@ -47389,7 +47396,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2024-06-27,Vanuatu,Fiji,2,1,Oceania Nations Cup,Port Vila,Vanuatu,False,OFC,OFC,163.0,992.0,150.0,1043.0
 2024-06-27,New Zealand,Tahiti,5,0,Oceania Nations Cup,Port Vila,Vanuatu,True,OFC,OFC,86.0,1285.0,156.0,1019.0
 2024-06-27,United States,Panama,1,2,Copa América,Atlanta,United States,False,CONCACAF,CONCACAF,16.0,1649.0,33.0,1518.0
-2024-06-27,Uruguay,Bolivia,4,0,Copa América,East Rutherford,United States,True,CONMEBOL,CONMEBOL,13.0,1679.0,80.0,1308.0
+2024-06-27,Uruguay,Bolivia,5,0,Copa América,East Rutherford,United States,True,CONMEBOL,CONMEBOL,13.0,1679.0,80.0,1308.0
 2024-06-28,Colombia,Costa Rica,3,0,Copa América,Glendale,United States,True,CONMEBOL,CONCACAF,14.0,1679.0,54.0,1459.0
 2024-06-28,Paraguay,Brazil,1,4,Copa América,Las Vegas,United States,True,CONMEBOL,CONMEBOL,48.0,1476.0,5.0,1776.0
 2024-06-29,Switzerland,Italy,2,0,UEFA Euro,Berlin,Germany,True,UEFA,UEFA,20.0,1625.0,9.0,1718.0
@@ -47622,6 +47629,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2024-09-10,Bahrain,Japan,0,5,FIFA World Cup qualification,Riffa,Bahrain,False,AFC,AFC,84.0,1290.0,15.0,1653.0
 2024-09-10,Indonesia,Australia,0,0,FIFA World Cup qualification,Jakarta,Indonesia,False,AFC,AFC,123.0,1143.0,26.0,1555.0
 2024-09-10,China PR,Saudi Arabia,1,2,FIFA World Cup qualification,Dalian,China PR,False,AFC,AFC,110.0,1000.0,58.0,1419.0
+2024-09-10,Zimbabwe,Cameroon,0,0,African Cup of Nations qualification,Kampala,Uganda,True,CAF,CAF,116.0,1161.0,50.0,1466.0
 2024-10-08,Brunei,Timor Leste,0,1,ASEAN Championship qualification,Bandar Seri Begawan,Brunei,False,AFC,AFC,110.0,1000.0,197.0,840.0
 2024-10-09,Barbados,United States Virgin Islands,5,0,CONCACAF Nations League,Bridgetown,Barbados,False,CONCACAF,CONCACAF,176.0,933.0,208.0,780.0
 2024-10-09,Belize,Anguilla,1,0,CONCACAF Nations League,Belmopan,Belize,False,CONCACAF,CONCACAF,179.0,919.0,209.0,769.0
@@ -47809,6 +47817,9 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2024-10-15,Timor Leste,Brunei,0,0,ASEAN Championship qualification,Chonburi,Thailand,True,AFC,AFC,197.0,840.0,110.0,1000.0
 2024-11-13,Bangladesh,Maldives,0,1,Friendly,Dhaka,Bangladesh,False,AFC,OFC,183.0,904.0,164.0,986.0
 2024-11-13,Tajikistan,Nepal,4,0,Friendly,Dushanbe,Tajikistan,False,AFC,AFC,104.0,1203.0,175.0,936.0
+2024-11-13,Liberia,Togo,1,0,African Cup of Nations qualification,Monrovia,Liberia,False,CAF,CAF,144.0,1068.0,120.0,1149.0
+2024-11-13,Chad,Sierra Leone,1,1,African Cup of Nations qualification,Abidjan,Ivory Coast,True,CAF,CAF,177.0,925.0,124.0,1140.0
+2024-11-13,Namibia,Cameroon,0,0,African Cup of Nations qualification,Johannesburg,South Africa,True,CAF,CAF,108.0,1192.0,50.0,1466.0
 2024-11-14,Belgium,Italy,0,1,UEFA Nations League,Brussels,Belgium,False,UEFA,UEFA,8.0,1736.0,9.0,1718.0
 2024-11-14,France,Israel,0,0,UEFA Nations League,Paris,France,False,UEFA,UEFA,3.0,1853.0,78.0,1322.0
 2024-11-14,Republic of Ireland,Finland,1,0,UEFA Nations League,Dublin,Republic of Ireland,False,UEFA,UEFA,60.0,1412.0,69.0,1360.0
@@ -47841,6 +47852,15 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2024-11-14,Oman,Palestine,1,0,FIFA World Cup qualification,Muscat,Oman,False,CAF,AFC,77.0,1324.0,101.0,1225.0
 2024-11-14,Bahrain,China PR,0,1,FIFA World Cup qualification,Riffa,Bahrain,False,AFC,AFC,84.0,1290.0,110.0,1000.0
 2024-11-14,Australia,Saudi Arabia,0,0,FIFA World Cup qualification,Melbourne,Australia,False,AFC,AFC,26.0,1555.0,58.0,1419.0
+2024-11-14,Madagascar,Tunisia,2,3,African Cup of Nations qualification,Pretoria,South Africa,True,CAF,CAF,115.0,1163.0,49.0,1474.0
+2024-11-14,Lesotho,Central African Republic,1,0,African Cup of Nations qualification,Bloemfontein,South Africa,True,CAF,CAF,148.0,1046.0,135.0,1102.0
+2024-11-14,Rwanda,Libya,0,1,African Cup of Nations qualification,Kigali,Rwanda,False,CAF,AFC,130.0,1127.0,117.0,1155.0
+2024-11-14,Benin,Nigeria,1,1,African Cup of Nations qualification,Abidjan,Ivory Coast,True,CAF,CAF,95.0,1240.0,43.0,1481.0
+2024-11-14,Equatorial Guinea,Algeria,0,0,African Cup of Nations qualification,Malabo,Equatorial Guinea,False,CAF,CAF,92.0,1256.0,36.0,1507.0
+2024-11-14,Niger,Sudan,4,0,African Cup of Nations qualification,Lomé,Togo,True,CAF,CAF,122.0,1143.0,114.0,1174.0
+2024-11-14,South Sudan,Congo,3,2,African Cup of Nations qualification,Juba,South Sudan,False,CAF,CAF,170.0,976.0,110.0,1000.0
+2024-11-14,Burundi,Malawi,0,0,African Cup of Nations qualification,Abidjan,Ivory Coast,True,CAF,CAF,140.0,1086.0,132.0,1118.0
+2024-11-14,Burkina Faso,Senegal,0,1,African Cup of Nations qualification,Bamako,Mali,True,CAF,CAF,64.0,1385.0,19.0,1630.0
 2024-11-15,Portugal,Poland,5,1,UEFA Nations League,Porto,Portugal,False,UEFA,UEFA,7.0,1750.0,34.0,1517.0
 2024-11-15,Scotland,Croatia,1,0,UEFA Nations League,Glasgow,Scotland,False,UEFA,UEFA,44.0,1480.0,11.0,1699.0
 2024-11-15,Denmark,Spain,1,2,UEFA Nations League,Copenhagen,Denmark,False,UEFA,UEFA,21.0,1618.0,2.0,1855.0
@@ -47864,6 +47884,16 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2024-11-15,New Zealand,Vanuatu,8,1,FIFA World Cup qualification,Hamilton,New Zealand,False,OFC,OFC,86.0,1285.0,163.0,992.0
 2024-11-15,Indonesia,Japan,0,4,FIFA World Cup qualification,Jakarta,Indonesia,False,AFC,AFC,123.0,1143.0,15.0,1653.0
 2024-11-15,Russian Federation,Brunei,2,1,Friendly,Krasnodar,Russia,False,UEFA,AFC,35.0,1516.0,110.0,1000.0
+2024-11-15,Gambia,Comoros,1,2,African Cup of Nations qualification,Berkane,Morocco,True,CAF,CAF,110.0,1000.0,105.0,1203.0
+2024-11-15,Gabon,Morocco,1,5,African Cup of Nations qualification,Franceville,Gabon,False,CAF,CAF,79.0,1310.0,12.0,1694.0
+2024-11-15,Botswana,Mauritania,1,1,African Cup of Nations qualification,Francistown,Botswana,False,CAF,CAF,136.0,1101.0,110.0,1180.0
+2024-11-15,Cape Verde,Egypt,1,1,African Cup of Nations qualification,Praia,Cape Verde,False,CAF,CAF,72.0,1344.0,32.0,1519.0
+2024-11-15,Angola,Ghana,1,1,African Cup of Nations qualification,Talatona,Angola,False,CAF,CAF,87.0,1280.0,76.0,1333.0
+2024-11-15,Zambia,Ivory Coast,1,0,African Cup of Nations qualification,Ndola,Zambia,False,CAF,CAF,88.0,1276.0,41.0,1487.0
+2024-11-15,Eswatini,Guinea-Bissau,1,1,African Cup of Nations qualification,Mbombela,South Africa,True,CAF,CAF,155.0,1023.0,128.0,1128.0
+2024-11-15,Mozambique,Mali,0,1,African Cup of Nations qualification,Maputo,Mozambique,False,CAF,CAF,96.0,1239.0,53.0,1460.0
+2024-11-15,Zimbabwe,Kenya,1,1,African Cup of Nations qualification,Polokwane,South Africa,True,CAF,CAF,116.0,1161.0,111.0,1179.0
+2024-11-15,Uganda,South Africa,0,2,African Cup of Nations qualification,Kampala,Uganda,False,CAF,CAF,89.0,1274.0,56.0,1445.0
 2024-11-16,Germany,Bosnia and Herzegovina,7,0,UEFA Nations League,Freiburg,Germany,False,UEFA,UEFA,10.0,1717.0,110.0,1000.0
 2024-11-16,Netherlands,Hungary,4,0,UEFA Nations League,Amsterdam,Netherlands,False,UEFA,UEFA,6.0,1752.0,37.0,1503.0
 2024-11-16,Albania,Czech Republic,0,0,UEFA Nations League,Tirana,Albania,False,UEFA,UEFA,66.0,1376.0,39.0,1491.0
@@ -47878,6 +47908,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2024-11-16,Bangladesh,Maldives,2,1,Friendly,Dhaka,Bangladesh,False,AFC,OFC,183.0,904.0,164.0,986.0
 2024-11-16,Nepal,Afghanistan,2,0,Friendly,Dushanbe,Tajikistan,True,AFC,AFC,175.0,936.0,160.0,1008.0
 2024-11-16,Sri Lanka,Yemen,1,0,Friendly,Al Khor,Qatar,True,AFC,CAF,200.0,834.0,158.0,1018.0
+2024-11-16,Ethiopia,Tanzania,0,2,African Cup of Nations qualification,Kinshasa,DR Congo,True,CAF,CAF,147.0,1061.0,107.0,1196.0
+2024-11-16,Guinea,Congo DR,1,0,African Cup of Nations qualification,Abidjan,Ivory Coast,True,CAF,CAF,82.0,1293.0,61.0,1407.0
 2024-11-17,Israel,Belgium,1,0,UEFA Nations League,Budapest,Hungary,True,UEFA,UEFA,78.0,1322.0,8.0,1736.0
 2024-11-17,Italy,France,1,3,UEFA Nations League,Milan,Italy,False,UEFA,UEFA,9.0,1718.0,3.0,1853.0
 2024-11-17,England,Republic of Ireland,5,0,UEFA Nations League,London,England,False,UEFA,UEFA,4.0,1819.0,60.0,1412.0
@@ -47891,6 +47923,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2024-11-17,Thailand,Laos,1,1,Friendly,Pathum Thani,Thailand,False,AFC,AFC,99.0,1234.0,190.0,876.0
 2024-11-17,Fiji,New Caledonia,1,1,FIFA World Cup qualification,Port Moresby,Papua New Guinea,True,OFC,OFC,150.0,1043.0,151.0,1040.0
 2024-11-17,Papua New Guinea,Solomon Islands,1,2,FIFA World Cup qualification,Port Moresby,Papua New Guinea,False,CAF,OFC,171.0,969.0,149.0,1046.0
+2024-11-17,Algeria,Liberia,5,1,African Cup of Nations qualification,Tizi Ouzou,Algeria,False,CAF,CAF,36.0,1507.0,144.0,1068.0
+2024-11-17,Togo,Equatorial Guinea,3,0,African Cup of Nations qualification,Lomé,Togo,False,CAF,CAF,120.0,1149.0,92.0,1256.0
 2024-11-18,Croatia,Portugal,1,1,UEFA Nations League,Split,Croatia,False,UEFA,UEFA,11.0,1699.0,7.0,1750.0
 2024-11-18,Poland,Scotland,1,2,UEFA Nations League,Warsaw,Poland,False,UEFA,UEFA,34.0,1517.0,44.0,1480.0
 2024-11-18,Serbia,Denmark,0,0,UEFA Nations League,Leskovac,Serbia,False,UEFA,UEFA,31.0,1524.0,21.0,1618.0
@@ -47911,6 +47945,15 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2024-11-18,Singapore,Taiwan,2,3,Friendly,Kallang,Singapore,False,AFC,AFC,161.0,1002.0,110.0,1000.0
 2024-11-18,Tahiti,Vanuatu,2,0,FIFA World Cup qualification,Auckland,New Zealand,True,OFC,OFC,156.0,1019.0,163.0,992.0
 2024-11-18,New Zealand,Samoa,8,0,FIFA World Cup qualification,Auckland,New Zealand,False,OFC,OFC,86.0,1285.0,189.0,876.0
+2024-11-18,Tunisia,Gambia,0,1,African Cup of Nations qualification,Tunis,Tunisia,False,CAF,CAF,49.0,1474.0,110.0,1000.0
+2024-11-18,Comoros,Madagascar,1,0,African Cup of Nations qualification,Al Hoceima,Morocco,True,CAF,CAF,105.0,1203.0,115.0,1163.0
+2024-11-18,Morocco,Lesotho,7,0,African Cup of Nations qualification,Oujda,Morocco,False,CAF,CAF,12.0,1694.0,148.0,1046.0
+2024-11-18,Central African Republic,Gabon,0,1,African Cup of Nations qualification,Johannesburg,South Africa,True,CAF,CAF,135.0,1102.0,79.0,1310.0
+2024-11-18,Nigeria,Rwanda,1,2,African Cup of Nations qualification,Uyo,Nigeria,False,CAF,CAF,43.0,1481.0,130.0,1127.0
+2024-11-18,Libya,Benin,0,0,African Cup of Nations qualification,Tripoli,Libya,False,AFC,CAF,117.0,1155.0,95.0,1240.0
+2024-11-18,Ghana,Niger,1,2,African Cup of Nations qualification,Accra,Ghana,False,CAF,CAF,76.0,1333.0,122.0,1143.0
+2024-11-18,Sudan,Angola,0,0,African Cup of Nations qualification,Benghazi,Libya,True,CAF,CAF,114.0,1174.0,87.0,1280.0
+2024-11-18,Malawi,Burkina Faso,3,0,African Cup of Nations qualification,Lilongwe,Malawi,False,CAF,CAF,132.0,1118.0,64.0,1385.0
 2024-11-19,Bosnia and Herzegovina,Netherlands,1,1,UEFA Nations League,Zenica,Bosnia and Herzegovina,False,UEFA,UEFA,110.0,1000.0,6.0,1752.0
 2024-11-19,Hungary,Germany,1,1,UEFA Nations League,Budapest,Hungary,False,UEFA,UEFA,37.0,1503.0,10.0,1717.0
 2024-11-19,Albania,Ukraine,1,2,UEFA Nations League,Tirana,Albania,False,UEFA,UEFA,66.0,1376.0,25.0,1560.0
@@ -47947,6 +47990,19 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2024-11-19,Bahrain,Australia,2,2,FIFA World Cup qualification,Riffa,Bahrain,False,AFC,AFC,84.0,1290.0,26.0,1555.0
 2024-11-19,Indonesia,Saudi Arabia,2,0,FIFA World Cup qualification,Jakarta,Indonesia,False,AFC,AFC,123.0,1143.0,58.0,1419.0
 2024-11-19,China PR,Japan,1,3,FIFA World Cup qualification,Xiamen,China PR,False,AFC,AFC,110.0,1000.0,15.0,1653.0
+2024-11-19,Egypt,Botswana,1,1,African Cup of Nations qualification,Cairo,Egypt,False,CAF,CAF,32.0,1519.0,136.0,1101.0
+2024-11-19,Mauritania,Cape Verde,1,0,African Cup of Nations qualification,Nouakchott,Mauritania,False,CAF,CAF,110.0,1180.0,72.0,1344.0
+2024-11-19,Ivory Coast,Chad,4,0,African Cup of Nations qualification,Abidjan,Ivory Coast,False,CAF,CAF,41.0,1487.0,177.0,925.0
+2024-11-19,Sierra Leone,Zambia,0,2,African Cup of Nations qualification,Monrovia,Liberia,True,CAF,CAF,124.0,1140.0,88.0,1276.0
+2024-11-19,Congo DR,Ethiopia,1,2,African Cup of Nations qualification,Kinshasa,DR Congo,False,CAF,CAF,61.0,1407.0,147.0,1061.0
+2024-11-19,Tanzania,Guinea,1,0,African Cup of Nations qualification,Dar es Salaam,Tanzania,False,CAF,CAF,107.0,1196.0,82.0,1293.0
+2024-11-19,Mali,Eswatini,6,0,African Cup of Nations qualification,Bamako,Mali,False,CAF,CAF,53.0,1460.0,155.0,1023.0
+2024-11-19,Guinea-Bissau,Mozambique,1,2,African Cup of Nations qualification,Bissau,Guinea-Bissau,False,CAF,CAF,128.0,1128.0,96.0,1239.0
+2024-11-19,Cameroon,Zimbabwe,2,1,African Cup of Nations qualification,Yaoundé,Cameroon,False,CAF,CAF,50.0,1466.0,116.0,1161.0
+2024-11-19,Kenya,Namibia,0,0,African Cup of Nations qualification,Polokwane,South Africa,True,CAF,CAF,111.0,1179.0,108.0,1192.0
+2024-11-19,South Africa,South Sudan,3,0,African Cup of Nations qualification,Cape Town,South Africa,False,CAF,CAF,56.0,1445.0,170.0,976.0
+2024-11-19,Congo,Uganda,0,1,African Cup of Nations qualification,Brazzaville,Congo,False,CAF,CAF,110.0,1000.0,89.0,1274.0
+2024-11-19,Senegal,Burundi,2,0,African Cup of Nations qualification,Dakar,Senegal,False,CAF,CAF,19.0,1630.0,140.0,1086.0
 2024-12-08,Cambodia,Malaysia,2,2,ASEAN Championship,Phnom Penh,Cambodia,False,AFC,AFC,181.0,913.0,131.0,1124.0
 2024-12-08,Timor Leste,Thailand,0,10,ASEAN Championship,Hanoi,Vietnam,True,AFC,AFC,197.0,840.0,99.0,1234.0
 2024-12-08,Hong Kong,Mongolia,3,0,EAFF Championship qualification,Hong Kong,Hong Kong,False,AFC,AFC,153.0,1033.0,187.0,880.0
@@ -48082,7 +48138,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-03-21,Ethiopia,Egypt,0,2,FIFA World Cup qualification,Casablanca,Morocco,True,CAF,CAF,147.0,1061.0,32.0,1519.0
 2025-03-21,Congo DR,South Sudan,1,0,FIFA World Cup qualification,Kinshasa,DR Congo,False,CAF,CAF,61.0,1407.0,170.0,976.0
 2025-03-21,Rwanda,Nigeria,0,2,FIFA World Cup qualification,Kigali,Rwanda,False,CAF,CAF,130.0,1127.0,43.0,1481.0
-2025-03-21,South Africa,Lesotho,2,0,FIFA World Cup qualification,Polokwane,South Africa,False,CAF,CAF,56.0,1445.0,148.0,1046.0
+2025-03-21,South Africa,Lesotho,0,3,FIFA World Cup qualification,Polokwane,South Africa,False,CAF,CAF,56.0,1445.0,148.0,1046.0
 2025-03-21,Morocco,Niger,2,1,FIFA World Cup qualification,Oujda,Morocco,False,CAF,CAF,12.0,1694.0,122.0,1143.0
 2025-03-21,Burundi,Ivory Coast,0,1,FIFA World Cup qualification,Meknes,Morocco,True,CAF,CAF,140.0,1086.0,41.0,1487.0
 2025-03-21,Botswana,Algeria,1,3,FIFA World Cup qualification,Francistown,Botswana,False,CAF,CAF,136.0,1101.0,36.0,1507.0
@@ -48218,6 +48274,12 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-06-04,Germany,Portugal,1,2,UEFA Nations League,Munich,Germany,False,UEFA,UEFA,10.0,1717.0,7.0,1750.0
 2025-06-04,Thailand,India,2,0,Friendly,Pathum Thani,Thailand,False,AFC,AFC,99.0,1234.0,127.0,1132.0
 2025-06-04,Bangladesh,Bhutan,2,0,Friendly,Dhaka,Bangladesh,False,AFC,AFC,183.0,904.0,182.0,907.0
+2025-06-04,Bermuda,Cayman Islands,5,0,FIFA World Cup qualification,Devonshire Parish,Bermuda,False,CONCACAF,CONCACAF,168.0,978.0,191.0,867.0
+2025-06-04,Grenada,Bahamas,6,0,FIFA World Cup qualification,St. George's,Grenada,False,CONCACAF,CONCACAF,174.0,954.0,204.0,819.0
+2025-06-04,Barbados,Aruba,1,1,FIFA World Cup qualification,Wildey,Barbados,False,CONCACAF,CONCACAF,176.0,933.0,195.0,864.0
+2025-06-04,Montserrat,Belize,1,0,FIFA World Cup qualification,Couva,Trinidad and Tobago,True,CONCACAF,CONCACAF,180.0,914.0,179.0,919.0
+2025-06-04,Dominica,British Virgin Islands,3,0,FIFA World Cup qualification,Roseau,Dominica,False,CONCACAF,CONCACAF,184.0,900.0,207.0,780.0
+2025-06-04,Saint Vincent and the Grenadines,Anguilla,6,0,FIFA World Cup qualification,Kingstown,Saint Vincent and the Grenadines,False,CONCACAF,CONCACAF,172.0,966.0,209.0,769.0
 2025-06-05,Spain,France,5,4,UEFA Nations League,Stuttgart,Germany,True,UEFA,UEFA,2.0,1855.0,3.0,1853.0
 2025-06-05,Algeria,Rwanda,2,0,Friendly,Constantine,Algeria,False,CAF,CAF,36.0,1507.0,130.0,1127.0
 2025-06-05,Belarus,Kazakhstan,4,1,Friendly,Borisov,Belarus,False,UEFA,AFC,98.0,1235.0,113.0,1178.0
@@ -48263,6 +48325,12 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-06-06,North Macedonia,Belgium,1,1,FIFA World Cup qualification,Skopje,North Macedonia,False,UEFA,UEFA,67.0,1376.0,8.0,1736.0
 2025-06-06,Czech Republic,Montenegro,2,0,FIFA World Cup qualification,Plzeň,Czech Republic,False,UEFA,UEFA,39.0,1491.0,73.0,1337.0
 2025-06-06,Gibraltar,Croatia,0,7,FIFA World Cup qualification,Faro-Loulé,Portugal,True,UEFA,UEFA,196.0,843.0,11.0,1699.0
+2025-06-06,Antigua and Barbuda,Cuba,0,1,FIFA World Cup qualification,Piggotts,Antigua and Barbuda,False,CONCACAF,CONCACAF,159.0,1011.0,167.0,980.0
+2025-06-06,Trinidad and Tobago,Saint Kitts and Nevis,6,2,FIFA World Cup qualification,Port of Spain,Trinidad and Tobago,False,CONCACAF,CONCACAF,100.0,1230.0,145.0,1065.0
+2025-06-06,Curacao,Saint Lucia,4,0,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,165.0,986.0
+2025-06-06,Nicaragua,Guyana,1,0,FIFA World Cup qualification,Managua,Nicaragua,False,CONCACAF,CONCACAF,133.0,1114.0,152.0,1038.0
+2025-06-06,Guatemala,Dominican Republic,4,2,FIFA World Cup qualification,Guatemala City,Guatemala,False,CONCACAF,CONCACAF,106.0,1197.0,139.0,1087.0
+2025-06-06,Suriname,Puerto Rico,1,0,FIFA World Cup qualification,Paramaribo,Suriname,False,CONCACAF,CONCACAF,137.0,1097.0,157.0,1019.0
 2025-06-07,Denmark,Northern Ireland,2,1,Friendly,Copenhagen,Denmark,False,UEFA,UEFA,21.0,1618.0,71.0,1349.0
 2025-06-07,Greece,Slovakia,4,1,Friendly,Heraklion,Greece,False,UEFA,UEFA,40.0,1490.0,46.0,1478.0
 2025-06-07,Latvia,Azerbaijan,0,0,Friendly,Riga,Latvia,False,UEFA,UEFA,138.0,1092.0,119.0,1151.0
@@ -48277,10 +48345,17 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-06-07,Canada,Ukraine,4,2,Canadian Shield,Toronto,Canada,False,CONCACAF,UEFA,30.0,1532.0,25.0,1560.0
 2025-06-07,Ivory Coast,New Zealand,0,1,Canadian Shield,Toronto,Canada,True,CAF,OFC,41.0,1487.0,86.0,1285.0
 2025-06-07,Kenya,Chad,0,0,Friendly,Marrakech,Morocco,True,CAF,CAF,111.0,1179.0,177.0,925.0
+2025-06-07,Cayman Islands,Honduras,0,1,FIFA World Cup qualification,George Town,Cayman Islands,False,CONCACAF,CONCACAF,191.0,867.0,75.0,1334.0
+2025-06-07,Bahamas,Costa Rica,0,8,FIFA World Cup qualification,Wildey,Barbados,True,CONCACAF,CONCACAF,204.0,819.0,54.0,1459.0
+2025-06-07,Aruba,Haiti,0,5,FIFA World Cup qualification,Oranjestad,Aruba,False,CONCACAF,CONCACAF,195.0,864.0,83.0,1292.0
+2025-06-07,Belize,Panama,0,2,FIFA World Cup qualification,Belmopan,Belize,False,CONCACAF,CONCACAF,179.0,919.0,33.0,1518.0
+2025-06-07,British Virgin Islands,Jamaica,0,1,FIFA World Cup qualification,Road Town,British Virgin Islands,False,CONCACAF,CONCACAF,207.0,780.0,63.0,1387.0
+2025-06-07,Anguilla,El Salvador,0,3,FIFA World Cup qualification,The Valley,Anguilla,False,CONCACAF,CONCACAF,209.0,769.0,81.0,1301.0
 2025-06-08,Germany,France,0,2,UEFA Nations League,Stuttgart,Germany,False,UEFA,UEFA,10.0,1717.0,3.0,1853.0
 2025-06-08,Portugal,Spain,2,2,UEFA Nations League,Munich,Germany,True,UEFA,UEFA,7.0,1750.0,2.0,1855.0
 2025-06-08,Congo DR,Madagascar,3,1,Friendly,Orléans,France,True,CAF,CAF,61.0,1407.0,115.0,1163.0
 2025-06-08,Georgia,Cape Verde,1,1,Friendly,Kutaisi,Georgia,False,UEFA,CAF,68.0,1373.0,72.0,1344.0
+2025-06-09,Algeria,Rwanda,2,0,Friendly,Blida,Algeria,False,CAF,CAF,36.0,1507.0,130.0,1127.0
 2025-06-09,Equatorial Guinea,Cameroon,1,1,Friendly,Marrakech,Morocco,True,CAF,CAF,92.0,1256.0,50.0,1466.0
 2025-06-09,Gabon,Guinea-Bissau,2,0,Friendly,Mohammédia,Morocco,True,CAF,CAF,79.0,1310.0,128.0,1128.0
 2025-06-09,Kosovo,Comoros,4,2,Friendly,Pristina,Kosovo,False,UEFA,CAF,97.0,1238.0,105.0,1203.0
@@ -48344,6 +48419,18 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-06-10,New Zealand,Ukraine,1,2,Canadian Shield,Toronto,Canada,True,OFC,UEFA,86.0,1285.0,25.0,1560.0
 2025-06-10,Canada,Ivory Coast,0,0,Canadian Shield,Toronto,Canada,False,CONCACAF,CAF,30.0,1532.0,41.0,1487.0
 2025-06-10,Belarus,Russian Federation,1,4,Friendly,Minsk,Belarus,False,UEFA,UEFA,98.0,1235.0,35.0,1516.0
+2025-06-10,Cuba,Bermuda,1,2,FIFA World Cup qualification,Santiago de Cuba,Cuba,False,CONCACAF,CONCACAF,167.0,980.0,168.0,978.0
+2025-06-10,Honduras,Antigua and Barbuda,2,0,FIFA World Cup qualification,Tegucigalpa,Honduras,False,CONCACAF,CONCACAF,75.0,1334.0,159.0,1011.0
+2025-06-10,Saint Kitts and Nevis,Grenada,2,3,FIFA World Cup qualification,Basseterre,Saint Kitts and Nevis,False,CONCACAF,CONCACAF,145.0,1065.0,174.0,954.0
+2025-06-10,Costa Rica,Trinidad and Tobago,2,1,FIFA World Cup qualification,San José,Costa Rica,False,CONCACAF,CONCACAF,54.0,1459.0,100.0,1230.0
+2025-06-10,Saint Lucia,Barbados,2,1,FIFA World Cup qualification,Gros Islet,Saint Lucia,False,CONCACAF,CONCACAF,165.0,986.0,176.0,933.0
+2025-06-10,Haiti,Curacao,1,5,FIFA World Cup qualification,Oranjestad,Aruba,True,CONCACAF,CONCACAF,83.0,1292.0,90.0,1265.0
+2025-06-10,Guyana,Montserrat,3,0,FIFA World Cup qualification,Leonora,Guyana,False,CONCACAF,CONCACAF,152.0,1038.0,180.0,914.0
+2025-06-10,Panama,Nicaragua,3,0,FIFA World Cup qualification,Panama City,Panama,False,CONCACAF,CONCACAF,33.0,1518.0,133.0,1114.0
+2025-06-10,Dominican Republic,Dominica,5,0,FIFA World Cup qualification,Santo Domingo,Dominican Republic,False,CONCACAF,CONCACAF,139.0,1087.0,184.0,900.0
+2025-06-10,Jamaica,Guatemala,3,0,FIFA World Cup qualification,Kingston,Jamaica,False,CONCACAF,CONCACAF,63.0,1387.0,106.0,1197.0
+2025-06-10,Puerto Rico,Saint Vincent and the Grenadines,2,1,FIFA World Cup qualification,Mayagüez,Puerto Rico,False,CONCACAF,CONCACAF,157.0,1019.0,172.0,966.0
+2025-06-10,El Salvador,Suriname,1,1,FIFA World Cup qualification,San Salvador,El Salvador,False,CONCACAF,CONCACAF,81.0,1301.0,137.0,1097.0
 2025-06-14,Mexico,Dominican Republic,3,2,Gold Cup,Inglewood,United States,True,CONCACAF,CONCACAF,17.0,1647.0,139.0,1087.0
 2025-06-15,Costa Rica,Suriname,4,3,Gold Cup,San Diego,United States,True,CONCACAF,CONCACAF,54.0,1459.0,137.0,1097.0
 2025-06-15,United States,Trinidad and Tobago,5,0,Gold Cup,San Jose,United States,False,CONCACAF,CONCACAF,16.0,1649.0,100.0,1230.0
@@ -48427,6 +48514,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-09-04,Liechtenstein,Belgium,0,6,FIFA World Cup qualification,Vaduz,Liechtenstein,False,UEFA,UEFA,205.0,814.0,8.0,1736.0
 2025-09-04,Iraq,Hong Kong,2,1,King's Cup,Kanchanaburi,Thailand,True,AFC,AFC,59.0,1413.0,153.0,1033.0
 2025-09-04,Thailand,Fiji,3,0,King's Cup,Kanchanaburi,Thailand,False,AFC,OFC,99.0,1234.0,150.0,1043.0
+2025-09-04,Suriname,Panama,0,0,FIFA World Cup qualification,Paramaribo,Suriname,False,CONCACAF,CONCACAF,137.0,1097.0,33.0,1518.0
+2025-09-04,Guatemala,El Salvador,0,1,FIFA World Cup qualification,Guatemala City,Guatemala,False,CONCACAF,CONCACAF,106.0,1197.0,81.0,1301.0
 2025-09-05,Australia,New Zealand,1,0,Soccer Ashes,Canberra,Australia,False,AFC,OFC,26.0,1555.0,86.0,1285.0
 2025-09-05,Indonesia,Taiwan,6,0,Friendly,Surabaya,Indonesia,False,AFC,AFC,123.0,1143.0,110.0,1000.0
 2025-09-05,Romania,Canada,0,3,Friendly,Bucharest,Romania,False,UEFA,CONCACAF,45.0,1479.0,30.0,1532.0
@@ -48454,6 +48543,10 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-09-05,Moldova,Israel,0,4,FIFA World Cup qualification,Chișinău,Moldova,False,UEFA,UEFA,154.0,1031.0,78.0,1322.0
 2025-09-05,Faroe Islands,Croatia,0,1,FIFA World Cup qualification,Tórshavn,Faroe Islands,False,UEFA,UEFA,141.0,1085.0,11.0,1699.0
 2025-09-05,Montenegro,Czech Republic,0,2,FIFA World Cup qualification,Podgorica,Montenegro,False,UEFA,UEFA,73.0,1337.0,39.0,1491.0
+2025-09-05,Bermuda,Jamaica,0,4,FIFA World Cup qualification,Devonshire Parish,Bermuda,False,CONCACAF,CONCACAF,168.0,978.0,63.0,1387.0
+2025-09-05,Trinidad and Tobago,Curacao,0,0,FIFA World Cup qualification,Port of Spain,Trinidad and Tobago,False,CONCACAF,CONCACAF,100.0,1230.0,90.0,1265.0
+2025-09-05,Haiti,Honduras,0,0,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,83.0,1292.0,75.0,1334.0
+2025-09-05,Nicaragua,Costa Rica,1,1,FIFA World Cup qualification,Managua,Nicaragua,False,CONCACAF,CONCACAF,133.0,1114.0,54.0,1459.0
 2025-09-06,Sri Lanka,Maldives,0,3,South Asian Super Cup,Colombo,Sri Lanka,False,AFC,OFC,200.0,834.0,164.0,986.0
 2025-09-06,Mexico,Japan,0,0,Friendly,Oakland,United States,True,CONCACAF,AFC,17.0,1647.0,15.0,1653.0
 2025-09-06,Nepal,Bangladesh,0,0,Friendly,Kathmandu,Nepal,False,AFC,AFC,175.0,936.0,183.0,904.0
@@ -48499,6 +48592,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-09-08,Israel,Italy,4,5,FIFA World Cup qualification,Debrecen,Hungary,True,UEFA,UEFA,78.0,1322.0,9.0,1718.0
 2025-09-08,Croatia,Montenegro,4,0,FIFA World Cup qualification,Zagreb,Croatia,False,UEFA,UEFA,11.0,1699.0,73.0,1337.0
 2025-09-08,Gibraltar,Faroe Islands,0,1,FIFA World Cup qualification,Gibraltar,Gibraltar,False,UEFA,UEFA,196.0,843.0,141.0,1085.0
+2025-09-08,El Salvador,Suriname,1,2,FIFA World Cup qualification,San Salvador,El Salvador,False,CONCACAF,CONCACAF,81.0,1301.0,137.0,1097.0
+2025-09-08,Panama,Guatemala,1,1,FIFA World Cup qualification,Panama City,Panama,False,CONCACAF,CONCACAF,33.0,1518.0,106.0,1197.0
 2025-09-09,Estonia,Andorra,0,0,Friendly,Tallinn,Estonia,False,UEFA,UEFA,121.0,1144.0,173.0,957.0
 2025-09-09,Jordan,Dominican Republic,3,0,Friendly,Amman,Jordan,False,AFC,CONCACAF,62.0,1389.0,139.0,1087.0
 2025-09-09,Malta,San Marino,3,1,Friendly,Ta' Qali,Malta,False,UEFA,UEFA,169.0,976.0,210.0,741.0
@@ -48537,6 +48632,10 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-09-09,Norway,Moldova,11,1,FIFA World Cup qualification,Oslo,Norway,False,UEFA,UEFA,38.0,1497.0,154.0,1031.0
 2025-09-09,Albania,Latvia,1,0,FIFA World Cup qualification,Tirana,Albania,False,UEFA,UEFA,66.0,1376.0,138.0,1092.0
 2025-09-09,Serbia,England,0,5,FIFA World Cup qualification,Belgrade,Serbia,False,UEFA,UEFA,31.0,1524.0,4.0,1819.0
+2025-09-09,Jamaica,Trinidad and Tobago,2,0,FIFA World Cup qualification,Kingston,Jamaica,False,CONCACAF,CONCACAF,63.0,1387.0,100.0,1230.0
+2025-09-09,Curacao,Bermuda,3,2,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,168.0,978.0
+2025-09-09,Costa Rica,Haiti,3,3,FIFA World Cup qualification,San José,Costa Rica,False,CONCACAF,CONCACAF,54.0,1459.0,83.0,1292.0
+2025-09-09,Honduras,Nicaragua,2,0,FIFA World Cup qualification,Tegucigalpa,Honduras,False,CONCACAF,CONCACAF,75.0,1334.0,133.0,1114.0
 2025-10-04,Saint Kitts and Nevis,Saint Martin,5,0,Friendly,Basseterre,Saint Kitts and Nevis,False,CONCACAF,CONCACAF,145.0,1065.0,110.0,1000.0
 2025-10-05,Saint Kitts and Nevis,Saint Martin,2,1,Friendly,Basseterre,Saint Kitts and Nevis,False,CONCACAF,CONCACAF,145.0,1065.0,110.0,1000.0
 2025-10-05,Saint Vincent and the Grenadines,Cuba,7,0,Friendly,Arnos Vale,Saint Vincent and the Grenadines,False,CONCACAF,CONCACAF,172.0,966.0,167.0,980.0
@@ -48585,6 +48684,9 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-10-09,Syria,Myanmar,5,1,AFC Asian Cup qualification,Al Hofuf,Saudi Arabia,True,AFC,AFC,93.0,1254.0,162.0,995.0
 2025-10-09,Laos,Malaysia,0,3,AFC Asian Cup qualification,Vientiane,Laos,False,AFC,AFC,190.0,876.0,131.0,1124.0
 2025-10-09,Vietnam,Nepal,3,1,AFC Asian Cup qualification,Ho Chi Minh City,Vietnam,False,AFC,AFC,109.0,1184.0,175.0,936.0
+2025-10-09,Liberia,Namibia,3,1,FIFA World Cup qualification,Monrovia,Liberia,False,CAF,CAF,144.0,1068.0,108.0,1192.0
+2025-10-09,Nicaragua,Haiti,0,3,FIFA World Cup qualification,Managua,Nicaragua,False,CONCACAF,CONCACAF,133.0,1114.0,83.0,1292.0
+2025-10-09,Honduras,Costa Rica,0,0,FIFA World Cup qualification,San Pedro Sula,Honduras,False,CONCACAF,CONCACAF,75.0,1334.0,54.0,1459.0
 2025-10-10,Argentina,Venezuela,1,0,Friendly,Miami Gardens,United States,True,CONMEBOL,CONMEBOL,1.0,1886.0,47.0,1477.0
 2025-10-10,Chile,Peru,2,1,Friendly,Santiago,Chile,False,CONMEBOL,CONMEBOL,52.0,1462.0,42.0,1483.0
 2025-10-10,Canada,Australia,0,1,Friendly,Montreal,Canada,False,CONCACAF,AFC,30.0,1532.0,26.0,1555.0
@@ -48603,7 +48705,6 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-10-10,South Africa,Zimbabwe,0,0,FIFA World Cup qualification,Durban,South Africa,False,CAF,CAF,56.0,1445.0,116.0,1161.0
 2025-10-10,Gambia,Gabon,3,4,FIFA World Cup qualification,Nairobi,Kenya,True,CAF,CAF,110.0,1000.0,79.0,1310.0
 2025-10-10,Seychelles,Ivory Coast,0,7,FIFA World Cup qualification,Saint Pierre,Mauritius,True,CAF,CAF,203.0,821.0,41.0,1487.0
-2025-10-10,Liberia,Namibia,3,1,FIFA World Cup qualification,Monrovia,Liberia,False,CAF,CAF,144.0,1068.0,108.0,1192.0
 2025-10-10,Tunisia,São Tomé and Príncipe,6,0,FIFA World Cup qualification,Radès,Tunisia,False,CAF,CONCACAF,49.0,1474.0,110.0,1000.0
 2025-10-10,Northern Ireland,Slovakia,2,0,FIFA World Cup qualification,Belfast,Northern Ireland,False,UEFA,UEFA,71.0,1349.0,46.0,1478.0
 2025-10-10,Germany,Luxembourg,4,0,FIFA World Cup qualification,Sinsheim,Germany,False,UEFA,UEFA,10.0,1717.0,91.0,1262.0
@@ -48613,6 +48714,10 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-10-10,France,Azerbaijan,3,0,FIFA World Cup qualification,Paris,France,False,UEFA,UEFA,3.0,1853.0,119.0,1151.0
 2025-10-10,Kazakhstan,Liechtenstein,4,0,FIFA World Cup qualification,Astana,Kazakhstan,False,AFC,UEFA,113.0,1178.0,205.0,814.0
 2025-10-10,Belgium,North Macedonia,0,0,FIFA World Cup qualification,Gent,Belgium,False,UEFA,UEFA,8.0,1736.0,67.0,1376.0
+2025-10-10,Suriname,Guatemala,1,1,FIFA World Cup qualification,Paramaribo,Suriname,False,CONCACAF,CONCACAF,137.0,1097.0,106.0,1197.0
+2025-10-10,El Salvador,Panama,0,1,FIFA World Cup qualification,San Salvador,El Salvador,False,CONCACAF,CONCACAF,81.0,1301.0,33.0,1518.0
+2025-10-10,Bermuda,Trinidad and Tobago,0,3,FIFA World Cup qualification,Devonshire Parish,Bermuda,False,CONCACAF,CONCACAF,168.0,978.0,100.0,1230.0
+2025-10-10,Curacao,Jamaica,2,0,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,63.0,1387.0
 2025-10-11,Grenada,Cuba,2,0,Friendly,St. George's,Grenada,False,CONCACAF,CONCACAF,174.0,954.0,167.0,980.0
 2025-10-11,Mexico,Colombia,0,4,Friendly,Arlington,United States,True,CONCACAF,CONMEBOL,17.0,1647.0,14.0,1679.0
 2025-10-11,United Arab Emirates,Oman,2,1,FIFA World Cup qualification,Al Rayyan,Qatar,True,AFC,CAF,110.0,1000.0,77.0,1324.0
@@ -48659,6 +48764,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-10-13,Ukraine,Azerbaijan,2,1,FIFA World Cup qualification,Kraków,Poland,True,UEFA,UEFA,25.0,1560.0,119.0,1151.0
 2025-10-13,Wales,Belgium,2,4,FIFA World Cup qualification,Cardiff,Wales,False,UEFA,UEFA,29.0,1536.0,8.0,1736.0
 2025-10-13,North Macedonia,Kazakhstan,1,1,FIFA World Cup qualification,Skopje,North Macedonia,False,UEFA,AFC,67.0,1376.0,113.0,1178.0
+2025-10-13,Honduras,Haiti,3,0,FIFA World Cup qualification,Tegucigalpa,Honduras,False,CONCACAF,CONCACAF,75.0,1334.0,83.0,1292.0
+2025-10-13,Costa Rica,Nicaragua,4,1,FIFA World Cup qualification,San José,Costa Rica,False,CONCACAF,CONCACAF,54.0,1459.0,133.0,1114.0
 2025-10-14,Albania,Jordan,4,2,Friendly,Tirana,Albania,False,UEFA,AFC,66.0,1376.0,62.0,1389.0
 2025-10-14,Japan,Brazil,3,2,Kirin Cup,Tokyo,Japan,False,AFC,CONMEBOL,15.0,1653.0,5.0,1776.0
 2025-10-14,Iran,Tanzania,2,0,Friendly,Dubai,United Arab Emirates,True,AFC,CAF,18.0,1637.0,107.0,1196.0
@@ -48702,6 +48809,10 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-10-14,Afghanistan,Pakistan,1,1,AFC Asian Cup qualification,Al Farwaniyah,Kuwait,True,AFC,AFC,160.0,1008.0,198.0,838.0
 2025-10-14,Vietnam,Nepal,1,0,AFC Asian Cup qualification,Ho Chi Minh City,Vietnam,False,AFC,AFC,109.0,1184.0,175.0,936.0
 2025-10-14,Malaysia,Laos,5,1,AFC Asian Cup qualification,Kuala Lumpur,Malaysia,False,AFC,AFC,131.0,1124.0,190.0,876.0
+2025-10-14,Panama,Suriname,1,1,FIFA World Cup qualification,Panama City,Panama,False,CONCACAF,CONCACAF,33.0,1518.0,137.0,1097.0
+2025-10-14,El Salvador,Guatemala,0,1,FIFA World Cup qualification,San Salvador,El Salvador,False,CONCACAF,CONCACAF,81.0,1301.0,106.0,1197.0
+2025-10-14,Curacao,Trinidad and Tobago,1,1,FIFA World Cup qualification,Willemstad,Curaçao,False,CONCACAF,CONCACAF,90.0,1265.0,100.0,1230.0
+2025-10-14,Jamaica,Bermuda,4,0,FIFA World Cup qualification,Kingston,Jamaica,False,CONCACAF,CONCACAF,63.0,1387.0,168.0,978.0
 2025-11-12,Tunisia,Mauritania,1,1,Friendly,Radès,Tunisia,False,CAF,CAF,49.0,1474.0,110.0,1180.0
 2025-11-12,Russian Federation,Peru,1,1,Friendly,Saint Petersburg,Russia,False,UEFA,CONMEBOL,35.0,1516.0,42.0,1483.0
 2025-11-12,Cuba,Saint Lucia,3,0,CONCACAF Series,Santiago de los Caballeros,Dominican Republic,True,CONCACAF,CONCACAF,167.0,980.0,165.0,986.0
@@ -48733,6 +48844,12 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-11-13,Andorra,Albania,0,1,FIFA World Cup qualification,Encamp,Andorra,False,UEFA,UEFA,173.0,957.0,66.0,1376.0
 2025-11-13,Iran,Cape Verde,0,0,Al Ain International Cup,Al Ain,United Arab Emirates,True,AFC,CAF,18.0,1637.0,72.0,1344.0
 2025-11-13,Papua New Guinea,Solomon Islands,1,0,MSG Prime Minister's Cup,Port Moresby,Papua New Guinea,False,CAF,OFC,171.0,969.0,149.0,1046.0
+2025-11-13,Suriname,El Salvador,4,0,FIFA World Cup qualification,Paramaribo,Suriname,False,CONCACAF,CONCACAF,137.0,1097.0,81.0,1301.0
+2025-11-13,Guatemala,Panama,2,3,FIFA World Cup qualification,Guatemala City,Guatemala,False,CONCACAF,CONCACAF,106.0,1197.0,33.0,1518.0
+2025-11-13,Bermuda,Curacao,0,7,FIFA World Cup qualification,Devonshire Parish,Bermuda,False,CONCACAF,CONCACAF,168.0,978.0,90.0,1265.0
+2025-11-13,Trinidad and Tobago,Jamaica,1,1,FIFA World Cup qualification,Port of Spain,Trinidad and Tobago,False,CONCACAF,CONCACAF,100.0,1230.0,63.0,1387.0
+2025-11-13,Haiti,Costa Rica,1,0,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,83.0,1292.0,54.0,1459.0
+2025-11-13,Nicaragua,Honduras,2,0,FIFA World Cup qualification,Managua,Nicaragua,False,CONCACAF,CONCACAF,133.0,1114.0,75.0,1334.0
 2025-11-14,Angola,Argentina,0,2,Friendly,Luanda,Angola,False,CAF,CONMEBOL,87.0,1280.0,1.0,1886.0
 2025-11-14,Australia,Venezuela,0,1,Friendly,Houston,United States,True,AFC,CONMEBOL,26.0,1555.0,47.0,1477.0
 2025-11-14,South Korea,Bolivia,2,0,Friendly,Daejeon,South Korea,False,AFC,CONMEBOL,23.0,1575.0,80.0,1308.0
@@ -48848,6 +48965,12 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-11-18,Saint Kitts and Nevis,Belize,2,6,CONCACAF Series,Basseterre,Saint Kitts and Nevis,False,CONCACAF,CONCACAF,145.0,1065.0,179.0,919.0
 2025-11-18,Antigua and Barbuda,Guyana,1,4,CONCACAF Series,North Sound,Antigua and Barbuda,False,CONCACAF,CONCACAF,159.0,1011.0,152.0,1038.0
 2025-11-18,Iran,Uzbekistan,0,0,Al Ain International Cup,Al Ain,United Arab Emirates,True,AFC,AFC,18.0,1637.0,57.0,1437.0
+2025-11-18,Guatemala,Suriname,3,1,FIFA World Cup qualification,Guatemala City,Guatemala,False,CONCACAF,CONCACAF,106.0,1197.0,137.0,1097.0
+2025-11-18,Panama,El Salvador,3,0,FIFA World Cup qualification,Panama City,Panama,False,CONCACAF,CONCACAF,33.0,1518.0,81.0,1301.0
+2025-11-18,Jamaica,Curacao,0,0,FIFA World Cup qualification,Kingston,Jamaica,False,CONCACAF,CONCACAF,63.0,1387.0,90.0,1265.0
+2025-11-18,Trinidad and Tobago,Bermuda,2,2,FIFA World Cup qualification,Port of Spain,Trinidad and Tobago,False,CONCACAF,CONCACAF,100.0,1230.0,168.0,978.0
+2025-11-18,Costa Rica,Honduras,0,0,FIFA World Cup qualification,San José,Costa Rica,False,CONCACAF,CONCACAF,54.0,1459.0,75.0,1334.0
+2025-11-18,Haiti,Nicaragua,2,0,FIFA World Cup qualification,Willemstad,Curaçao,True,CONCACAF,CONCACAF,83.0,1292.0,133.0,1114.0
 2025-11-19,Laos,Vietnam,0,2,AFC Asian Cup qualification,Vientiane,Laos,False,AFC,AFC,190.0,876.0,109.0,1184.0
 2025-11-20,Vanuatu,Solomon Islands,2,1,MSG Prime Minister's Cup,Port Moresby,Papua New Guinea,True,OFC,OFC,163.0,992.0,149.0,1046.0
 2025-11-20,Papua New Guinea,Fiji,2,0,MSG Prime Minister's Cup,Port Moresby,Papua New Guinea,False,CAF,OFC,171.0,969.0,150.0,1043.0
@@ -48890,3 +49013,60 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,h
 2025-12-15,Morocco,United Arab Emirates,3,0,Arab Cup,Al Rayyan,Qatar,True,CAF,AFC,12.0,1694.0,110.0,1000.0
 2025-12-15,Saudi Arabia,Jordan,0,1,Arab Cup,Al Khor,Qatar,True,AFC,AFC,58.0,1419.0,62.0,1389.0
 2025-12-18,Jordan,Morocco,2,3,Arab Cup,Lusail,Qatar,True,AFC,CAF,62.0,1389.0,12.0,1694.0
+2025-12-21,Morocco,Comoros,2,0,African Cup of Nations,Rabat,Morocco,False,CAF,CAF,12.0,1694.0,105.0,1203.0
+2025-12-22,Mali,Zambia,1,1,African Cup of Nations,Casablanca,Morocco,True,CAF,CAF,53.0,1460.0,88.0,1276.0
+2025-12-22,South Africa,Angola,2,1,African Cup of Nations,Marrakesh,Morocco,True,CAF,CAF,56.0,1445.0,87.0,1280.0
+2025-12-22,Egypt,Zimbabwe,2,1,African Cup of Nations,Agadir,Morocco,True,CAF,CAF,32.0,1519.0,116.0,1161.0
+2025-12-23,Nigeria,Tanzania,2,1,African Cup of Nations,Fez,Morocco,True,CAF,CAF,43.0,1481.0,107.0,1196.0
+2025-12-23,Tunisia,Uganda,3,1,African Cup of Nations,Rabat,Morocco,True,CAF,CAF,49.0,1474.0,89.0,1274.0
+2025-12-23,Congo DR,Benin,1,0,African Cup of Nations,Rabat,Morocco,True,CAF,CAF,61.0,1407.0,95.0,1240.0
+2025-12-23,Senegal,Botswana,3,0,African Cup of Nations,Tangier,Morocco,True,CAF,CAF,19.0,1630.0,136.0,1101.0
+2025-12-24,Burkina Faso,Equatorial Guinea,2,1,African Cup of Nations,Casablanca,Morocco,True,CAF,CAF,64.0,1385.0,92.0,1256.0
+2025-12-24,Algeria,Sudan,3,0,African Cup of Nations,Rabat,Morocco,True,CAF,CAF,36.0,1507.0,114.0,1174.0
+2025-12-24,Ivory Coast,Mozambique,1,0,African Cup of Nations,Marrakesh,Morocco,True,CAF,CAF,41.0,1487.0,96.0,1239.0
+2025-12-24,Cameroon,Gabon,1,0,African Cup of Nations,Agadir,Morocco,True,CAF,CAF,50.0,1466.0,79.0,1310.0
+2025-12-26,Zambia,Comoros,0,0,African Cup of Nations,Casablanca,Morocco,True,CAF,CAF,88.0,1276.0,105.0,1203.0
+2025-12-26,Morocco,Mali,1,1,African Cup of Nations,Rabat,Morocco,False,CAF,CAF,12.0,1694.0,53.0,1460.0
+2025-12-26,Angola,Zimbabwe,1,1,African Cup of Nations,Marrakesh,Morocco,True,CAF,CAF,87.0,1280.0,116.0,1161.0
+2025-12-26,Egypt,South Africa,1,0,African Cup of Nations,Agadir,Morocco,True,CAF,CAF,32.0,1519.0,56.0,1445.0
+2025-12-27,Uganda,Tanzania,1,1,African Cup of Nations,Rabat,Morocco,True,CAF,CAF,89.0,1274.0,107.0,1196.0
+2025-12-27,Nigeria,Tunisia,3,2,African Cup of Nations,Fez,Morocco,True,CAF,CAF,43.0,1481.0,49.0,1474.0
+2025-12-27,Benin,Botswana,1,0,African Cup of Nations,Rabat,Morocco,True,CAF,CAF,95.0,1240.0,136.0,1101.0
+2025-12-27,Senegal,Congo DR,1,1,African Cup of Nations,Tangier,Morocco,True,CAF,CAF,19.0,1630.0,61.0,1407.0
+2025-12-28,Equatorial Guinea,Sudan,0,1,African Cup of Nations,Casablanca,Morocco,True,CAF,CAF,92.0,1256.0,114.0,1174.0
+2025-12-28,Algeria,Burkina Faso,1,0,African Cup of Nations,Rabat,Morocco,True,CAF,CAF,36.0,1507.0,64.0,1385.0
+2025-12-28,Gabon,Mozambique,2,3,African Cup of Nations,Agadir,Morocco,True,CAF,CAF,79.0,1310.0,96.0,1239.0
+2025-12-28,Ivory Coast,Cameroon,1,1,African Cup of Nations,Marrakesh,Morocco,True,CAF,CAF,41.0,1487.0,50.0,1466.0
+2025-12-29,Morocco,Zambia,3,0,African Cup of Nations,Rabat,Morocco,False,CAF,CAF,12.0,1694.0,88.0,1276.0
+2025-12-29,Comoros,Mali,0,0,African Cup of Nations,Casablanca,Morocco,True,CAF,CAF,105.0,1203.0,53.0,1460.0
+2025-12-29,Angola,Egypt,0,0,African Cup of Nations,Agadir,Morocco,True,CAF,CAF,87.0,1280.0,32.0,1519.0
+2025-12-29,Zimbabwe,South Africa,2,3,African Cup of Nations,Marrakesh,Morocco,True,CAF,CAF,116.0,1161.0,56.0,1445.0
+2025-12-30,Uganda,Nigeria,1,3,African Cup of Nations,Fez,Morocco,True,CAF,CAF,89.0,1274.0,43.0,1481.0
+2025-12-30,Tanzania,Tunisia,1,1,African Cup of Nations,Rabat,Morocco,True,CAF,CAF,107.0,1196.0,49.0,1474.0
+2025-12-30,Benin,Senegal,0,3,African Cup of Nations,Tangier,Morocco,True,CAF,CAF,95.0,1240.0,19.0,1630.0
+2025-12-30,Botswana,Congo DR,0,3,African Cup of Nations,Rabat,Morocco,True,CAF,CAF,136.0,1101.0,61.0,1407.0
+2025-12-31,Equatorial Guinea,Algeria,1,3,African Cup of Nations,Rabat,Morocco,True,CAF,CAF,92.0,1256.0,36.0,1507.0
+2025-12-31,Sudan,Burkina Faso,0,2,African Cup of Nations,Casablanca,Morocco,True,CAF,CAF,114.0,1174.0,64.0,1385.0
+2025-12-31,Gabon,Ivory Coast,2,3,African Cup of Nations,Marrakesh,Morocco,True,CAF,CAF,79.0,1310.0,41.0,1487.0
+2025-12-31,Mozambique,Cameroon,1,2,African Cup of Nations,Agadir,Morocco,True,CAF,CAF,96.0,1239.0,50.0,1466.0
+2026-01-03,Senegal,Sudan,3,1,African Cup of Nations,Tangier,Morocco,True,CAF,CAF,19.0,1630.0,114.0,1174.0
+2026-01-03,Mali,Tunisia,1,1,African Cup of Nations,Casablanca,Morocco,True,CAF,CAF,53.0,1460.0,49.0,1474.0
+2026-01-04,Morocco,Tanzania,1,0,African Cup of Nations,Rabat,Morocco,False,CAF,CAF,12.0,1694.0,107.0,1196.0
+2026-01-04,South Africa,Cameroon,1,2,African Cup of Nations,Rabat,Morocco,True,CAF,CAF,56.0,1445.0,50.0,1466.0
+2026-01-05,Egypt,Benin,3,1,African Cup of Nations,Agadir,Morocco,True,CAF,CAF,32.0,1519.0,95.0,1240.0
+2026-01-05,Nigeria,Mozambique,4,0,African Cup of Nations,Fez,Morocco,True,CAF,CAF,43.0,1481.0,96.0,1239.0
+2026-01-06,Algeria,Congo DR,1,0,African Cup of Nations,Rabat,Morocco,True,CAF,CAF,36.0,1507.0,61.0,1407.0
+2026-01-06,Ivory Coast,Burkina Faso,3,0,African Cup of Nations,Marrakesh,Morocco,True,CAF,CAF,41.0,1487.0,64.0,1385.0
+2026-01-09,Mali,Senegal,0,1,African Cup of Nations,Tangier,Morocco,True,CAF,CAF,53.0,1460.0,19.0,1630.0
+2026-01-09,Morocco,Cameroon,2,0,African Cup of Nations,Rabat,Morocco,False,CAF,CAF,12.0,1694.0,50.0,1466.0
+2026-01-10,Algeria,Nigeria,0,2,African Cup of Nations,Marrakesh,Morocco,True,CAF,CAF,36.0,1507.0,43.0,1481.0
+2026-01-10,Egypt,Ivory Coast,3,2,African Cup of Nations,Agadir,Morocco,True,CAF,CAF,32.0,1519.0,41.0,1487.0
+2026-01-14,Senegal,Egypt,1,0,African Cup of Nations,Tangier,Morocco,True,CAF,CAF,19.0,1630.0,32.0,1519.0
+2026-01-14,Morocco,Nigeria,0,0,African Cup of Nations,Rabat,Morocco,False,CAF,CAF,12.0,1694.0,43.0,1481.0
+2026-01-17,Egypt,Nigeria,0,0,African Cup of Nations,Casablanca,Morocco,True,CAF,CAF,32.0,1519.0,43.0,1481.0
+2026-01-18,Morocco,Senegal,0,1,African Cup of Nations,Rabat,Morocco,False,CAF,CAF,12.0,1694.0,19.0,1630.0
+2026-01-18,Bolivia,Panama,1,1,Friendly,Tarija,Bolivia,False,CONMEBOL,CONCACAF,80.0,1308.0,33.0,1518.0
+2026-01-18,Grenada,Jamaica,0,1,Friendly,St. George's,Grenada,False,CONCACAF,CONCACAF,174.0,954.0,63.0,1387.0
+2026-01-22,Panama,Mexico,0,1,Friendly,Panama City,Panama,False,CONCACAF,CONCACAF,33.0,1518.0,17.0,1647.0
+2026-01-25,Bolivia,Mexico,0,1,Friendly,Santa Cruz,Bolivia,False,CONMEBOL,CONCACAF,80.0,1308.0,17.0,1647.0
+2026-01-26,Uzbekistan,China PR,2,2,Friendly,Dubai,United Arab Emirates,True,AFC,AFC,57.0,1437.0,110.0,1000.0
