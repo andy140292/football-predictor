@@ -37,3 +37,19 @@ class HeadToHeadResponse(BaseModel):
     matches: List[MatchOut]
     home_form: TeamForm
     away_form: TeamForm
+
+
+class TeamVsConfedInput(BaseModel):
+    team: str
+    opponent_confederation: str
+
+
+class TeamVsConfedResponse(BaseModel):
+    team: str
+    opponent_confederation: str
+    matches_count: int
+    wins: int
+    draws: int
+    losses: int
+    goals_for: int
+    goals_against: int

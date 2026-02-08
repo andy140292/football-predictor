@@ -100,3 +100,53 @@ def get_head_to_head(home_team: str, away_team: str, tournaments: List[str]) -> 
         "home_form": _team_form(home_team, h2h),
         "away_form": _team_form(away_team, h2h),
     }
+
+
+def _team_record(team: str, matches: pd.DataFrame) -> Dict[str, int]:
+    wins = draws = losses = goals_for = goals_against = 0
+    for _, row in matches.iterrows():
+        if row["home_team"] == team:
+            team_goals = row["home_score"]
+            opp_goals = row["away_score"]
+        else:
+            team_goals = row["away_score"]
+            opp_goals = row["home_score"]
+
+        goals_for += int(team_goals)
+        goals_against += int(opp_goals)
+        if team_goals > opp_goals:
+            wins += 1
+        elif team_goals == opp_goals:
+            draws += 1
+        else:
+            losses += 1
+
+    return {
+        "matches_count": int(len(matches)),
+        "wins": wins,
+        "draws": draws,
+        "losses": losses,
+        "goals_for": goals_for,
+        "goals_against": goals_against,
+    }
+
+
+def get_team_vs_confed(team: str, opponent_confederation: str) -> Dict[str, object]:
+    df = load_matches()
+    df = df[df["tournament"].isin(_FORM_TOURNAMENTS)]
+    confed = (opponent_confederation or "").strip().upper()
+
+    home_conf = df["home_team_confederation"].astype(str).str.upper()
+    away_conf = df["away_team_confederation"].astype(str).str.upper()
+
+    filtered = df[
+        ((df["home_team"] == team) & (away_conf == confed))
+        | ((df["away_team"] == team) & (home_conf == confed))
+    ]
+
+    record = _team_record(team, filtered)
+    return {
+        "team": team,
+        "opponent_confederation": confed,
+        **record,
+    }

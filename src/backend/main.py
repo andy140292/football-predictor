@@ -7,8 +7,10 @@ from src.backend.schema import (
     HeadToHeadInput,
     HeadToHeadResponse,
     MatchOut,
+    TeamVsConfedInput,
+    TeamVsConfedResponse,
 )
-from src.backend.match_service import get_recent_matches, get_head_to_head
+from src.backend.match_service import get_recent_matches, get_head_to_head, get_team_vs_confed
 from src.predict_match import predict_outcome
 from dotenv import load_dotenv
 import sys
@@ -103,6 +105,17 @@ def head_to_head(input: HeadToHeadInput, user=Depends(verify_token)):
             home_team=input.home_team,
             away_team=input.away_team,
             tournaments=input.tournaments,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/team-vs-confed", response_model=TeamVsConfedResponse)
+def team_vs_confed(input: TeamVsConfedInput, user=Depends(verify_token)):
+    try:
+        return get_team_vs_confed(
+            team=input.team,
+            opponent_confederation=input.opponent_confederation,
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
