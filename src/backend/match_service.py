@@ -15,7 +15,11 @@ def load_matches() -> pd.DataFrame:
 
 
 def _format_matches(df: pd.DataFrame) -> List[Dict[str, int]]:
-    return df[["home_team", "away_team", "home_score", "away_score"]].to_dict(orient="records")
+    formatted = df.copy()
+    if "date" in formatted.columns:
+        formatted["date"] = pd.to_datetime(formatted["date"], errors="coerce").dt.strftime("%Y-%m-%d")
+        formatted["date"] = formatted["date"].where(formatted["date"].notna(), None)
+    return formatted[["date", "home_team", "away_team", "home_score", "away_score"]].to_dict(orient="records")
 
 
 def get_recent_matches(home_team: str, away_team: str, last_matches: int) -> List[Dict[str, int]]:

@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Optional
 
 class MatchInput(BaseModel):
     home_team: str
@@ -19,6 +19,7 @@ class HeadToHeadInput(BaseModel):
 
 
 class MatchOut(BaseModel):
+    date: Optional[str] = None
     home_team: str
     away_team: str
     home_score: int
