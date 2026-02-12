@@ -17,8 +17,20 @@ PROCESSED_X__FULL_PATH = DATA_DIR / "processed_X_Full.csv"
 PROCESSED_y_PATH = DATA_DIR / "processed_y.csv"
 RANKING_PATH = DATA_DIR / "ranking_fifa_2025.csv"
 
+CLUB_MATCHES_PATH = DATA_DIR / "ucl_ko_teams_scores_fixtures_2025_2026.csv"
+CLUB_COEFFICIENTS_PATH = DATA_DIR / "ucl_ko_uefa_coefficients_2026.csv"
+CLUB_PROCESSED_X_PATH = DATA_DIR / "processed_X_club.csv"
+CLUB_PROCESSED_X_FULL_PATH = DATA_DIR / "processed_X_Full_club.csv"
+CLUB_PROCESSED_Y_PATH = DATA_DIR / "processed_y_club.csv"
+
 MODEL_PATHS = {
     "logistic_regression": MODELS_DIR / "logistic_regression_predictor.pkl",
     "random_forest": MODELS_DIR / "random_forest_predictor.pkl",
     "mlp": MODELS_DIR / "mlp_predictor.pkl",
+}
+
+CLUB_MODEL_PATHS = {
+    "logistic_regression": MODELS_DIR / "club_logistic_regression_predictor.pkl",
+    "random_forest": MODELS_DIR / "club_random_forest_predictor.pkl",
+    "mlp": MODELS_DIR / "club_mlp_predictor.pkl",
 }

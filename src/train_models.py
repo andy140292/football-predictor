@@ -1,11 +1,20 @@
 import joblib
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.model_selection import train_test_split
 from prediction.match_data_preprocessor import MatchDataPreprocessor
+from prediction.club_match_data_preprocessor import ClubMatchDataPreprocessor
 from prediction.football_match_predictor import FootballMatchPredictor
 from pathlib import Path
-from utils.paths import MODEL_PATHS, PROCESSED_X_PATH, PROCESSED_X__FULL_PATH, PROCESSED_y_PATH, MATCHES_PATH
+from utils.paths import (
+    CLUB_MODEL_PATHS,
+    CLUB_PROCESSED_X_FULL_PATH,
+    CLUB_PROCESSED_X_PATH,
+    CLUB_PROCESSED_Y_PATH,
+    MODEL_PATHS,
+    PROCESSED_X_PATH,
+    PROCESSED_X__FULL_PATH,
+    PROCESSED_y_PATH,
+)
 from datetime import datetime, timedelta
 import tempfile
 from supabase_client import get_supabase_client
@@ -58,19 +67,28 @@ def upload_processed_data_to_supabase(X, y, X_full):
             print(f"🧨 {type(e)}: {e}")
 
 
-def save_model_locally(predictor, model_type):
+def save_model_locally(predictor, model_type, mode="national"):
     # Save model locally
-    local_model_path = MODEL_PATHS[model_type]
+    model_paths = MODEL_PATHS if mode == "national" else CLUB_MODEL_PATHS
+    local_model_path = model_paths[model_type]
     joblib.dump(predictor, local_model_path)
     print(f"✅ Modelo {model_type} guardado localmente en {local_model_path}")
 
-def save_processed_data_to_csv(X, y, X_full):
-    # Save processed data
-    X.to_csv(PROCESSED_X_PATH, index=False)
-    y.to_csv(PROCESSED_y_PATH, index=False)
-    X_full.to_csv(PROCESSED_X__FULL_PATH, index=False)
+def save_processed_data_to_csv(X, y, X_full, mode="national"):
+    if mode == "national":
+        x_path = PROCESSED_X_PATH
+        y_path = PROCESSED_y_PATH
+        x_full_path = PROCESSED_X__FULL_PATH
+    else:
+        x_path = CLUB_PROCESSED_X_PATH
+        y_path = CLUB_PROCESSED_Y_PATH
+        x_full_path = CLUB_PROCESSED_X_FULL_PATH
 
-def train_model(model_type, X, y):
+    X.to_csv(x_path, index=False)
+    y.to_csv(y_path, index=False)
+    X_full.to_csv(x_full_path, index=False)
+
+def train_model(model_type, X, y, mode="national"):
     predictor = FootballMatchPredictor(model_type=model_type)
     predictor.train(X, y)
 
@@ -81,7 +99,7 @@ def train_model(model_type, X, y):
     # upload_model_to_supabase(predictor, filename, model_type)
     
     # Save model locally
-    save_model_locally(predictor, model_type)
+    save_model_locally(predictor, model_type, mode=mode)
     print(f"✅ Modelo {model_type} entrenado y guardado.")
 
     # Store best estimator if needed
@@ -93,29 +111,38 @@ def train_model(model_type, X, y):
     return best_model
 
 
-def train_models():
-    file_path = f"matches_{month_str}"
-    print(file_path)
-    preprocessor = MatchDataPreprocessor(file_path, from_supabase=False)
+def train_models(mode="national"):
+    if mode == "national":
+        file_path = f"matches_{month_str}"
+        preprocessor = MatchDataPreprocessor(file_path, from_supabase=False)
+    elif mode == "club":
+        file_path = "data/ucl_ko_teams_scores_fixtures_2025_2026.csv"
+        preprocessor = ClubMatchDataPreprocessor(file_path)
+    else:
+        raise ValueError(f"Modo inválido: {mode}")
 
+    print(file_path)
     X, y = preprocessor.preprocess()
 
     # Save processed data for prediction module
     X_full = preprocessor.X_Full
 
     # Save processed data
-    save_processed_data_to_csv(X, y, X_full)
+    save_processed_data_to_csv(X, y, X_full, mode=mode)
 
     # Upload processed data to Supabase. Only doing it locally for now.
     # upload_processed_data_to_supabase(X, y, X_full)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    # Time-based split to avoid temporal leakage.
+    split_idx = max(1, int(len(X) * 0.8))
+    X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]
+    y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]
 
     models = {}
 
     for model_type in ["random_forest", "logistic_regression", "mlp"]:
         print(f"🔁 Entrenando modelo {model_type}...")
-        best_model = train_model(model_type, X_train, y_train)
+        best_model = train_model(model_type, X_train, y_train, mode=mode)
         models[model_type] = best_model
 
     return models, X, y, None
@@ -163,20 +190,29 @@ def plot_mlp_feature_weights(mlp, X, class_index=0):
     ax.set_title("Importancia aproximada (MLP)")
     return fig
 
-def train_all_models_if_needed():
+def train_all_models_if_needed(mode="national"):
     base_dir = Path(__file__).resolve().parent.parent  # raíz del proyecto
     models_dir = base_dir / "models"
-    model_paths = {
-        "random_forest": models_dir / "random_forest_predictor.pkl",
-        "logistic_regression": models_dir / "logistic_regression_predictor.pkl",
-        "mlp": models_dir / "mlp_predictor.pkl"
-    }
+    if mode == "national":
+        model_paths = {
+            "random_forest": models_dir / "random_forest_predictor.pkl",
+            "logistic_regression": models_dir / "logistic_regression_predictor.pkl",
+            "mlp": models_dir / "mlp_predictor.pkl",
+        }
+    elif mode == "club":
+        model_paths = {
+            "random_forest": models_dir / "club_random_forest_predictor.pkl",
+            "logistic_regression": models_dir / "club_logistic_regression_predictor.pkl",
+            "mlp": models_dir / "club_mlp_predictor.pkl",
+        }
+    else:
+        raise ValueError(f"Modo inválido: {mode}")
 
     # Solo entrena si falta alguno
     if not all(p.exists() for p in model_paths.values()):
         print("🔁 Modelos no encontrados. Entrenando...")
-        return train_models()
+        return train_models(mode=mode)
     else:
         print("✅ Modelos ya entrenados. Usando existentes.")
         return None, None, None
-# train_models()
+# train_models("club")

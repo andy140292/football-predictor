@@ -80,3 +80,57 @@ def test_predict_outcome_uses_models(monkeypatch):
     assert results["random_forest"]["home_win"] == 0.7
     assert results["logistic_regression"]["draw"] == 0.2
     assert results["mlp"]["away_win"] == 0.1
+
+
+def test_predict_outcome_club_mode_uses_club_assets(monkeypatch):
+    predict_match = _load_predict_match(monkeypatch)
+
+    class DummyModel:
+        def predict_proba(self, _):
+            return [[0.25, 0.5, 0.25]]
+
+    def fake_club_assets():
+        X = pd.DataFrame(
+            columns=[
+                "home_team_Benfica",
+                "away_team_Real Madrid",
+                "competition_Champions Lg",
+                "round_Knockout phase play-offs",
+                "head_to_head_goal_diff",
+                "h2h_available",
+                "home_team_avg_scored",
+                "away_team_avg_scored",
+                "neutral",
+            ]
+        )
+        X_full = pd.DataFrame(
+            [
+                {
+                    "home_team_Benfica": 1,
+                    "away_team_Real Madrid": 1,
+                    "head_to_head_goal_diff": 0.3,
+                    "h2h_available": 1,
+                    "home_team_avg_scored": 1.8,
+                    "away_team_avg_scored": 1.4,
+                }
+            ]
+        )
+        return {
+            "X": X,
+            "X_full": X_full,
+            "models": {
+                "random_forest": DummyModel(),
+                "logistic_regression": DummyModel(),
+                "mlp": DummyModel(),
+            },
+        }
+
+    monkeypatch.setattr(predict_match, "_load_club_assets", fake_club_assets)
+    monkeypatch.setattr(predict_match, "get_remaining_predictions", lambda *_: 5)
+    monkeypatch.setattr(predict_match, "register_prediction", lambda *args, **kwargs: None)
+
+    results = predict_match.predict_outcome("Benfica", "Real Madrid", token="dummy", mode="club")
+
+    assert results["random_forest"]["home_win"] == 0.25
+    assert results["logistic_regression"]["draw"] == 0.5
+    assert results["mlp"]["away_win"] == 0.25

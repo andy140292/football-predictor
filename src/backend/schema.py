@@ -4,6 +4,7 @@ from typing import List, Optional
 class MatchInput(BaseModel):
     home_team: str
     away_team: str
+    mode: str = "national"
 
 
 class RecentFormInput(BaseModel):

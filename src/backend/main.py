@@ -79,7 +79,8 @@ def predict(input: MatchInput, user=Depends(verify_token)):
         result = predict_outcome(
             home_team=input.home_team,
             away_team=input.away_team,
-            token=user.get("token")
+            token=user.get("token"),
+            mode=input.mode,
         )
         return {"predicción": result}
     except Exception as e:
