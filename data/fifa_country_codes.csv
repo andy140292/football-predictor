@@ -1,0 +1,283 @@
+country_name,team_code
+Abkhazia,ABK
+Afghanistan,AFG
+Anguilla,AIA
+Åland,ALA
+Albania,ALB
+Algeria,ALG
+Andorra,AND
+Angola,ANG
+Netherlands Antilles,ANT
+Argentina,ARG
+Armenia,ARM
+Aruba,ARU
+American Samoa,ASA
+Antigua and Barbuda,ATG
+Australia,AUS
+Austria,AUT
+Azerbaijan,AZE
+Bahamas,BAH
+Bangladesh,BAN
+Burundi,BDI
+Belgium,BEL
+Benin,BEN
+Bermuda,BER
+Burkina Faso,BFA
+British Guiana,BGU
+Bahrain,BHR
+Bhutan,BHU
+Bosnia and Herzegovina,BIH
+British India,BIN
+Saint Barthélemy,BLM
+Belarus,BLR
+Belize,BLZ
+Bohemia,BOH
+Bolivia,BOL
+Botswana,BOT
+Brazil,BRA
+Barbados,BRB
+Brunei,BRU
+Basque Country,BSQ
+Bulgaria,BUL
+Burma,BUR
+Central African Republic,CAF
+Cambodia,CAM
+Canada,CAN
+Catalonia,CAT
+Cayman Islands,CAY
+Ceylon,CEY
+Congo,CGO
+Chad,CHA
+Chile,CHI
+China,CHN
+CIS,CIS
+Ivory Coast,CIV
+Cameroon,CMR
+DR Congo,COD
+Cook Islands,COK
+Colombia,COL
+Comoros,COM
+Cape Verde,CPV
+Costa Rica,CRC
+Croatia,CRO
+Central African Republic,CTA
+Cuba,CUB
+Curaçao,CUW
+Cyprus,CYP
+Czech Republic,CZE
+Dahomey,DAH
+Denmark,DEN
+Djibouti,DJI
+Dominica,DMA
+Dominican Republic,DOM
+Ecuador,ECU
+Egypt,EGY
+Ireland,EIR
+England,ENG
+Equatorial Guinea,EQG
+Eritrea,ERI
+Western Sahara,ESH
+Spain,ESP
+Estonia,EST
+Ethiopia,ETH
+Fiji,FIJ
+Finland,FIN
+Falkland Islands,FIS
+Falkland Islands,FLK
+France,FRA
+West Germany,FRG
+Faroe Islands,FRO
+Gabon,GAB
+Gambia,GAM
+East Germany,GDR
+Georgia,GEO
+Germany,GER
+Guernsey,GGY
+Ghana,GHA
+Gibraltar,GIB
+Guinea-Bissau,GNB
+Gold Coast,GOC
+Gozo,GOZ
+Greece,GRE
+Greenland,GRL
+Grenada,GRN
+Guatemala,GUA
+Guinea,GUI
+Guam,GUM
+Guyana,GUY
+Haiti,HAI
+New Hebrides,HEB
+Hong Kong,HKG
+Netherlands,HOL
+Honduras,HON
+Hungary,HUN
+Indonesia,IDN
+India,IND
+Dutch East Indies,INH
+Isle of Man,IOM
+Republic of Ireland,IRL
+Iran,IRN
+Iraq,IRQ
+Iceland,ISL
+Israel,ISR
+Italy,ITA
+Jamaica,JAM
+Jersey,JER
+Jordan,JOR
+Japan,JPN
+Kazakhstan,KAZ
+Kenya,KEN
+Kyrgyzstan,KGZ
+South Korea,KOR
+Kosovo,KOS
+Saudi Arabia,KSA
+Kuwait,KUW
+Kosovo,KVX
+Laos,LAO
+Lebanon,LBN
+Liberia,LBR
+Libya,LBY
+Saint Lucia,LCA
+Lesotho,LES
+Lebanon,LIB
+Liechtenstein,LIE
+Lithuania,LTU
+Luxembourg,LUX
+Latvia,LVA
+Macau,MAC
+Madagascar,MAD
+Malaya,MAL
+Morocco,MAR
+Malaysia,MAS
+Monaco,MCO
+Moldova,MDA
+Maldives,MDV
+Mexico,MEX
+North Macedonia,MKD
+Mali,MLI
+Malta,MLT
+Montenegro,MNE
+Mongolia,MNG
+Mozambique,MOZ
+Mauritius,MRI
+Montserrat,MSR
+Mauritania,MTN
+Malawi,MWI
+Myanmar,MYA
+Namibia,NAM
+Nicaragua,NCA
+New Caledonia,NCL
+Northern Cyprus,NCY
+Netherlands,NED
+Nepal,NEP
+Nigeria,NGA
+Suriname,NGY
+Niger,NIG
+Northern Ireland,NIR
+Northern Mariana Islands,NMI
+Norway,NOR
+Northern Rhodesia,NRH
+New Zealand,NZL
+Oman,OMA
+Pakistan,PAK
+"Palestine, British Mandate",PAL
+Panama,PAN
+Paraguay,PAR
+Peru,PER
+Philippines,PHI
+Palestine,PLE
+Transnistria,PMR
+Papua New Guinea,PNG
+Poland,POL
+Portugal,POR
+North Korea,PRK
+Puerto Rico,PUR
+Qatar,QAT
+Rhodesia,RHO
+Romania,ROM
+Romania,ROU
+South Africa,RSA
+Russia,RUS
+Rwanda,RWA
+Saar,SAA
+Samoa,SAM
+Sardinia,SAR
+Serbia and Montenegro,SCG
+Scotland,SCO
+Sudan,SDN
+Senegal,SEN
+Seychelles,SEY
+Singapore,SGP
+Saint Helena,SHN
+Siam,SIA
+Singapore,SIN
+Saint Kitts and Nevis,SKN
+Sierra Leone,SLE
+El Salvador,SLV
+Somaliland,SMD
+San Marino,SMR
+Solomon Islands,SOL
+Somalia,SOM
+Saint Pierre and Miquelon,SPM
+Serbia,SRB
+Sardinia,SRD
+Southern Rhodesia,SRH
+Sri Lanka,SRI
+South Sudan,SSD
+São Tomé and Príncipe,STP
+Sudan,SUD
+Switzerland,SUI
+Suriname,SUR
+Slovakia,SVK
+Slovenia,SVN
+Sweden,SWE
+Eswatini,SWZ
+Syria,SYR
+Tanganyika,TAA
+Tahiti,TAH
+Taiwan,TAI
+Tanzania,TAN
+Turks and Caicos Islands,TCA
+Czechoslovakia,TCH
+Tonga,TGA
+Thailand,THA
+Tibet,TIB
+Tajikistan,TJK
+Turkmenistan,TKM
+Timor-Leste,TLS
+Togo,TOG
+Tokelau,TOK
+Chinese Taipei,TPE
+Trinidad and Tobago,TRI
+Tunisia,TUN
+Turkey,TUR
+United Arab Emirates,UAE
+United Arab Republic,UAR
+Uganda,UGA
+Ukraine,UKR
+Upper Volta,UPV
+Soviet Union,URS
+Uruguay,URU
+United States,USA
+Uzbekistan,UZB
+Vanuatu,VAN
+Vatican City,VAT
+Venezuela,VEN
+British Virgin Islands,VGB
+Vietnam,VIE
+Saint Vincent and the Grenadines,VIN
+U.S. Virgin Islands,VIR
+North Vietnam,VNO
+South Vietnam,VSO
+Wallis and Futuna,WAF
+Wales,WAL
+Wallis and Futuna,WLF
+Western Samoa,WSM
+North Yemen,YAR
+Yemen,YEM
+South Yemen,YMD
+Yugoslavia,YUG
+Zaire,ZAI
+Zambia,ZAM
+Zanzibar,ZAN
+Zimbabwe,ZIM

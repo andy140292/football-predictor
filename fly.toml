@@ -7,15 +7,15 @@ app = "futbolconu-predictor"
 primary_region = "gru"
 
 [build]
-  dockerfile = "src/backend/Dockerfile"
+  dockerfile = "src/backend/dockerfile"
 
 [env]
   PORT = "8080"
-  WEB_CONCURRENCY = "2"
+  WEB_CONCURRENCY = "1"
   API_ENV = "prod"
-  PYTHONPATH = "/app:/app/src"
-  ALLOWED_ORIGINS = "http://localhost:5173,http://127.0.0.1:5173"
-
+  API_LOG_LEVEL = "INFO"
+  PYTHONPATH = "/app/src"
+  ALLOWED_ORIGINS = "http://localhost:5173,http://127.0.0.1:5173,https://futbolconu.com,https://www.futbolconu.com"
 [[services]]
   internal_port = 8080
   processes = ["app"]

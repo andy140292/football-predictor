@@ -3,14 +3,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import joblib
 import os
-from utils.paths import MATCHES_PATH, PROCESSED_X_PATH, MODEL_PATHS, PROCESSED_y_PATH, RANKING_PATH
+from backend.paths import MATCHES_PATH, PROCESSED_X_PATH, MODEL_PATHS, PROCESSED_y_PATH, RANKING_PATH
 import requests
 from datetime import datetime, timedelta
 import io
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, log_loss
 from supabase_client import get_supabase_client
-from predict_match import get_remaining_predictions, build_feature_vector
+from backend.predict_match import get_remaining_predictions, build_feature_vector
 
 
 API_URL = "https://futbolconu-predictor.fly.dev/predict"  # Puedes cambiar esto más adelante por el endpoint de producción

@@ -1,16 +1,30 @@
 from functools import lru_cache
 from typing import List, Dict
+import logging
+from time import perf_counter
 
 import pandas as pd
 
-from src.utils.paths import MATCHES_PATH
+try:
+    from .paths import MATCHES_PATH
+except ImportError:  # pragma: no cover - fallback for direct module execution
+    from src.backend.paths import MATCHES_PATH
+
+logger = logging.getLogger("futbolconu.match_service")
 
 
 @lru_cache(maxsize=1)
 def load_matches() -> pd.DataFrame:
+    start_time = perf_counter()
     df = pd.read_csv(MATCHES_PATH)
     if "date" in df.columns:
         df["date"] = pd.to_datetime(df["date"], errors="coerce")
+    logger.info(
+        "load_matches_completed rows=%s cols=%s elapsed_ms=%.2f",
+        len(df),
+        len(df.columns),
+        (perf_counter() - start_time) * 1000.0,
+    )
     return df
 
 
@@ -22,8 +36,26 @@ def _format_matches(df: pd.DataFrame) -> List[Dict[str, int]]:
     return formatted[["date", "home_team", "away_team", "home_score", "away_score"]].to_dict(orient="records")
 
 
-def get_recent_matches(home_team: str, away_team: str, last_matches: int) -> List[Dict[str, int]]:
+def get_recent_matches(
+    home_team: str,
+    away_team: str,
+    last_matches: int,
+    request_id: str = "-",
+) -> List[Dict[str, int]]:
+    start_time = perf_counter()
+    cache_before = load_matches.cache_info()
     df = load_matches()
+    cache_after = load_matches.cache_info()
+    cache_event = "hit" if cache_after.hits > cache_before.hits else "miss"
+    logger.info(
+        "recent_form_service_started request_id=%s home_team=%s away_team=%s last_matches=%s rows=%s cache=%s",
+        request_id,
+        home_team,
+        away_team,
+        last_matches,
+        len(df),
+        cache_event,
+    )
     recent_home = (
         df[(df["home_team"] == home_team) | (df["away_team"] == home_team)]
         .sort_values("date", ascending=False)
@@ -40,7 +72,14 @@ def get_recent_matches(home_team: str, away_team: str, last_matches: int) -> Lis
         subset=["date", "home_team", "away_team", "home_score", "away_score"]
     ).sort_values("date", ascending=False)
 
-    return _format_matches(combined)
+    result = _format_matches(combined)
+    logger.info(
+        "recent_form_service_completed request_id=%s returned_matches=%s elapsed_ms=%.2f",
+        request_id,
+        len(result),
+        (perf_counter() - start_time) * 1000.0,
+    )
+    return result
 
 
 _FORM_TOURNAMENTS = {
@@ -62,6 +101,7 @@ _FORM_TOURNAMENTS = {
     "UEFA Euro",
     "UEFA Euro qualification",
     "UEFA Nations League",
+    "Confederations Cup",
 }
 
 
@@ -87,8 +127,26 @@ def _team_form(team: str, matches: pd.DataFrame) -> Dict[str, int]:
     return {"team": team, "wins": wins, "draws": draws, "losses": losses, "goals": goals}
 
 
-def get_head_to_head(home_team: str, away_team: str, tournaments: List[str]) -> Dict[str, object]:
+def get_head_to_head(
+    home_team: str,
+    away_team: str,
+    tournaments: List[str],
+    request_id: str = "-",
+) -> Dict[str, object]:
+    start_time = perf_counter()
+    cache_before = load_matches.cache_info()
     df = load_matches()
+    cache_after = load_matches.cache_info()
+    cache_event = "hit" if cache_after.hits > cache_before.hits else "miss"
+    logger.info(
+        "head_to_head_service_started request_id=%s home_team=%s away_team=%s tournaments=%s rows=%s cache=%s",
+        request_id,
+        home_team,
+        away_team,
+        len(tournaments or []),
+        len(df),
+        cache_event,
+    )
 
     if tournaments:
         df = df[df["tournament"].isin(tournaments)]
@@ -99,11 +157,18 @@ def get_head_to_head(home_team: str, away_team: str, tournaments: List[str]) -> 
     ].sort_values("date", ascending=False)
 
     matches = _format_matches(h2h)
-    return {
+    result = {
         "matches": matches,
         "home_form": _team_form(home_team, h2h),
         "away_form": _team_form(away_team, h2h),
     }
+    logger.info(
+        "head_to_head_service_completed request_id=%s returned_matches=%s elapsed_ms=%.2f",
+        request_id,
+        len(matches),
+        (perf_counter() - start_time) * 1000.0,
+    )
+    return result
 
 
 def _team_record(team: str, matches: pd.DataFrame) -> Dict[str, int]:
@@ -135,8 +200,24 @@ def _team_record(team: str, matches: pd.DataFrame) -> Dict[str, int]:
     }
 
 
-def get_team_vs_confed(team: str, opponent_confederation: str) -> Dict[str, object]:
+def get_team_vs_confed(
+    team: str,
+    opponent_confederation: str,
+    request_id: str = "-",
+) -> Dict[str, object]:
+    start_time = perf_counter()
+    cache_before = load_matches.cache_info()
     df = load_matches()
+    cache_after = load_matches.cache_info()
+    cache_event = "hit" if cache_after.hits > cache_before.hits else "miss"
+    logger.info(
+        "team_vs_confed_service_started request_id=%s team=%s opponent_confed=%s rows=%s cache=%s",
+        request_id,
+        team,
+        opponent_confederation,
+        len(df),
+        cache_event,
+    )
     df = df[df["tournament"].isin(_FORM_TOURNAMENTS)]
     confed = (opponent_confederation or "").strip().upper()
 
@@ -149,8 +230,15 @@ def get_team_vs_confed(team: str, opponent_confederation: str) -> Dict[str, obje
     ]
 
     record = _team_record(team, filtered)
-    return {
+    result = {
         "team": team,
         "opponent_confederation": confed,
         **record,
     }
+    logger.info(
+        "team_vs_confed_service_completed request_id=%s matches_count=%s elapsed_ms=%.2f",
+        request_id,
+        result.get("matches_count"),
+        (perf_counter() - start_time) * 1000.0,
+    )
+    return result

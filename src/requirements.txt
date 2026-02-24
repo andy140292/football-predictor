@@ -15,6 +15,7 @@ joblib
 numpy
 pandas
 scikit-learn
+matplotlib
 xgboost
 catboost
 streamlit-option-menu

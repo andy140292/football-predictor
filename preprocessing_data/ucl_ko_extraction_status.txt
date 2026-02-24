@@ -1,0 +1,15 @@
+Extractor script implemented at src/data/extract_ucl_ko_fbref.py.
+
+Current environment blocker:
+- Python package `playwright` is not installed.
+- Package install is blocked by network restrictions.
+
+Generated now:
+- data/ucl_ko_playoff_first_legs_2026_02_17_18.csv (8 rows)
+- data/ucl_ko_team_sources_2025_2026.csv (16 rows)
+- data/ucl_ko_teams_scores_fixtures_2025_2026.csv (header-only placeholder)
+
+To generate full team-level rows when dependencies are available:
+1) python3 -m pip install playwright
+2) python3 -m playwright install chromium
+3) python3 src/data/extract_ucl_ko_fbref.py --output-dir data
