@@ -108,3 +108,40 @@ class CalendarBatchUpsertResponse(BaseModel):
     updated: int
     skipped: int
     errors: List[CalendarUpsertError]
+
+
+class ModelScorecardOut(BaseModel):
+    mode: str
+    model_version: str
+    from_date: Optional[str] = None
+    to_date: Optional[str] = None
+    correct_count: int
+    incorrect_count: int
+    total_scored: int
+    accuracy_pct: float
+
+
+class ConsensusMatchEvaluationOut(BaseModel):
+    match_id: UUID
+    match_date: str
+    home_team: str
+    away_team: str
+    tournament: Optional[str] = None
+    actual_outcome: Literal["home_win", "away_win", "draw"]
+    consensus_predicted_outcome: Literal["home_win", "away_win", "draw"]
+    consensus_prob_home_win: float
+    consensus_prob_draw: float
+    consensus_prob_away_win: float
+    is_correct: bool
+
+
+class ModelScorecardMatchesResponse(BaseModel):
+    mode: str
+    model_version: str
+    from_date: Optional[str] = None
+    to_date: Optional[str] = None
+    verdict: Literal["all", "correct", "incorrect"]
+    page: int
+    page_size: int
+    total: int
+    matches: List[ConsensusMatchEvaluationOut]

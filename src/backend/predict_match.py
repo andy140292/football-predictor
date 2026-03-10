@@ -70,6 +70,7 @@ TEAM_CODE_ALIASES_PATH = os.getenv(
 )
 _team_name_to_code = None
 _team_alias_to_code = None
+MODEL_NAMES = ("random_forest", "logistic_regression", "mlp")
 
 
 class FootballMatchPredictor:
@@ -166,6 +167,7 @@ def _stabilize_probabilities(raw_probs):
 _club_assets = None
 _champions_assets = None
 _club_team_aliases = None
+_club_canonical_to_aliases = None
 _STATE_HISTORY_COLS = ["date", "home_team", "away_team", "home_score", "away_score"]
 
 
@@ -178,6 +180,15 @@ def _get_request_supabase_client(token: str = None):
     if token:
         return get_supabase_client(access_token=token)
     return supabase
+
+
+def _get_admin_supabase_client():
+    """Use service-role client for admin-only writes; fallback to anon if unavailable."""
+    try:
+        return get_supabase_client(use_service_role=True)
+    except Exception as exc:
+        logger.warning("admin_supabase_service_role_unavailable error=%s", exc)
+        return supabase
 
 
 def _load_latest_club_coefficients():
@@ -475,7 +486,46 @@ def _resolve_team_code(team_name: str) -> str:
     key = _normalized_text(team_name)
     if key in alias_to_code:
         return alias_to_code[key]
-    return name_to_code.get(key, "")
+    code = name_to_code.get(key, "")
+    if code:
+        return code
+
+    # Fallback for labels that append a 3-letter token (e.g. "United Arab Emirates UAE").
+    raw = str(team_name).replace("\xa0", " ").strip()
+    parts = raw.split()
+    if len(parts) >= 2 and re.fullmatch(r"[A-Z]{3}", parts[-1].upper()):
+        trimmed_key = _normalized_text(" ".join(parts[:-1]))
+        if trimmed_key in alias_to_code:
+            return alias_to_code[trimmed_key]
+        return name_to_code.get(trimmed_key, "")
+    return ""
+
+
+def _lookup_national_ranking_row(team_name: str, ranking_df: pd.DataFrame):
+    if ranking_df is None or ranking_df.empty or "team" not in ranking_df.columns:
+        return None
+
+    exact = ranking_df[ranking_df["team"] == team_name]
+    if not exact.empty:
+        return exact.iloc[0]
+
+    normalized_target = _normalized_text(team_name)
+    if normalized_target:
+        normalized_matches = ranking_df[
+            ranking_df["team"].astype(str).map(_normalized_text) == normalized_target
+        ]
+        if not normalized_matches.empty:
+            return normalized_matches.iloc[0]
+
+    team_code = _resolve_team_code(team_name)
+    if not team_code:
+        return None
+    code_matches = ranking_df[
+        ranking_df["team"].astype(str).map(_resolve_team_code) == team_code
+    ]
+    if code_matches.empty:
+        return None
+    return code_matches.iloc[0]
 
 
 def _query_future_matches_pair(
@@ -502,11 +552,22 @@ def _query_future_matches_pair(
     return rows
 
 
-def _fetch_future_matches_for_pair(home_team: str, away_team: str, token: str = None) -> list[dict]:
+def _fetch_future_matches_for_pair(
+    home_team: str,
+    away_team: str,
+    token: str = None,
+    mode: str = "national",
+) -> list[dict]:
     today_iso = datetime.utcnow().date().isoformat()
     rows = []
-    home_code = _resolve_team_code(home_team)
-    away_code = _resolve_team_code(away_team)
+    home_values = _calendar_team_query_values(home_team, mode)
+    away_values = _calendar_team_query_values(away_team, mode)
+
+    home_code = ""
+    away_code = ""
+    if mode == "national":
+        home_code = _resolve_team_code(home_team)
+        away_code = _resolve_team_code(away_team)
 
     if home_code and away_code:
         try:
@@ -530,16 +591,18 @@ def _fetch_future_matches_for_pair(home_team: str, away_team: str, token: str = 
                 exc,
             )
 
-    rows.extend(
-        _query_future_matches_pair(
-            home_col="home_team",
-            away_col="away_team",
-            home_value=home_team,
-            away_value=away_team,
-            today_iso=today_iso,
-            token=token,
-        )
-    )
+    for home_value in home_values:
+        for away_value in away_values:
+            rows.extend(
+                _query_future_matches_pair(
+                    home_col="home_team",
+                    away_col="away_team",
+                    home_value=home_value,
+                    away_value=away_value,
+                    today_iso=today_iso,
+                    token=token,
+                )
+            )
 
     deduped = {}
     for row in rows:
@@ -581,13 +644,14 @@ def get_unpredicted_future_matches(
     away_team: str,
     user_id: str = None,
     token: str = None,
+    mode: str = "national",
     request_id: str = "-",
 ) -> list[dict]:
     try:
         if token:
-            matches = _fetch_future_matches_for_pair(home_team, away_team, token=token)
+            matches = _fetch_future_matches_for_pair(home_team, away_team, token=token, mode=mode)
         else:
-            matches = _fetch_future_matches_for_pair(home_team, away_team)
+            matches = _fetch_future_matches_for_pair(home_team, away_team, mode=mode)
     except Exception as exc:
         logger.warning(
             "future_matches_lookup_failed request_id=%s home_team=%s away_team=%s error=%s",
@@ -780,6 +844,7 @@ def _validate_calendar_row(
 
 
 def _calendar_row_exists(row: dict) -> bool:
+    client = _get_admin_supabase_client()
     home_team = row.get("home_team")
     away_team = row.get("away_team")
     match_date = row.get("match_date")
@@ -789,7 +854,7 @@ def _calendar_row_exists(row: dict) -> bool:
     if home_team_code and away_team_code:
         try:
             by_code = (
-                supabase.table("matches_calendar")
+                client.table("matches_calendar")
                 .select("match_id")
                 .eq("home_team_code", home_team_code)
                 .eq("away_team_code", away_team_code)
@@ -803,7 +868,7 @@ def _calendar_row_exists(row: dict) -> bool:
             logger.warning("calendar_exists_by_code_failed error=%s", exc)
 
     by_name = (
-        supabase.table("matches_calendar")
+        client.table("matches_calendar")
         .select("match_id")
         .eq("home_team", home_team)
         .eq("away_team", away_team)
@@ -817,8 +882,9 @@ def _calendar_row_exists(row: dict) -> bool:
 def _bulk_upsert_calendar_rows(rows: list[dict]) -> None:
     if not rows:
         return
+    client = _get_admin_supabase_client()
     try:
-        supabase.table("matches_calendar").upsert(
+        client.table("matches_calendar").upsert(
             rows,
             on_conflict="home_team,away_team,match_date",
         ).execute()
@@ -834,7 +900,7 @@ def _bulk_upsert_calendar_rows(rows: list[dict]) -> None:
             }
             for row in rows
         ]
-        supabase.table("matches_calendar").upsert(
+        client.table("matches_calendar").upsert(
             stripped_rows,
             on_conflict="home_team,away_team,match_date",
         ).execute()
@@ -1001,6 +1067,62 @@ def register_prediction(
         raise
 
 
+def predict_match_probabilities_offline(
+    home_team: str,
+    away_team: str,
+    mode: str = "national",
+    competition: str = None,
+    round_name: str = None,
+    neutral: int = None,
+    request_id: str = "-",
+):
+    request_id = request_id or "-"
+    if mode not in {"national", "club", "champions"}:
+        raise ValueError(f"Modo inválido: {mode}")
+
+    if mode == "national":
+        assets = _load_assets()
+        ranking_data = assets.get("fifa_rank")
+    elif mode == "club":
+        assets = _load_club_assets()
+        ranking_data = assets.get("club_coefficients")
+    else:
+        assets = _load_champions_assets()
+        ranking_data = assets.get("club_coefficients")
+
+    match_vector = build_feature_vector(
+        home_team,
+        away_team,
+        assets["X"],
+        ranking_data,
+        mode=mode,
+        history_df=assets.get("X_full"),
+        competition=competition,
+        round_name=round_name,
+        neutral=neutral,
+        team_states=assets.get("team_states"),
+        pair_states=assets.get("pair_states"),
+        request_id=request_id,
+    )
+
+    results = {}
+    for model_name in MODEL_NAMES:
+        predictor = assets.get("models", {}).get(model_name)
+        if predictor is None:
+            continue
+        probs = _stabilize_probabilities(predictor.predict_proba(match_vector)[0])
+        results[model_name] = {
+            "home_win": float(probs[2]),
+            "draw": float(probs[1]),
+            "away_win": float(probs[0]),
+        }
+
+    if not results:
+        raise RuntimeError("No hay modelos disponibles para predicción offline")
+
+    return results
+
+
 def predict_outcome(
     home_team,
     away_team,
@@ -1165,6 +1287,7 @@ def predict_outcome(
         away_team=away_team,
         user_id=user_id,
         token=token,
+        mode=mode,
         request_id=request_id,
     )
     logger.info(
@@ -1189,12 +1312,10 @@ def _build_national_feature_vector(home_team, away_team, feature_template_df, ra
 
     vector = pd.DataFrame([np.zeros(len(feature_template_df.columns))], columns=feature_template_df.columns)
 
-    home_row = ranking_df[ranking_df["team"] == home_team]
-    away_row = ranking_df[ranking_df["team"] == away_team]
-    if home_row.empty or away_row.empty:
+    home_info = _lookup_national_ranking_row(home_team, ranking_df)
+    away_info = _lookup_national_ranking_row(away_team, ranking_df)
+    if home_info is None or away_info is None:
         raise ValueError(f"Team not found in ranking: {home_team} or {away_team}")
-    home_info = home_row.iloc[0]
-    away_info = away_row.iloc[0]
 
     if "home_team_fifa_rank" in vector.columns:
         vector["home_team_fifa_rank"] = home_info["ranking"]
@@ -1242,19 +1363,21 @@ def _normalized_text(value: str) -> str:
 
 
 def _load_club_team_aliases() -> dict:
-    global _club_team_aliases
-    if _club_team_aliases is not None:
+    global _club_team_aliases, _club_canonical_to_aliases
+    if _club_team_aliases is not None and _club_canonical_to_aliases is not None:
         return _club_team_aliases
 
     alias_path = str(CLUB_TEAM_ALIASES_PATH)
     if not os.path.exists(alias_path):
         _club_team_aliases = {}
+        _club_canonical_to_aliases = {}
         return _club_team_aliases
 
     try:
         aliases = pd.read_csv(alias_path)
     except Exception:
         _club_team_aliases = {}
+        _club_canonical_to_aliases = {}
         return _club_team_aliases
 
     source_candidates = ["alias", "source_name", "source_team", "match_team", "from"]
@@ -1263,15 +1386,22 @@ def _load_club_team_aliases() -> dict:
     target_col = next((col for col in target_candidates if col in aliases.columns), None)
     if source_col is None or target_col is None:
         _club_team_aliases = {}
+        _club_canonical_to_aliases = {}
         return _club_team_aliases
 
     mapped = {}
+    canonical_to_aliases = {}
     for _, row in aliases[[source_col, target_col]].iterrows():
         source = str(row.get(source_col, "") or "").strip()
         target = str(row.get(target_col, "") or "").strip()
         if source and target:
             mapped[_normalized_text(source)] = target
+            canonical_key = _normalized_text(target)
+            canonical_to_aliases.setdefault(canonical_key, set()).update({source, target})
     _club_team_aliases = mapped
+    _club_canonical_to_aliases = {
+        key: sorted(value_set) for key, value_set in canonical_to_aliases.items()
+    }
     return _club_team_aliases
 
 
@@ -1279,6 +1409,42 @@ def _canonical_club_name(value: str) -> str:
     team = str(value or "").strip()
     aliases = _load_club_team_aliases()
     return aliases.get(_normalized_text(team), team)
+
+
+def _club_calendar_team_variants(value: str) -> list[str]:
+    team = str(value or "").strip()
+    if not team:
+        return []
+
+    _load_club_team_aliases()
+    canonical = _canonical_club_name(team)
+    canonical_key = _normalized_text(canonical)
+
+    variants = [team, canonical]
+    for alias in (_club_canonical_to_aliases or {}).get(canonical_key, []):
+        alias_text = str(alias or "").strip()
+        if alias_text:
+            variants.append(alias_text)
+
+    deduped = []
+    seen = set()
+    for item in variants:
+        key = _normalized_text(item)
+        if key and key not in seen:
+            seen.add(key)
+            deduped.append(item)
+    return deduped
+
+
+def _calendar_team_query_values(team_name: str, mode: str) -> list[str]:
+    team = str(team_name or "").strip()
+    if not team:
+        return []
+    if mode in {"club", "champions"}:
+        variants = _club_calendar_team_variants(team)
+        if variants:
+            return variants
+    return [team]
 
 
 def _club_name_keys(value: str) -> set[str]:

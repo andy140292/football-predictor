@@ -23,6 +23,8 @@ try:
         MatchPredictionCreateResponse,
         CalendarBatchUpsertInput,
         CalendarBatchUpsertResponse,
+        ModelScorecardOut,
+        ModelScorecardMatchesResponse,
     )
     from .match_service import get_recent_matches, get_head_to_head, get_team_vs_confed
     from .predict_match import (
@@ -30,6 +32,7 @@ try:
         create_or_get_match_prediction,
         upsert_matches_calendar_batch,
     )
+    from .scorecard_service import get_model_scorecard, list_model_scorecard_matches
 except ImportError:  # pragma: no cover - fallback for direct module execution
     from src.backend.schema import (
         MatchInput,
@@ -43,6 +46,8 @@ except ImportError:  # pragma: no cover - fallback for direct module execution
         MatchPredictionCreateResponse,
         CalendarBatchUpsertInput,
         CalendarBatchUpsertResponse,
+        ModelScorecardOut,
+        ModelScorecardMatchesResponse,
     )
     from src.backend.match_service import get_recent_matches, get_head_to_head, get_team_vs_confed
     from src.backend.predict_match import (
@@ -50,6 +55,7 @@ except ImportError:  # pragma: no cover - fallback for direct module execution
         create_or_get_match_prediction,
         upsert_matches_calendar_batch,
     )
+    from src.backend.scorecard_service import get_model_scorecard, list_model_scorecard_matches
 
 
 load_dotenv()
@@ -284,6 +290,122 @@ def upsert_matches_calendar(
     except Exception as e:
         logger.exception(
             "calendar_upsert_request_failed request_id=%s elapsed_ms=%.2f",
+            request_id,
+            (perf_counter() - start_time) * 1000.0,
+        )
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/model-scorecard", response_model=ModelScorecardOut)
+def read_model_scorecard(
+    request: Request,
+    response: Response,
+    mode: str = "national",
+    model_version: str = "",
+    from_date: Optional[str] = None,
+    to_date: Optional[str] = None,
+    user=Depends(verify_token),
+):
+    request_id = _ensure_request_id(request)
+    response.headers["X-Request-ID"] = request_id
+    start_time = perf_counter()
+    logger.info(
+        "model_scorecard_request_received request_id=%s sub=%s mode=%s model_version=%s from_date=%s to_date=%s",
+        request_id,
+        user.get("sub"),
+        mode,
+        model_version,
+        from_date,
+        to_date,
+    )
+    try:
+        result = get_model_scorecard(
+            mode=mode,
+            model_version=model_version,
+            from_date=from_date,
+            to_date=to_date,
+        )
+        logger.info(
+            "model_scorecard_request_succeeded request_id=%s total_scored=%s elapsed_ms=%.2f",
+            request_id,
+            result.get("total_scored"),
+            (perf_counter() - start_time) * 1000.0,
+        )
+        return result
+    except ValueError as e:
+        logger.warning(
+            "model_scorecard_request_rejected request_id=%s reason=%s elapsed_ms=%.2f",
+            request_id,
+            str(e),
+            (perf_counter() - start_time) * 1000.0,
+        )
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.exception(
+            "model_scorecard_request_failed request_id=%s elapsed_ms=%.2f",
+            request_id,
+            (perf_counter() - start_time) * 1000.0,
+        )
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/model-scorecard/matches", response_model=ModelScorecardMatchesResponse)
+def read_model_scorecard_matches(
+    request: Request,
+    response: Response,
+    mode: str = "national",
+    model_version: str = "",
+    from_date: Optional[str] = None,
+    to_date: Optional[str] = None,
+    verdict: str = "all",
+    page: int = 1,
+    page_size: int = 50,
+    user=Depends(verify_token),
+):
+    request_id = _ensure_request_id(request)
+    response.headers["X-Request-ID"] = request_id
+    start_time = perf_counter()
+    logger.info(
+        "model_scorecard_matches_request_received request_id=%s sub=%s mode=%s model_version=%s verdict=%s page=%s page_size=%s from_date=%s to_date=%s",
+        request_id,
+        user.get("sub"),
+        mode,
+        model_version,
+        verdict,
+        page,
+        page_size,
+        from_date,
+        to_date,
+    )
+    try:
+        result = list_model_scorecard_matches(
+            mode=mode,
+            model_version=model_version,
+            from_date=from_date,
+            to_date=to_date,
+            verdict=verdict,
+            page=page,
+            page_size=page_size,
+        )
+        logger.info(
+            "model_scorecard_matches_request_succeeded request_id=%s total=%s returned=%s elapsed_ms=%.2f",
+            request_id,
+            result.get("total"),
+            len(result.get("matches", [])),
+            (perf_counter() - start_time) * 1000.0,
+        )
+        return result
+    except ValueError as e:
+        logger.warning(
+            "model_scorecard_matches_request_rejected request_id=%s reason=%s elapsed_ms=%.2f",
+            request_id,
+            str(e),
+            (perf_counter() - start_time) * 1000.0,
+        )
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.exception(
+            "model_scorecard_matches_request_failed request_id=%s elapsed_ms=%.2f",
             request_id,
             (perf_counter() - start_time) * 1000.0,
         )

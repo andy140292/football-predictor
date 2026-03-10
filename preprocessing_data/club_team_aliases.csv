@@ -2,17 +2,23 @@ alias,canonical
 Real Madrid CF,Real Madrid
 Real Madrid C.F.,Real Madrid
 Bayern Munich,Bayern München
+Bayern,Bayern München
 Manchester Utd,Man Utd
 Man United,Man Utd
+Manchester City,Man City
 Dortmund,B. Dortmund
 Atlético Madrid,Atleti
+Atletico Madrid,Atleti
 Ath Madrid,Atleti
 Ath Bilbao,Athletic Club
 Paris SG,Paris
+PSG,Paris
+Paris Saint-Germain,Paris
 Sociedad,Real Sociedad
 Espanol,Espanyol
 Betis,Real Betis
 Sp Lisbon,Sporting CP
+Sporting Lisboa,Sporting CP
 Sp Braga,Braga
 M'gladbach,Mönchengladbach
 Dinamo Zagreb,GNK Dinamo
@@ -31,3 +37,4 @@ Rangers sct,Rangers
 sct Rangers,Rangers
 Ludogorets Razgrad,Ludogorets
 Steaua,FCSB
+Bodo/Glimt,Bodø/Glimt

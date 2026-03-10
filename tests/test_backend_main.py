@@ -123,3 +123,94 @@ def test_admin_calendar_upsert_uses_service(monkeypatch):
 
     assert response.status_code == 200
     assert response.json() == service_response
+
+
+def test_model_scorecard_endpoint_uses_service(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    service_response = {
+        "mode": "national",
+        "model_version": "2026_01_national_v1",
+        "from_date": "2025-09-01",
+        "to_date": "2026-01-31",
+        "correct_count": 210,
+        "incorrect_count": 120,
+        "total_scored": 330,
+        "accuracy_pct": 63.6364,
+    }
+    monkeypatch.setattr(main, "get_model_scorecard", lambda **_: service_response)
+
+    client = TestClient(main.app)
+    response = client.get(
+        "/model-scorecard",
+        params={
+            "mode": "national",
+            "model_version": "2026_01_national_v1",
+            "from_date": "2025-09-01",
+            "to_date": "2026-01-31",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == service_response
+
+
+def test_model_scorecard_matches_endpoint_uses_service(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    service_response = {
+        "mode": "national",
+        "model_version": "2026_01_national_v1",
+        "from_date": "2025-09-01",
+        "to_date": "2026-01-31",
+        "verdict": "all",
+        "page": 1,
+        "page_size": 2,
+        "total": 2,
+        "matches": [
+            {
+                "match_id": "22222222-2222-2222-2222-222222222222",
+                "match_date": "2026-01-10",
+                "home_team": "Brazil",
+                "away_team": "Argentina",
+                "tournament": "FIFA World Cup qualification",
+                "actual_outcome": "home_win",
+                "consensus_predicted_outcome": "home_win",
+                "consensus_prob_home_win": 0.6,
+                "consensus_prob_draw": 0.2,
+                "consensus_prob_away_win": 0.2,
+                "is_correct": True,
+            },
+            {
+                "match_id": "33333333-3333-3333-3333-333333333333",
+                "match_date": "2026-01-11",
+                "home_team": "Chile",
+                "away_team": "Peru",
+                "tournament": "Friendly",
+                "actual_outcome": "draw",
+                "consensus_predicted_outcome": "away_win",
+                "consensus_prob_home_win": 0.3,
+                "consensus_prob_draw": 0.29,
+                "consensus_prob_away_win": 0.41,
+                "is_correct": False,
+            },
+        ],
+    }
+    monkeypatch.setattr(main, "list_model_scorecard_matches", lambda **_: service_response)
+
+    client = TestClient(main.app)
+    response = client.get(
+        "/model-scorecard/matches",
+        params={
+            "mode": "national",
+            "model_version": "2026_01_national_v1",
+            "from_date": "2025-09-01",
+            "to_date": "2026-01-31",
+            "page": 1,
+            "page_size": 2,
+            "verdict": "all",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == service_response
