@@ -115,7 +115,11 @@ class ClubFeatureEngineer:
     @staticmethod
     def _is_ucl_match(competition: str) -> int:
         value = str(competition or "").lower()
-        return int("champions" in value and "lg" in value or "champions league" in value)
+        return int(
+            ("champions" in value and "lg" in value)
+            or ("champions league" in value)
+            or ("libertadores" in value)
+        )
 
     @staticmethod
     def _is_knockout_round(round_name: str) -> int:

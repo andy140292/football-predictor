@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -5,12 +6,20 @@ from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import log_loss, accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.calibration import CalibratedClassifierCV
-from xgboost import XGBClassifier
-from catboost import CatBoostClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
 from typing import Optional
+
+try:
+    from xgboost import XGBClassifier
+except Exception:  # pragma: no cover - optional dependency
+    XGBClassifier = None
+
+try:
+    from catboost import CatBoostClassifier
+except Exception:  # pragma: no cover - optional dependency
+    CatBoostClassifier = None
 
 class FootballMatchPredictor:
     def __init__(self, model_type="random_forest"):
@@ -19,6 +28,7 @@ class FootballMatchPredictor:
         Supported model types: "random_forest", "xgboost", "catboost", "logistic_regression".
         """
         self.model_type = model_type
+        self.n_jobs = int(os.getenv("MODEL_N_JOBS", "1"))
         self.model = self._initialize_model()
         self.scaler = StandardScaler()
         self.X_train_columns = None  # store feature columns for logistic regression
@@ -32,15 +42,25 @@ class FootballMatchPredictor:
                 'min_samples_split': [2, 5, 10],
                 'min_samples_leaf': [1, 2, 4]
             }
-            rf_model = RandomForestClassifier(n_estimators=200, random_state=42)
+            rf_model = RandomForestClassifier(n_estimators=200, random_state=42, n_jobs=self.n_jobs)
             rf_random_search = RandomizedSearchCV(
                 estimator=rf_model, param_distributions=rf_param_grid,
-                n_iter=10, scoring='neg_log_loss', cv=5, verbose=2, n_jobs=-1, random_state=42
+                n_iter=10, scoring='neg_log_loss', cv=5, verbose=2, n_jobs=self.n_jobs, random_state=42
             )
             return rf_random_search
         elif self.model_type == "xgboost":
+            if XGBClassifier is None:
+                raise ImportError(
+                    "xgboost is not available in this environment. "
+                    "Install a compatible xgboost build to use model_type='xgboost'."
+                )
             return XGBClassifier(objective="multi:softprob", eval_metric="mlogloss", use_label_encoder=False)
         elif self.model_type == "catboost":
+            if CatBoostClassifier is None:
+                raise ImportError(
+                    "catboost is not available in this environment. "
+                    "Install a compatible catboost build to use model_type='catboost'."
+                )
             return CatBoostClassifier(loss_function='MultiClass', verbose=0)
         elif self.model_type == "logistic_regression":
             base_model = LogisticRegression(solver='lbfgs', max_iter=1000)
@@ -60,7 +80,10 @@ class FootballMatchPredictor:
             )
 
         else:
-            raise ValueError("Unsupported model type. Choose 'random_forest', 'xgboost', or 'catboost'.")
+            raise ValueError(
+                "Unsupported model type. Choose 'random_forest', 'xgboost', "
+                "'catboost', 'logistic_regression', or 'mlp'."
+            )
     def train(self, X_train, y_train):
         if self.model_type in ["logistic_regression", "mlp"]:
             X_train_scaled = self.scaler.fit_transform(X_train)

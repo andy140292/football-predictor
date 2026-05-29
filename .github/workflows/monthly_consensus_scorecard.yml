@@ -1,0 +1,57 @@
+name: Monthly Consensus Scorecard
+
+on:
+  schedule:
+    - cron: "0 3 1 * *"
+  workflow_dispatch:
+    inputs:
+      from_date:
+        description: "Start date YYYY-MM-DD"
+        required: false
+      to_date:
+        description: "End date YYYY-MM-DD"
+        required: false
+      model_version:
+        description: "Model version override"
+        required: false
+
+jobs:
+  run-monthly-scorecard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r src/backend/requirements.txt
+
+      - name: Compute dates
+        id: dates
+        run: |
+          if [ -n "${{ github.event.inputs.from_date }}" ] && [ -n "${{ github.event.inputs.to_date }}" ]; then
+            echo "from_date=${{ github.event.inputs.from_date }}" >> "$GITHUB_OUTPUT"
+            echo "to_date=${{ github.event.inputs.to_date }}" >> "$GITHUB_OUTPUT"
+          else
+            FROM_DATE=$(date -u -d "$(date -u +%Y-%m-01) -1 month" +%Y-%m-01)
+            TO_DATE=$(date -u -d "$(date -u +%Y-%m-01) -1 day" +%Y-%m-%d)
+            echo "from_date=$FROM_DATE" >> "$GITHUB_OUTPUT"
+            echo "to_date=$TO_DATE" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run backfill/evaluation
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          MODEL_VERSION: ${{ github.event.inputs.model_version || vars.MODEL_VERSION }}
+        run: |
+          python src/backend/jobs/run_consensus_scorecard_backfill.py \
+            --from-date "${{ steps.dates.outputs.from_date }}" \
+            --to-date "${{ steps.dates.outputs.to_date }}" \
+            --mode national \
+            --model-version "${MODEL_VERSION}"

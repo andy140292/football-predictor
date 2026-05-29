@@ -1,0 +1,44 @@
+# flyctl launch added from src/.gitignore
+src/**/.env
+
+# flyctl launch added from venv/.gitignore
+# Byte-compiled / cache files
+venv/**/__pycache__
+venv/**/*.py[cod]
+venv/**/*.so
+
+# Jupyter Notebook checkpoints
+venv/**/.ipynb_checkpoints
+
+# Environments
+venv/**/.env
+venv/**/.venv
+venv/**/env
+venv/**/venv
+
+# VSCode settings
+venv/**/.vscode
+
+# macOS specific
+venv/**/.DS_Store
+
+# Data & model outputs
+venv/**/*.pkl
+venv/**/*.csv
+venv/**/models
+venv/**/data/processed_*.csv
+
+# Logs and temporary files
+venv/**/*.log
+venv/**/*.tmp
+
+# matplotlib plots
+venv/**/*.png
+venv/**/*.svg
+
+# Python history
+venv/**/.python_history
+
+# Backup files
+venv/**/*~
+fly.toml

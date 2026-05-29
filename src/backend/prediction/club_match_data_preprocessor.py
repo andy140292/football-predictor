@@ -26,8 +26,17 @@ except Exception:  # pragma: no cover - import path fallback
 
 class ClubMatchDataPreprocessor:
     CLUB_NAME_TOKENS = {"fc", "cf", "sc", "afc", "fk", "ac", "ss", "sv", "as"}
+    FBREF_COUNTRY_PREFIX_RE = re.compile(r"^(?P<prefix>[a-z]{2,3})\s+(?P<team>.+)$")
 
-    def __init__(self, file_path, verbose=False, include_uefa_coefficients=False):
+    def __init__(
+        self,
+        file_path,
+        verbose=False,
+        include_uefa_coefficients=False,
+        coeff_path=None,
+        coeff_history_path=None,
+        country_coeff_path=None,
+    ):
         self.file_path = (
             f"data/{file_path}.csv"
             if not str(file_path).startswith("data/") and not str(file_path).endswith(".csv")
@@ -35,6 +44,9 @@ class ClubMatchDataPreprocessor:
         )
         self.verbose = verbose
         self.include_uefa_coefficients = include_uefa_coefficients
+        self.coeff_path = coeff_path
+        self.coeff_history_path = coeff_history_path
+        self.country_coeff_path = country_coeff_path
         self.team_aliases = self._load_team_aliases()
         self.matches = None
         self.X_Full = None
@@ -102,8 +114,98 @@ class ClubMatchDataPreprocessor:
         if value is None or (isinstance(value, float) and pd.isna(value)):
             return ""
         team_name = str(value).strip()
+        prefix_match = self.FBREF_COUNTRY_PREFIX_RE.match(team_name)
+        if prefix_match:
+            team_name = prefix_match.group("team").strip()
         normalized = self._normalize_text(team_name)
         return self.team_aliases.get(normalized, team_name)
+
+    def _prepare_country_coefficients(self, country_coeff: pd.DataFrame) -> pd.DataFrame:
+        if country_coeff.empty:
+            return pd.DataFrame()
+
+        has_country_rank_cols = {"country_uefa_overall_rank", "country_uefa_season_rank"}.issubset(
+            set(country_coeff.columns)
+        )
+        has_legacy_rank_cols = {"overall_rank", "season_rank"}.issubset(set(country_coeff.columns))
+        required_country = [
+            "country",
+            "overall_country_coefficient",
+            "season_country_coefficient",
+            "uefa_season_year",
+        ]
+        missing_country = [col for col in required_country if col not in country_coeff.columns]
+        if missing_country or not (has_country_rank_cols or has_legacy_rank_cols):
+            return pd.DataFrame()
+
+        prepared = country_coeff.copy()
+        prepared["country_norm"] = prepared["country"].map(self._normalize_text)
+        prepared["uefa_season_year"] = pd.to_numeric(prepared["uefa_season_year"], errors="coerce").astype("Int64")
+
+        rank_rename = (
+            {}
+            if has_country_rank_cols
+            else {
+                "overall_rank": "country_uefa_overall_rank",
+                "season_rank": "country_uefa_season_rank",
+            }
+        )
+        rank_cols = (
+            ["country_uefa_overall_rank", "country_uefa_season_rank"]
+            if has_country_rank_cols
+            else ["overall_rank", "season_rank"]
+        )
+
+        prepared = prepared[
+            [
+                "country_norm",
+                "uefa_season_year",
+                "overall_country_coefficient",
+                "season_country_coefficient",
+                *rank_cols,
+            ]
+        ].rename(columns=rank_rename)
+
+        numeric_cols = [
+            "overall_country_coefficient",
+            "season_country_coefficient",
+            "country_uefa_overall_rank",
+            "country_uefa_season_rank",
+        ]
+        for col in numeric_cols:
+            prepared[col] = pd.to_numeric(prepared[col], errors="coerce")
+
+        before = len(prepared)
+        prepared = (
+            prepared.groupby(["country_norm", "uefa_season_year"], dropna=False, as_index=False)
+            .agg(
+                {
+                    "overall_country_coefficient": "max",
+                    "season_country_coefficient": "max",
+                    "country_uefa_overall_rank": "min",
+                    "country_uefa_season_rank": "min",
+                }
+            )
+            .reset_index(drop=True)
+        )
+        if self.verbose and before != len(prepared):
+            self.log(
+                "Collapsed duplicate country coefficient rows: "
+                f"{before} -> {len(prepared)}"
+            )
+        return prepared
+
+    @staticmethod
+    def _latest_available_by_key(df: pd.DataFrame, key_cols: list[str]) -> pd.DataFrame:
+        if df.empty:
+            return df.copy()
+        if "uefa_season_year" in df.columns:
+            sortable = df.copy()
+            sortable["uefa_season_year"] = pd.to_numeric(sortable["uefa_season_year"], errors="coerce")
+            sortable = sortable.sort_values("uefa_season_year", ascending=False, na_position="last")
+        else:
+            sortable = df.copy()
+        return sortable.drop_duplicates(subset=key_cols, keep="first").reset_index(drop=True)
 
     def _team_name_key(self, value):
         if value is None or (isinstance(value, float) and pd.isna(value)):
@@ -149,8 +251,8 @@ class ClubMatchDataPreprocessor:
                 continue
 
             venue_norm = str(venue).strip().lower()
-            team = str(team).strip()
-            opponent = str(opponent).strip()
+            team = self._canonical_team_name(team)
+            opponent = self._canonical_team_name(opponent)
 
             if venue_norm == "home":
                 home_team, away_team = team, opponent
@@ -213,8 +315,9 @@ class ClubMatchDataPreprocessor:
         if not self.include_uefa_coefficients:
             return match_df
 
-        history_coeff_path = Path(CLUB_COEFFICIENTS_HISTORY_PATH)
-        coeff_path = history_coeff_path if history_coeff_path.exists() else Path(CLUB_COEFFICIENTS_PATH)
+        history_coeff_path = Path(self.coeff_history_path) if self.coeff_history_path else Path(CLUB_COEFFICIENTS_HISTORY_PATH)
+        current_coeff_path = Path(self.coeff_path) if self.coeff_path else Path(CLUB_COEFFICIENTS_PATH)
+        coeff_path = history_coeff_path if history_coeff_path.exists() else current_coeff_path
         if not coeff_path.exists():
             self.log("UEFA coefficients file not found; continuing without coefficients.")
             return match_df
@@ -258,7 +361,7 @@ class ClubMatchDataPreprocessor:
             dedupe_cols = ["team_norm"]
             if "uefa_season_year" in coeff.columns:
                 dedupe_cols.append("uefa_season_year")
-            coeff = coeff.drop_duplicates(subset=dedupe_cols, keep="first").reset_index(drop=True)
+            coeff = self._latest_available_by_key(coeff, dedupe_cols)
 
         home_coeff = coeff.rename(
             columns={
@@ -288,7 +391,8 @@ class ClubMatchDataPreprocessor:
 
         home_keys = ["home_team_norm"]
         away_keys = ["away_team_norm"]
-        if coeff["uefa_season_year"].notna().any():
+        has_season_specific_coeffs = coeff["uefa_season_year"].notna().any()
+        if has_season_specific_coeffs:
             home_keys.append("uefa_season_year")
             away_keys.append("uefa_season_year")
 
@@ -320,6 +424,90 @@ class ClubMatchDataPreprocessor:
             on=away_keys,
             how="left",
         )
+        if has_season_specific_coeffs:
+            latest_coeff = self._latest_available_by_key(coeff, ["team_norm"])
+            latest_home_coeff = latest_coeff.rename(
+                columns={
+                    "team_norm": "home_team_norm",
+                    "country": "home_team_country_latest",
+                    "overall_club_coefficient": "home_team_uefa_overall_coefficient_latest",
+                    "season_club_coefficient": "home_team_uefa_season_coefficient_latest",
+                    "overall_rank": "home_team_uefa_overall_rank_latest",
+                    "season_rank": "home_team_uefa_season_rank_latest",
+                }
+            )
+            latest_away_coeff = latest_coeff.rename(
+                columns={
+                    "team_norm": "away_team_norm",
+                    "country": "away_team_country_latest",
+                    "overall_club_coefficient": "away_team_uefa_overall_coefficient_latest",
+                    "season_club_coefficient": "away_team_uefa_season_coefficient_latest",
+                    "overall_rank": "away_team_uefa_overall_rank_latest",
+                    "season_rank": "away_team_uefa_season_rank_latest",
+                }
+            )
+            out = out.merge(
+                latest_home_coeff[
+                    [
+                        "home_team_norm",
+                        "home_team_country_latest",
+                        "home_team_uefa_overall_coefficient_latest",
+                        "home_team_uefa_season_coefficient_latest",
+                        "home_team_uefa_overall_rank_latest",
+                        "home_team_uefa_season_rank_latest",
+                    ]
+                ],
+                on=["home_team_norm"],
+                how="left",
+            )
+            out = out.merge(
+                latest_away_coeff[
+                    [
+                        "away_team_norm",
+                        "away_team_country_latest",
+                        "away_team_uefa_overall_coefficient_latest",
+                        "away_team_uefa_season_coefficient_latest",
+                        "away_team_uefa_overall_rank_latest",
+                        "away_team_uefa_season_rank_latest",
+                    ]
+                ],
+                on=["away_team_norm"],
+                how="left",
+            )
+
+            home_team_exact_missing = (
+                out["home_team_uefa_overall_coefficient"].isna()
+                | out["home_team_uefa_season_coefficient"].isna()
+                | out["home_team_uefa_overall_rank"].isna()
+                | out["home_team_uefa_season_rank"].isna()
+            )
+            away_team_exact_missing = (
+                out["away_team_uefa_overall_coefficient"].isna()
+                | out["away_team_uefa_season_coefficient"].isna()
+                | out["away_team_uefa_overall_rank"].isna()
+                | out["away_team_uefa_season_rank"].isna()
+            )
+            out["home_uefa_fallback_used"] = (
+                home_team_exact_missing & out["home_team_uefa_overall_coefficient_latest"].notna()
+            ).astype(int)
+            out["away_uefa_fallback_used"] = (
+                away_team_exact_missing & out["away_team_uefa_overall_coefficient_latest"].notna()
+            ).astype(int)
+
+            fill_pairs = [
+                ("home_team_country", "home_team_country_latest"),
+                ("home_team_uefa_overall_coefficient", "home_team_uefa_overall_coefficient_latest"),
+                ("home_team_uefa_season_coefficient", "home_team_uefa_season_coefficient_latest"),
+                ("home_team_uefa_overall_rank", "home_team_uefa_overall_rank_latest"),
+                ("home_team_uefa_season_rank", "home_team_uefa_season_rank_latest"),
+                ("away_team_country", "away_team_country_latest"),
+                ("away_team_uefa_overall_coefficient", "away_team_uefa_overall_coefficient_latest"),
+                ("away_team_uefa_season_coefficient", "away_team_uefa_season_coefficient_latest"),
+                ("away_team_uefa_overall_rank", "away_team_uefa_overall_rank_latest"),
+                ("away_team_uefa_season_rank", "away_team_uefa_season_rank_latest"),
+            ]
+            for target_col, fallback_col in fill_pairs:
+                out[target_col] = out[target_col].fillna(out[fallback_col])
 
         numeric_cols = [
             "home_team_uefa_overall_coefficient",
@@ -358,24 +546,12 @@ class ClubMatchDataPreprocessor:
         out["uefa_season_rank_diff"] = out["home_team_uefa_season_rank"] - out["away_team_uefa_season_rank"]
 
         # Optional country-association context keyed by each team's association.
-        country_coeff_path = Path(COUNTRY_COEFFICIENTS_HISTORY_PATH)
+        country_coeff_path = (
+            Path(self.country_coeff_path) if self.country_coeff_path else Path(COUNTRY_COEFFICIENTS_HISTORY_PATH)
+        )
         if country_coeff_path.exists():
-            country_coeff = pd.read_csv(country_coeff_path)
-            required_country = [
-                "country",
-                "overall_country_coefficient",
-                "season_country_coefficient",
-                "overall_rank",
-                "season_rank",
-                "uefa_season_year",
-            ]
-            missing_country = [col for col in required_country if col not in country_coeff.columns]
-            if not missing_country:
-                country_coeff = country_coeff.copy()
-                country_coeff["country_norm"] = country_coeff["country"].map(self._normalize_text)
-                country_coeff["uefa_season_year"] = pd.to_numeric(
-                    country_coeff["uefa_season_year"], errors="coerce"
-                ).astype("Int64")
+            country_coeff = self._prepare_country_coefficients(pd.read_csv(country_coeff_path))
+            if not country_coeff.empty:
                 out["home_country_norm"] = out["home_team_country"].map(self._normalize_text)
                 out["away_country_norm"] = out["away_team_country"].map(self._normalize_text)
 
@@ -385,16 +561,16 @@ class ClubMatchDataPreprocessor:
                         "uefa_season_year",
                         "overall_country_coefficient",
                         "season_country_coefficient",
-                        "overall_rank",
-                        "season_rank",
+                        "country_uefa_overall_rank",
+                        "country_uefa_season_rank",
                     ]
                 ].rename(
                     columns={
                         "country_norm": "home_country_norm",
                         "overall_country_coefficient": "home_overall_country_coefficient",
                         "season_country_coefficient": "home_season_country_coefficient",
-                        "overall_rank": "home_country_uefa_overall_rank",
-                        "season_rank": "home_country_uefa_season_rank",
+                        "country_uefa_overall_rank": "home_country_uefa_overall_rank",
+                        "country_uefa_season_rank": "home_country_uefa_season_rank",
                     }
                 )
                 away_country_coeff = country_coeff[
@@ -403,16 +579,16 @@ class ClubMatchDataPreprocessor:
                         "uefa_season_year",
                         "overall_country_coefficient",
                         "season_country_coefficient",
-                        "overall_rank",
-                        "season_rank",
+                        "country_uefa_overall_rank",
+                        "country_uefa_season_rank",
                     ]
                 ].rename(
                     columns={
                         "country_norm": "away_country_norm",
                         "overall_country_coefficient": "away_overall_country_coefficient",
                         "season_country_coefficient": "away_season_country_coefficient",
-                        "overall_rank": "away_country_uefa_overall_rank",
-                        "season_rank": "away_country_uefa_season_rank",
+                        "country_uefa_overall_rank": "away_country_uefa_overall_rank",
+                        "country_uefa_season_rank": "away_country_uefa_season_rank",
                     }
                 )
 
@@ -426,6 +602,83 @@ class ClubMatchDataPreprocessor:
                     on=["away_country_norm", "uefa_season_year"],
                     how="left",
                 )
+                latest_country_coeff = self._latest_available_by_key(country_coeff, ["country_norm"])
+                latest_home_country_coeff = latest_country_coeff[
+                    [
+                        "country_norm",
+                        "overall_country_coefficient",
+                        "season_country_coefficient",
+                        "country_uefa_overall_rank",
+                        "country_uefa_season_rank",
+                    ]
+                ].rename(
+                    columns={
+                        "country_norm": "home_country_norm",
+                        "overall_country_coefficient": "home_overall_country_coefficient_latest",
+                        "season_country_coefficient": "home_season_country_coefficient_latest",
+                        "country_uefa_overall_rank": "home_country_uefa_overall_rank_latest",
+                        "country_uefa_season_rank": "home_country_uefa_season_rank_latest",
+                    }
+                )
+                latest_away_country_coeff = latest_country_coeff[
+                    [
+                        "country_norm",
+                        "overall_country_coefficient",
+                        "season_country_coefficient",
+                        "country_uefa_overall_rank",
+                        "country_uefa_season_rank",
+                    ]
+                ].rename(
+                    columns={
+                        "country_norm": "away_country_norm",
+                        "overall_country_coefficient": "away_overall_country_coefficient_latest",
+                        "season_country_coefficient": "away_season_country_coefficient_latest",
+                        "country_uefa_overall_rank": "away_country_uefa_overall_rank_latest",
+                        "country_uefa_season_rank": "away_country_uefa_season_rank_latest",
+                    }
+                )
+                out = out.merge(
+                    latest_home_country_coeff,
+                    on=["home_country_norm"],
+                    how="left",
+                )
+                out = out.merge(
+                    latest_away_country_coeff,
+                    on=["away_country_norm"],
+                    how="left",
+                )
+
+                home_country_exact_missing = (
+                    out["home_overall_country_coefficient"].isna()
+                    | out["home_season_country_coefficient"].isna()
+                    | out["home_country_uefa_overall_rank"].isna()
+                    | out["home_country_uefa_season_rank"].isna()
+                )
+                away_country_exact_missing = (
+                    out["away_overall_country_coefficient"].isna()
+                    | out["away_season_country_coefficient"].isna()
+                    | out["away_country_uefa_overall_rank"].isna()
+                    | out["away_country_uefa_season_rank"].isna()
+                )
+                out["home_country_uefa_fallback_used"] = (
+                    home_country_exact_missing & out["home_overall_country_coefficient_latest"].notna()
+                ).astype(int)
+                out["away_country_uefa_fallback_used"] = (
+                    away_country_exact_missing & out["away_overall_country_coefficient_latest"].notna()
+                ).astype(int)
+
+                country_fill_pairs = [
+                    ("home_overall_country_coefficient", "home_overall_country_coefficient_latest"),
+                    ("home_season_country_coefficient", "home_season_country_coefficient_latest"),
+                    ("home_country_uefa_overall_rank", "home_country_uefa_overall_rank_latest"),
+                    ("home_country_uefa_season_rank", "home_country_uefa_season_rank_latest"),
+                    ("away_overall_country_coefficient", "away_overall_country_coefficient_latest"),
+                    ("away_season_country_coefficient", "away_season_country_coefficient_latest"),
+                    ("away_country_uefa_overall_rank", "away_country_uefa_overall_rank_latest"),
+                    ("away_country_uefa_season_rank", "away_country_uefa_season_rank_latest"),
+                ]
+                for target_col, fallback_col in country_fill_pairs:
+                    out[target_col] = out[target_col].fillna(out[fallback_col])
 
                 country_cols = [
                     "home_overall_country_coefficient",
@@ -505,6 +758,24 @@ class ClubMatchDataPreprocessor:
                 "away_country_norm",
                 "home_team_country",
                 "away_team_country",
+                "home_team_country_latest",
+                "away_team_country_latest",
+                "home_team_uefa_overall_coefficient_latest",
+                "home_team_uefa_season_coefficient_latest",
+                "home_team_uefa_overall_rank_latest",
+                "home_team_uefa_season_rank_latest",
+                "away_team_uefa_overall_coefficient_latest",
+                "away_team_uefa_season_coefficient_latest",
+                "away_team_uefa_overall_rank_latest",
+                "away_team_uefa_season_rank_latest",
+                "home_overall_country_coefficient_latest",
+                "home_season_country_coefficient_latest",
+                "home_country_uefa_overall_rank_latest",
+                "home_country_uefa_season_rank_latest",
+                "away_overall_country_coefficient_latest",
+                "away_season_country_coefficient_latest",
+                "away_country_uefa_overall_rank_latest",
+                "away_country_uefa_season_rank_latest",
             ]
             if col in out.columns
         ]
@@ -550,10 +821,28 @@ class ClubMatchDataPreprocessor:
         if "result" not in df.columns:
             df["result"] = ""
 
+        df["home_team"] = df["home_team"].map(self._canonical_team_name)
+        df["away_team"] = df["away_team"].map(self._canonical_team_name)
+
         df["date"] = pd.to_datetime(df["date"], errors="coerce")
         df["home_score"] = pd.to_numeric(df["home_score"], errors="coerce")
         df["away_score"] = pd.to_numeric(df["away_score"], errors="coerce")
         df = df.dropna(subset=["date", "home_score", "away_score"]).copy()
+
+        dedupe_cols = [
+            "date",
+            "home_team",
+            "away_team",
+            "home_score",
+            "away_score",
+            "competition",
+            "round",
+            "neutral",
+        ]
+        before_dedupe = len(df)
+        df = df.sort_values("date").drop_duplicates(subset=dedupe_cols, keep="first").reset_index(drop=True)
+        if self.verbose and before_dedupe != len(df):
+            self.log(f"Removed {before_dedupe - len(df)} duplicate club matches after team canonicalization.")
 
         self.matches = self._attach_optional_uefa_coefficients(df)
         self.log(f"Loaded {len(self.matches)} club matches after transformation.")

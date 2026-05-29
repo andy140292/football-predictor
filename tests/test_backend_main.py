@@ -9,6 +9,12 @@ def _load_main(monkeypatch):
     return importlib.reload(main)
 
 
+def _load_main_prod(monkeypatch):
+    monkeypatch.setenv("API_ENV", "prod")
+    import backend.main as main
+    return importlib.reload(main)
+
+
 def test_healthz_returns_ok(monkeypatch):
     main = _load_main(monkeypatch)
 
@@ -56,6 +62,59 @@ def test_team_vs_confed_endpoint_uses_service(monkeypatch):
     assert response.json() == payload
 
 
+def test_recent_form_endpoint_uses_service(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    payload = {
+        "home_team": "Bolivia",
+        "away_team": "Jamaica",
+        "home_matches": [
+            {"date": "2026-03-26", "home_team": "Bolivia", "away_team": "Suriname", "home_score": 2, "away_score": 1},
+            {"date": "2026-03-15", "home_team": "Bolivia", "away_team": "Trinidad and Tobago", "home_score": 3, "away_score": 0},
+        ],
+        "away_matches": [
+            {"date": "2026-03-27", "home_team": "New Caledonia", "away_team": "Jamaica", "home_score": 0, "away_score": 1},
+            {"date": "2026-01-18", "home_team": "Grenada", "away_team": "Jamaica", "home_score": 0, "away_score": 1},
+        ],
+    }
+    monkeypatch.setattr(main, "get_recent_matches", lambda **_: payload)
+
+    client = TestClient(main.app)
+    response = client.post(
+        "/recent-form",
+        json={"home_team": "Bolivia", "away_team": "Jamaica", "last_matches": 5},
+    )
+
+    assert response.status_code == 200
+    assert response.json() == payload
+
+
+def test_recent_form_endpoint_passes_libertadores_mode(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    captured = {}
+
+    def fake_service(**kwargs):
+        captured.update(kwargs)
+        return {
+            "home_team": "Palmeiras",
+            "away_team": "Boca Juniors",
+            "home_matches": [],
+            "away_matches": [],
+        }
+
+    monkeypatch.setattr(main, "get_recent_matches", fake_service)
+
+    client = TestClient(main.app)
+    response = client.post(
+        "/recent-form",
+        json={"home_team": "Palmeiras", "away_team": "Boca Juniors", "last_matches": 5, "mode": "libertadores"},
+    )
+
+    assert response.status_code == 200
+    assert captured["mode"] == "libertadores"
+
+
 def test_match_predictions_endpoint_uses_service(monkeypatch):
     main = _load_main(monkeypatch)
 
@@ -81,6 +140,50 @@ def test_match_predictions_endpoint_uses_service(monkeypatch):
 
     assert response.status_code == 200
     assert response.json() == service_response
+
+
+def test_matches_calendar_endpoint_uses_service(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    service_response = {
+        "mode": "world_cup",
+        "matches": [
+            {
+                "match_id": "22222222-2222-2222-2222-222222222222",
+                "home_team": "Ecuador",
+                "away_team": "Germany",
+                "match_date": "2026-06-25",
+                "tournament": "FIFA World Cup",
+                "predicted_outcome": "home_win",
+                "prediction_id": "11111111-1111-1111-1111-111111111111",
+                "prediction_created_at": "2026-02-18T12:00:00+00:00",
+            }
+        ],
+    }
+    captured = {}
+
+    def fake_service(**kwargs):
+        captured.update(kwargs)
+        return service_response
+
+    monkeypatch.setattr(main, "list_matches_calendar", fake_service)
+
+    client = TestClient(main.app)
+    response = client.get("/matches-calendar?mode=world_cup")
+
+    assert response.status_code == 200
+    assert response.json() == service_response
+    assert captured["mode"] == "world_cup"
+    assert captured["user_id"] == "dev-user"
+
+
+def test_matches_calendar_endpoint_requires_token_in_prod(monkeypatch):
+    main = _load_main_prod(monkeypatch)
+
+    client = TestClient(main.app)
+    response = client.get("/matches-calendar?mode=world_cup")
+
+    assert response.status_code == 401
 
 
 def test_admin_calendar_upsert_requires_valid_admin_key(monkeypatch):
@@ -125,6 +228,55 @@ def test_admin_calendar_upsert_uses_service(monkeypatch):
     assert response.json() == service_response
 
 
+def test_admin_matches_upsert_uses_service(monkeypatch):
+    monkeypatch.setenv("ADMIN_API_KEY", "super-secret")
+    main = _load_main(monkeypatch)
+
+    service_response = {
+        "received": 2,
+        "inserted": 1,
+        "updated": 1,
+        "skipped": 0,
+        "errors": [],
+    }
+    monkeypatch.setattr(main, "upsert_manual_matches_batch", lambda *_args, **_kwargs: service_response)
+
+    client = TestClient(main.app)
+    response = client.post(
+        "/admin/matches/upsert-batch",
+        headers={"X-Admin-Key": "super-secret"},
+        json={
+            "matches": [
+                {
+                    "date": "2026-03-01",
+                    "home_team": "Brazil",
+                    "away_team": "Argentina",
+                    "home_score": 1,
+                    "away_score": 0,
+                    "tournament": "Friendly",
+                    "city": "Rio de Janeiro",
+                    "country": "Brazil",
+                    "neutral": False,
+                },
+                {
+                    "date": "2026-03-05",
+                    "home_team": "USA",
+                    "away_team": "Mexico",
+                    "home_score": 2,
+                    "away_score": 1,
+                    "tournament": "Friendly",
+                    "city": "Houston",
+                    "country": "United States",
+                    "neutral": False,
+                },
+            ]
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == service_response
+
+
 def test_model_scorecard_endpoint_uses_service(monkeypatch):
     main = _load_main(monkeypatch)
 
@@ -153,6 +305,41 @@ def test_model_scorecard_endpoint_uses_service(monkeypatch):
 
     assert response.status_code == 200
     assert response.json() == service_response
+
+
+def test_model_scorecard_endpoint_allows_missing_model_version(monkeypatch):
+    monkeypatch.setenv("MODEL_VERSION", "2026_01_national_v1")
+    main = _load_main(monkeypatch)
+
+    captured = {}
+
+    def fake_service(**kwargs):
+        captured.update(kwargs)
+        return {
+            "mode": "national",
+            "model_version": "2026_01_national_v1",
+            "from_date": "2025-09-01",
+            "to_date": "2026-01-31",
+            "correct_count": 210,
+            "incorrect_count": 120,
+            "total_scored": 330,
+            "accuracy_pct": 63.6364,
+        }
+
+    monkeypatch.setattr(main, "get_model_scorecard", fake_service)
+
+    client = TestClient(main.app)
+    response = client.get(
+        "/model-scorecard",
+        params={
+            "mode": "national",
+            "from_date": "2025-09-01",
+            "to_date": "2026-01-31",
+        },
+    )
+
+    assert response.status_code == 200
+    assert captured["model_version"] == ""
 
 
 def test_model_scorecard_matches_endpoint_uses_service(monkeypatch):
@@ -214,3 +401,200 @@ def test_model_scorecard_matches_endpoint_uses_service(monkeypatch):
 
     assert response.status_code == 200
     assert response.json() == service_response
+
+
+def test_model_scorecard_matches_endpoint_allows_missing_model_version(monkeypatch):
+    monkeypatch.setenv("MODEL_VERSION", "2026_01_national_v1")
+    main = _load_main(monkeypatch)
+
+    captured = {}
+
+    def fake_service(**kwargs):
+        captured.update(kwargs)
+        return {
+            "mode": "national",
+            "model_version": "2026_01_national_v1",
+            "from_date": "2025-09-01",
+            "to_date": "2026-01-31",
+            "verdict": "all",
+            "page": 1,
+            "page_size": 2,
+            "total": 0,
+            "matches": [],
+        }
+
+    monkeypatch.setattr(main, "list_model_scorecard_matches", fake_service)
+
+    client = TestClient(main.app)
+    response = client.get(
+        "/model-scorecard/matches",
+        params={
+            "mode": "national",
+            "from_date": "2025-09-01",
+            "to_date": "2026-01-31",
+            "page": 1,
+            "page_size": 2,
+            "verdict": "all",
+        },
+    )
+
+    assert response.status_code == 200
+    assert captured["model_version"] == ""
+
+
+def test_top_searched_teams_endpoint_uses_service(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    service_response = {
+        "mode": "national",
+        "snapshot_date": "2026-03-12",
+        "lookback_days_used": 7,
+        "calculated_at": "2026-03-12T18:00:00Z",
+        "teams": [
+            {"rank": 1, "team": "Argentina", "searches": 128},
+            {"rank": 2, "team": "Brazil", "searches": 121},
+        ],
+    }
+    monkeypatch.setattr(main, "get_top_searched_teams_snapshot", lambda **_: service_response)
+
+    client = TestClient(main.app)
+    response = client.get("/top-searched-teams", params={"mode": "national"})
+
+    assert response.status_code == 200
+    assert response.json() == service_response
+
+
+def test_top_searched_teams_endpoint_rejects_invalid_mode(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    def raise_invalid_mode(**_kwargs):
+        raise ValueError("mode must be one of: national, champions")
+
+    monkeypatch.setattr(main, "get_top_searched_teams_snapshot", raise_invalid_mode)
+
+    client = TestClient(main.app)
+    response = client.get("/top-searched-teams", params={"mode": "invalid"})
+
+    assert response.status_code == 400
+    assert response.json()["detail"] == "mode must be one of: national, champions"
+
+
+def test_top_searched_teams_endpoint_requires_auth(monkeypatch):
+    main = _load_main_prod(monkeypatch)
+
+    client = TestClient(main.app)
+    response = client.get("/top-searched-teams")
+
+    assert response.status_code == 401
+
+
+def test_prediction_rankings_endpoint_uses_service(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    service_response = {
+        "mode": "national",
+        "sort_by": "correct_count",
+        "sort_order": "desc",
+        "page": 1,
+        "page_size": 5,
+        "total_users": 2,
+        "rankings": [
+            {
+                "rank": 1,
+                "user_id": "user-1",
+                "display_name": "Ana",
+                "correct_count": 4,
+                "incorrect_count": 1,
+                "total_resolved_predictions": 5,
+                "accuracy_pct": 80.0,
+            },
+            {
+                "rank": 2,
+                "user_id": "user-2",
+                "display_name": "Ben",
+                "correct_count": 3,
+                "incorrect_count": 2,
+                "total_resolved_predictions": 5,
+                "accuracy_pct": 60.0,
+            },
+        ],
+    }
+    captured = {}
+
+    def fake_service(**kwargs):
+        captured.update(kwargs)
+        return service_response
+
+    monkeypatch.setattr(main, "list_prediction_rankings", fake_service)
+
+    client = TestClient(main.app)
+    response = client.get(
+        "/prediction-rankings",
+        params={
+            "mode": "national",
+            "sort_by": "correct_count",
+            "sort_order": "desc",
+            "page": 1,
+            "page_size": 5,
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == service_response
+    assert captured == {
+        "mode": "national",
+        "sort_by": "correct_count",
+        "sort_order": "desc",
+        "page": 1,
+        "page_size": 5,
+    }
+
+
+def test_prediction_rankings_endpoint_rejects_invalid_input(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    def raise_invalid(**_kwargs):
+        raise ValueError("mode must be one of: all, national, champions")
+
+    monkeypatch.setattr(main, "list_prediction_rankings", raise_invalid)
+
+    client = TestClient(main.app)
+    response = client.get("/prediction-rankings", params={"mode": "invalid"})
+
+    assert response.status_code == 400
+    assert response.json()["detail"] == "mode must be one of: all, national, champions"
+
+
+def test_prediction_rankings_endpoint_supports_missing_mode(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    captured = {}
+
+    def fake_service(**kwargs):
+        captured.update(kwargs)
+        return {
+            "mode": "all",
+            "sort_by": "correct_count",
+            "sort_order": "desc",
+            "page": 1,
+            "page_size": 50,
+            "total_users": 0,
+            "rankings": [],
+        }
+
+    monkeypatch.setattr(main, "list_prediction_rankings", fake_service)
+
+    client = TestClient(main.app)
+    response = client.get("/prediction-rankings")
+
+    assert response.status_code == 200
+    assert captured["mode"] is None
+
+
+def test_prediction_rankings_endpoint_requires_auth(monkeypatch):
+    main = _load_main_prod(monkeypatch)
+
+    client = TestClient(main.app)
+    response = client.get("/prediction-rankings", params={"mode": "national"})
+
+    assert response.status_code == 401

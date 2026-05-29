@@ -97,9 +97,17 @@ CLUB_MATCHES_HISTORY_PATH = _resolve_existing_file(
     "club_matches_historical_1993_2026.csv",
     [HISTORICAL_DATA_DIR, DATA_DIR],
 )
+LIBERTADORES_MATCHES_HISTORY_PATH = _resolve_existing_file(
+    "club_matches_historical_libertadores_2025_2026.csv",
+    [HISTORICAL_DATA_DIR, DATA_DIR],
+)
 CLUB_TEAM_ALIASES_PATH = _resolve_existing_file(
     "club_team_aliases.csv",
     [DATA_DIR, HISTORICAL_DATA_DIR],
+)
+LIBERTADORES_COEFFICIENTS_PATH = _resolve_existing_file(
+    "libertadores_conmebol_coefficients_2026.csv",
+    [HISTORICAL_DATA_DIR, DATA_DIR],
 )
 CLUB_PROCESSED_X_PATH = DATA_DIR / "processed_X_club.csv"
 CLUB_PROCESSED_X_FULL_PATH = DATA_DIR / "processed_X_Full_club.csv"
@@ -107,6 +115,9 @@ CLUB_PROCESSED_Y_PATH = DATA_DIR / "processed_y_club.csv"
 CHAMPIONS_PROCESSED_X_PATH = DATA_DIR / "processed_X_champions.csv"
 CHAMPIONS_PROCESSED_X_FULL_PATH = DATA_DIR / "processed_X_Full_champions.csv"
 CHAMPIONS_PROCESSED_Y_PATH = DATA_DIR / "processed_y_champions.csv"
+LIBERTADORES_PROCESSED_X_PATH = DATA_DIR / "processed_X_libertadores.csv"
+LIBERTADORES_PROCESSED_X_FULL_PATH = DATA_DIR / "processed_X_Full_libertadores.csv"
+LIBERTADORES_PROCESSED_Y_PATH = DATA_DIR / "processed_y_libertadores.csv"
 
 MODEL_PATHS = {
     "logistic_regression": MODELS_DIR / "logistic_regression_predictor.pkl",
@@ -125,6 +136,12 @@ CHAMPIONS_MODEL_PATHS = {
     "random_forest": MODELS_DIR / "champions_random_forest_predictor.pkl",
     "mlp": MODELS_DIR / "champions_mlp_predictor.pkl",
 }
+LIBERTADORES_MODEL_PATHS = {
+    "logistic_regression": MODELS_DIR / "libertadores_logistic_regression_predictor.pkl",
+    "random_forest": MODELS_DIR / "libertadores_random_forest_predictor.pkl",
+    "mlp": MODELS_DIR / "libertadores_mlp_predictor.pkl",
+}
 
 CLUB_STATE_SNAPSHOT_PATH = MODELS_DIR / "club_state_snapshot.pkl"
 CHAMPIONS_STATE_SNAPSHOT_PATH = MODELS_DIR / "champions_state_snapshot.pkl"
+LIBERTADORES_STATE_SNAPSHOT_PATH = MODELS_DIR / "libertadores_state_snapshot.pkl"

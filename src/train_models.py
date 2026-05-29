@@ -24,6 +24,13 @@ try:
         CLUB_PROCESSED_X_FULL_PATH,
         CLUB_PROCESSED_X_PATH,
         CLUB_PROCESSED_Y_PATH,
+        LIBERTADORES_COEFFICIENTS_PATH,
+        LIBERTADORES_MATCHES_HISTORY_PATH,
+        LIBERTADORES_MODEL_PATHS,
+        LIBERTADORES_PROCESSED_X_FULL_PATH,
+        LIBERTADORES_PROCESSED_X_PATH,
+        LIBERTADORES_PROCESSED_Y_PATH,
+        LIBERTADORES_STATE_SNAPSHOT_PATH,
         MODEL_PATHS,
         PROCESSED_X_PATH,
         PROCESSED_X__FULL_PATH,
@@ -47,6 +54,13 @@ except Exception:  # pragma: no cover - import path fallback
         CLUB_PROCESSED_X_FULL_PATH,
         CLUB_PROCESSED_X_PATH,
         CLUB_PROCESSED_Y_PATH,
+        LIBERTADORES_COEFFICIENTS_PATH,
+        LIBERTADORES_MATCHES_HISTORY_PATH,
+        LIBERTADORES_MODEL_PATHS,
+        LIBERTADORES_PROCESSED_X_FULL_PATH,
+        LIBERTADORES_PROCESSED_X_PATH,
+        LIBERTADORES_PROCESSED_Y_PATH,
+        LIBERTADORES_STATE_SNAPSHOT_PATH,
         MODEL_PATHS,
         PROCESSED_X_PATH,
         PROCESSED_X__FULL_PATH,
@@ -97,6 +111,10 @@ CLUB_FORCE_SAVE_MODELS = os.getenv("CLUB_FORCE_SAVE_MODELS", "0").lower() in {
     "true",
     "yes",
 }
+CLUB_PROTECTED_FEATURE_TOKENS = (
+    "uefa",
+    "country_coefficient",
+)
 
 supabase = get_supabase_client()
 
@@ -152,6 +170,8 @@ def save_model_locally(predictor, model_type, mode="national"):
         model_paths = CLUB_MODEL_PATHS
     elif mode == "champions":
         model_paths = CHAMPIONS_MODEL_PATHS
+    elif mode == "libertadores":
+        model_paths = LIBERTADORES_MODEL_PATHS
     else:
         raise ValueError(f"Modo inválido: {mode}")
     local_model_path = model_paths[model_type]
@@ -171,6 +191,10 @@ def save_processed_data_to_csv(X, y, X_full, mode="national"):
         x_path = CHAMPIONS_PROCESSED_X_PATH
         y_path = CHAMPIONS_PROCESSED_Y_PATH
         x_full_path = CHAMPIONS_PROCESSED_X_FULL_PATH
+    elif mode == "libertadores":
+        x_path = LIBERTADORES_PROCESSED_X_PATH
+        y_path = LIBERTADORES_PROCESSED_Y_PATH
+        x_full_path = LIBERTADORES_PROCESSED_X_FULL_PATH
     else:
         raise ValueError(f"Modo inválido: {mode}")
 
@@ -311,7 +335,20 @@ def _select_club_features(X_train, y_train, X_val, y_val):
         return feature_cols
     print(f"🧮 Permutation baseline log_loss={perm_baseline:.4f}")
 
-    removable = [col for col in ranked_importance.index.tolist() if col in feature_cols]
+    protected_features = [
+        col
+        for col in feature_cols
+        if any(token in str(col).lower() for token in CLUB_PROTECTED_FEATURE_TOKENS)
+    ]
+    removable = [
+        col
+        for col in ranked_importance.index.tolist()
+        if col in feature_cols and col not in protected_features
+    ]
+    if protected_features:
+        print(
+            f"🛡️ Protected ranking/context features from removal: {len(protected_features)}"
+        )
     selected = list(feature_cols)
     best_features = list(feature_cols)
     best_loss = baseline_metrics["log_loss"]
@@ -409,30 +446,47 @@ def _apply_club_min_date_filter(X, y, X_full):
     return X.loc[mask].copy(), y.loc[mask].copy(), X_full.loc[mask].copy()
 
 
-def _apply_champions_subset(X, y, X_full):
-    if "is_ucl_match" in X.columns:
-        mask = pd.to_numeric(X["is_ucl_match"], errors="coerce").fillna(0).astype(int) == 1
-    elif "competition" in X_full.columns:
-        competition = X_full["competition"].astype(str).str.lower()
-        mask = competition.str.contains("champions")
+def _apply_competition_subset(X, y, X_full, mode):
+    mode_text = str(mode or "").strip().lower()
+    if mode_text == "champions":
+        label = "Champions"
+        competition_tokens = ["champions"]
+    elif mode_text == "libertadores":
+        label = "Libertadores"
+        competition_tokens = ["libertadores"]
     else:
-        print("⚠️ Champions subset could not be identified. Keeping full club dataset.")
+        return X, y, X_full
+
+    if "competition" in X_full.columns:
+        competition = X_full["competition"].astype(str).str.lower()
+        mask = pd.Series(False, index=X_full.index)
+        for token in competition_tokens:
+            mask = mask | competition.str.contains(token)
+    elif "is_ucl_match" in X.columns:
+        mask = pd.to_numeric(X["is_ucl_match"], errors="coerce").fillna(0).astype(int) == 1
+    else:
+        print(f"⚠️ {label} subset could not be identified. Keeping full club dataset.")
         return X, y, X_full
 
     kept = int(mask.sum())
     if kept < 100:
-        print(f"⚠️ Champions subset too small ({kept} rows). Keeping full club dataset.")
+        print(f"⚠️ {label} subset too small ({kept} rows). Keeping full club dataset.")
         return X, y, X_full
 
-    print(f"🏆 Applied champions subset | rows {len(X)} -> {kept}")
+    print(f"🏆 Applied {mode_text} subset | rows {len(X)} -> {kept}")
     return X.loc[mask].copy(), y.loc[mask].copy(), X_full.loc[mask].copy()
 
 
 def _save_state_snapshot(X_full, mode="club"):
-    if mode not in {"club", "champions"}:
+    if mode not in {"club", "champions", "libertadores"}:
         return
 
-    snapshot_path = CLUB_STATE_SNAPSHOT_PATH if mode == "club" else CHAMPIONS_STATE_SNAPSHOT_PATH
+    if mode == "club":
+        snapshot_path = CLUB_STATE_SNAPSHOT_PATH
+    elif mode == "champions":
+        snapshot_path = CHAMPIONS_STATE_SNAPSHOT_PATH
+    else:
+        snapshot_path = LIBERTADORES_STATE_SNAPSHOT_PATH
     required_cols = ["date", "home_team", "away_team", "home_score", "away_score"]
     if not set(required_cols).issubset(set(X_full.columns)):
         print(
@@ -469,19 +523,44 @@ def _save_state_snapshot(X_full, mode="club"):
     )
 
 
+def _prune_libertadores_duplicate_coeff_features(X: pd.DataFrame) -> pd.DataFrame:
+    duplicate_cols = [
+        # Backward-compatible single-country fields duplicate the home-country block
+        # and create unstable linear behavior in Libertadores mode.
+        "overall_country_coefficient",
+        "season_country_coefficient",
+        "country_uefa_overall_rank",
+        "country_uefa_season_rank",
+    ]
+    cols_to_drop = [col for col in duplicate_cols if col in X.columns]
+    if cols_to_drop:
+        print(f"🧹 libertadores feature prune | dropping duplicate coeff cols={cols_to_drop}")
+        X = X.drop(columns=cols_to_drop)
+    return X
+
+
 def train_models(mode="national"):
     if mode == "national":
         file_path = f"matches_{month_str}"
         preprocessor = MatchDataPreprocessor(file_path, from_supabase=False)
-    elif mode in {"club", "champions"}:
+    elif mode in {"club", "champions", "libertadores"}:
         # Auto-build merged historical dataset if it does not exist yet.
-        club_dataset_path = CLUB_MATCHES_HISTORY_PATH
+        if mode == "libertadores":
+            club_dataset_path = LIBERTADORES_MATCHES_HISTORY_PATH
+            coeff_path = LIBERTADORES_COEFFICIENTS_PATH
+            coeff_history_path = LIBERTADORES_COEFFICIENTS_PATH
+            country_coeff_path = LIBERTADORES_COEFFICIENTS_PATH
+        else:
+            club_dataset_path = CLUB_MATCHES_HISTORY_PATH
+            coeff_path = None
+            coeff_history_path = None
+            country_coeff_path = None
         if not club_dataset_path.exists():
-            if ensure_club_historical_dataset is not None:
+            if mode == "club" and ensure_club_historical_dataset is not None:
                 ensure_club_historical_dataset()
-            if CLUB_MATCHES_HISTORY_PATH.exists():
+            if mode == "club" and CLUB_MATCHES_HISTORY_PATH.exists():
                 club_dataset_path = CLUB_MATCHES_HISTORY_PATH
-            elif Path(CLUB_MATCHES_PATH).exists():
+            elif mode == "club" and Path(CLUB_MATCHES_PATH).exists():
                 print(
                     f"⚠️ {CLUB_MATCHES_HISTORY_PATH} not found. "
                     f"Falling back to {CLUB_MATCHES_PATH}."
@@ -489,12 +568,15 @@ def train_models(mode="national"):
                 club_dataset_path = Path(CLUB_MATCHES_PATH)
             else:
                 raise FileNotFoundError(
-                    f"Missing required datasets: {CLUB_MATCHES_HISTORY_PATH} and {CLUB_MATCHES_PATH}."
+                    f"Missing required dataset for mode={mode}: {club_dataset_path}."
                 )
         file_path = str(club_dataset_path)
         preprocessor = ClubMatchDataPreprocessor(
             file_path,
             include_uefa_coefficients=CLUB_INCLUDE_UEFA_COEFFICIENTS,
+            coeff_path=coeff_path,
+            coeff_history_path=coeff_history_path,
+            country_coeff_path=country_coeff_path,
         )
     else:
         raise ValueError(f"Modo inválido: {mode}")
@@ -505,10 +587,12 @@ def train_models(mode="national"):
     # Save processed data for prediction module
     X_full_raw = preprocessor.X_Full.copy()
     X_full = X_full_raw.copy()
-    if mode in {"club", "champions"}:
+    if mode in {"club", "champions", "libertadores"}:
         X, y, X_full = _apply_club_min_date_filter(X, y, X_full)
-    if mode == "champions":
-        X, y, X_full = _apply_champions_subset(X, y, X_full)
+    if mode in {"champions", "libertadores"}:
+        X, y, X_full = _apply_competition_subset(X, y, X_full, mode)
+    if mode == "libertadores":
+        X = _prune_libertadores_duplicate_coeff_features(X)
 
     # Upload processed data to Supabase. Only doing it locally for now.
     # upload_processed_data_to_supabase(X, y, X_full)
@@ -516,7 +600,7 @@ def train_models(mode="national"):
     selected_features = list(X.columns)
 
     # Time-based split to avoid temporal leakage.
-    if mode in {"club", "champions"}:
+    if mode in {"club", "champions", "libertadores"}:
         X_train, X_val, X_test, y_train, y_val, y_test = _club_time_split_train_val_test(X, y, X_full)
         print(
             f"🗓️ {mode} OOT split | train={len(X_train)} val={len(X_val)} test={len(X_test)} "
@@ -539,11 +623,11 @@ def train_models(mode="national"):
         y_train_val = y_train
         X_test_eval = X_test
 
-    X_full_for_inference = X_full_raw if mode == "champions" else X_full
+    X_full_for_inference = X_full_raw if mode in {"champions", "libertadores"} else X_full
 
     # Save processed data (feature template used by inference must match trained models).
     save_processed_data_to_csv(X_for_training, y, X_full_for_inference, mode=mode)
-    if mode in {"club", "champions"}:
+    if mode in {"club", "champions", "libertadores"}:
         _save_state_snapshot(X_full_for_inference, mode=mode)
 
     models = {}
@@ -557,7 +641,7 @@ def train_models(mode="national"):
             X_train_val,
             y_train_val,
             mode=mode,
-            save_model=(mode not in {"club", "champions"}),
+            save_model=(mode not in {"club", "champions", "libertadores"}),
         )
         models[model_type] = best_model
         predictors[model_type] = predictor
@@ -573,7 +657,7 @@ def train_models(mode="national"):
                 "test_rows": int(len(X_test_eval)),
                 "feature_count": int(len(selected_features)),
             }
-            if mode in {"club", "champions"} and "is_ucl_match" in X_test_eval.columns:
+            if mode in {"club", "champions", "libertadores"} and "is_ucl_match" in X_test_eval.columns:
                 ucl_mask_test = pd.to_numeric(X_test_eval["is_ucl_match"], errors="coerce").fillna(0).astype(int) == 1
                 if int(ucl_mask_test.sum()) > 0:
                     ucl_probs = predictor.predict_proba(X_test_eval.loc[ucl_mask_test])
@@ -596,7 +680,7 @@ def train_models(mode="national"):
                     f"accuracy={metrics[model_type]['ucl_accuracy']:.4f}"
                 )
 
-    if mode in {"club", "champions"} and metrics:
+    if mode in {"club", "champions", "libertadores"} and metrics:
         baseline_log_loss = CLUB_BASELINE_LOG_LOSS if mode == "club" else CHAMPIONS_BASELINE_LOG_LOSS
         best_logloss = min(m["log_loss"] for m in metrics.values())
         print(
@@ -685,6 +769,12 @@ def train_all_models_if_needed(mode="national"):
             "random_forest": models_dir / "champions_random_forest_predictor.pkl",
             "logistic_regression": models_dir / "champions_logistic_regression_predictor.pkl",
             "mlp": models_dir / "champions_mlp_predictor.pkl",
+        }
+    elif mode == "libertadores":
+        model_paths = {
+            "random_forest": models_dir / "libertadores_random_forest_predictor.pkl",
+            "logistic_regression": models_dir / "libertadores_logistic_regression_predictor.pkl",
+            "mlp": models_dir / "libertadores_mlp_predictor.pkl",
         }
     else:
         raise ValueError(f"Modo inválido: {mode}")

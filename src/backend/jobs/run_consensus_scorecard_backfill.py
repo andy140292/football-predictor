@@ -30,11 +30,6 @@ def parse_args() -> argparse.Namespace:
         default=os.getenv("MODEL_VERSION"),
         help="Model version label (default: MODEL_VERSION env)",
     )
-    parser.add_argument(
-        "--matches-file",
-        default=None,
-        help="Optional CSV file path to use instead of backend.paths.MATCHES_PATH",
-    )
     return parser.parse_args()
 
 
@@ -45,7 +40,6 @@ def main() -> int:
         to_date=args.to_date,
         mode=args.mode,
         model_version=args.model_version,
-        matches_file_path=args.matches_file,
     )
     print(json.dumps(summary, ensure_ascii=True, indent=2))
     return 0

@@ -5,8 +5,9 @@ import types
 import unicodedata
 import logging
 from difflib import get_close_matches
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import perf_counter
+from typing import Optional
 
 import joblib
 import jwt
@@ -31,6 +32,12 @@ try:
         CLUB_MODEL_PATHS,
         CLUB_PROCESSED_X_FULL_PATH,
         CLUB_PROCESSED_X_PATH,
+        LIBERTADORES_COEFFICIENTS_PATH,
+        LIBERTADORES_MATCHES_HISTORY_PATH,
+        LIBERTADORES_MODEL_PATHS,
+        LIBERTADORES_PROCESSED_X_FULL_PATH,
+        LIBERTADORES_PROCESSED_X_PATH,
+        LIBERTADORES_STATE_SNAPSHOT_PATH,
         MODEL_PATHS,
         PROCESSED_X_PATH,
         RANKING_PATH,
@@ -51,6 +58,12 @@ except ImportError:  # pragma: no cover - fallback for direct module execution
         CLUB_MODEL_PATHS,
         CLUB_PROCESSED_X_FULL_PATH,
         CLUB_PROCESSED_X_PATH,
+        LIBERTADORES_COEFFICIENTS_PATH,
+        LIBERTADORES_MATCHES_HISTORY_PATH,
+        LIBERTADORES_MODEL_PATHS,
+        LIBERTADORES_PROCESSED_X_FULL_PATH,
+        LIBERTADORES_PROCESSED_X_PATH,
+        LIBERTADORES_STATE_SNAPSHOT_PATH,
         MODEL_PATHS,
         PROCESSED_X_PATH,
         RANKING_PATH,
@@ -70,7 +83,10 @@ TEAM_CODE_ALIASES_PATH = os.getenv(
 )
 _team_name_to_code = None
 _team_alias_to_code = None
+_team_code_to_names = None
 MODEL_NAMES = ("random_forest", "logistic_regression", "mlp")
+WORLD_CUP_2026_HOST_CODES = {"USA", "MEX", "CAN"}
+WORLD_CUP_2026_HOST_NAMES = {"unitedstates", "usa", "us", "mexico", "canada"}
 
 
 class FootballMatchPredictor:
@@ -91,6 +107,25 @@ class FootballMatchPredictor:
             X_scaled = self.scaler.transform(X)
             return self.model.predict_proba(X_scaled)
         return self.model.predict_proba(X)
+
+
+def normalize_search_bucket_mode(
+    mode: str = None,
+    default: Optional[str] = "national",
+    strict: bool = True,
+) -> Optional[str]:
+    text = str(mode or "").strip().lower()
+    if not text:
+        return default
+    if text == "national":
+        return "national"
+    if text == "libertadores":
+        return "libertadores"
+    if text in {"club", "champions"}:
+        return "champions"
+    if strict:
+        raise ValueError(f"Modo inválido: {mode}")
+    return default
 
 
 def _register_pickle_compat_modules():
@@ -166,6 +201,7 @@ def _stabilize_probabilities(raw_probs):
 
 _club_assets = None
 _champions_assets = None
+_libertadores_assets = None
 _club_team_aliases = None
 _club_canonical_to_aliases = None
 _STATE_HISTORY_COLS = ["date", "home_team", "away_team", "home_score", "away_score"]
@@ -191,8 +227,18 @@ def _get_admin_supabase_client():
         return supabase
 
 
-def _load_latest_club_coefficients():
-    coeff_history_path = str(CLUB_COEFFICIENTS_HISTORY_PATH)
+def _get_calendar_read_client(token: str = None):
+    """Read public schedule data through the backend client to avoid RLS mismatches."""
+    try:
+        return _get_admin_supabase_client()
+    except Exception as exc:
+        logger.warning("calendar_read_service_role_unavailable error=%s", exc)
+        return _get_request_supabase_client(token)
+
+
+def _load_latest_club_coefficients(coeff_history_path=None, coeff_path=None, country_coeff_path=None):
+    coeff_history_path = str(coeff_history_path or CLUB_COEFFICIENTS_HISTORY_PATH)
+    coeff_path = str(coeff_path or CLUB_COEFFICIENTS_PATH)
     if os.path.exists(coeff_history_path):
         club_coefficients = pd.read_csv(coeff_history_path)
         if "uefa_season_year" in club_coefficients.columns:
@@ -204,7 +250,7 @@ def _load_latest_club_coefficients():
                 .drop_duplicates(subset=["team"], keep="first")
                 .reset_index(drop=True)
             )
-        country_coeff_path = str(COUNTRY_COEFFICIENTS_HISTORY_PATH)
+        country_coeff_path = str(country_coeff_path or COUNTRY_COEFFICIENTS_HISTORY_PATH)
         if os.path.exists(country_coeff_path):
             country_coefficients = pd.read_csv(country_coeff_path)
             if not country_coefficients.empty and "country" in country_coefficients.columns:
@@ -217,32 +263,46 @@ def _load_latest_club_coefficients():
                         .drop_duplicates(subset=["country"], keep="first")
                         .reset_index(drop=True)
                     )
+                has_country_rank_cols = {"country_uefa_overall_rank", "country_uefa_season_rank"}.issubset(
+                    set(country_coefficients.columns)
+                )
+                has_legacy_rank_cols = {"overall_rank", "season_rank"}.issubset(set(country_coefficients.columns))
                 merge_cols = [
                     col
                     for col in [
                         "country",
                         "overall_country_coefficient",
                         "season_country_coefficient",
-                        "overall_rank",
-                        "season_rank",
+                        *(
+                            ["country_uefa_overall_rank", "country_uefa_season_rank"]
+                            if has_country_rank_cols
+                            else ["overall_rank", "season_rank"]
+                        ),
                     ]
                     if col in country_coefficients.columns
                 ]
                 if set(["country", "overall_country_coefficient", "season_country_coefficient"]).issubset(
                     set(merge_cols)
-                ):
-                    country_for_merge = country_coefficients[merge_cols].rename(
-                        columns={
-                            "overall_rank": "country_uefa_overall_rank",
-                            "season_rank": "country_uefa_season_rank",
-                        }
-                    )
-                    club_coefficients = club_coefficients.merge(
-                        country_for_merge, on="country", how="left"
-                    )
+                ) and (has_country_rank_cols or has_legacy_rank_cols):
+                    target_cols = [
+                        "overall_country_coefficient",
+                        "season_country_coefficient",
+                        "country_uefa_overall_rank",
+                        "country_uefa_season_rank",
+                    ]
+                    if not set(target_cols).issubset(set(club_coefficients.columns)):
+                        country_for_merge = country_coefficients[merge_cols].rename(
+                            columns={
+                                "overall_rank": "country_uefa_overall_rank",
+                                "season_rank": "country_uefa_season_rank",
+                            }
+                        )
+                        club_coefficients = club_coefficients.merge(
+                            country_for_merge, on="country", how="left"
+                        )
         return club_coefficients
-    if os.path.exists(CLUB_COEFFICIENTS_PATH):
-        return pd.read_csv(CLUB_COEFFICIENTS_PATH)
+    if os.path.exists(coeff_path):
+        return pd.read_csv(coeff_path)
     return pd.DataFrame()
 
 
@@ -283,12 +343,24 @@ def _load_state_snapshot(snapshot_path):
     return team_states, pair_states, payload.get("meta", {})
 
 
-def _build_club_mode_assets(processed_x_path, processed_x_full_path, model_paths, state_snapshot_path=None):
+def _build_club_mode_assets(
+    processed_x_path,
+    processed_x_full_path,
+    model_paths,
+    state_snapshot_path=None,
+    coeff_history_path=None,
+    coeff_path=None,
+    country_coeff_path=None,
+):
     X = pd.read_csv(processed_x_path)
     # Keep only the minimal columns required to derive current team/pair states.
     # Loading the full engineered matrix can exceed Fly machine memory limits.
     X_full = _load_state_history_frame(processed_x_full_path)
-    club_coefficients = _load_latest_club_coefficients()
+    club_coefficients = _load_latest_club_coefficients(
+        coeff_history_path=coeff_history_path,
+        coeff_path=coeff_path,
+        country_coeff_path=country_coeff_path,
+    )
 
     team_states, pair_states = ({}, {})
     snapshot_loaded = False
@@ -358,6 +430,21 @@ def _load_champions_assets():
     return _champions_assets
 
 
+def _load_libertadores_assets():
+    global _libertadores_assets
+    if _libertadores_assets is None:
+        _libertadores_assets = _build_club_mode_assets(
+            LIBERTADORES_PROCESSED_X_PATH,
+            LIBERTADORES_PROCESSED_X_FULL_PATH,
+            LIBERTADORES_MODEL_PATHS,
+            LIBERTADORES_STATE_SNAPSHOT_PATH,
+            LIBERTADORES_COEFFICIENTS_PATH,
+            LIBERTADORES_COEFFICIENTS_PATH,
+            LIBERTADORES_COEFFICIENTS_PATH,
+        )
+    return _libertadores_assets
+
+
 def extract_email_from_token(token: str) -> str:
     if _is_dev_mode():
         return "dev@example.com"
@@ -423,12 +510,21 @@ def _normalize_team_code(value: str) -> str:
 
 
 def _load_team_code_mappings() -> tuple[dict, dict]:
-    global _team_name_to_code, _team_alias_to_code
+    global _team_name_to_code, _team_alias_to_code, _team_code_to_names
     if _team_name_to_code is not None and _team_alias_to_code is not None:
         return _team_name_to_code, _team_alias_to_code
 
     _team_name_to_code = {}
     _team_alias_to_code = {}
+    _team_code_to_names = {}
+
+    def add_display_name(name: object, code: object, target: dict):
+        normalized_code = _normalize_team_code(code)
+        display_name = str(name or "").strip()
+        if not normalized_code or not display_name:
+            return
+        target[_normalized_text(display_name)] = normalized_code
+        _team_code_to_names.setdefault(normalized_code, set()).add(display_name)
 
     if os.path.exists(FIFA_CODES_PATH):
         try:
@@ -448,10 +544,7 @@ def _load_team_code_mappings() -> tuple[dict, dict]:
             )
             if code_col and name_col:
                 for _, row in fifa_df[[code_col, name_col]].iterrows():
-                    code = _normalize_team_code(row.get(code_col))
-                    name = str(row.get(name_col, "") or "").strip()
-                    if code and name:
-                        _team_name_to_code[_normalized_text(name)] = code
+                    add_display_name(row.get(name_col), row.get(code_col), _team_name_to_code)
 
     if os.path.exists(TEAM_CODE_ALIASES_PATH):
         try:
@@ -471,10 +564,7 @@ def _load_team_code_mappings() -> tuple[dict, dict]:
             )
             if code_col and alias_col:
                 for _, row in alias_df[[code_col, alias_col]].iterrows():
-                    code = _normalize_team_code(row.get(code_col))
-                    alias = str(row.get(alias_col, "") or "").strip()
-                    if code and alias:
-                        _team_alias_to_code[_normalized_text(alias)] = code
+                    add_display_name(row.get(alias_col), row.get(code_col), _team_alias_to_code)
 
     return _team_name_to_code, _team_alias_to_code
 
@@ -499,6 +589,42 @@ def _resolve_team_code(team_name: str) -> str:
             return alias_to_code[trimmed_key]
         return name_to_code.get(trimmed_key, "")
     return ""
+
+
+def _national_calendar_team_variants(team_name: str) -> list[str]:
+    team = str(team_name or "").strip()
+    if not team:
+        return []
+
+    _load_team_code_mappings()
+    code = _resolve_team_code(team)
+    variants = [team]
+    if code:
+        variants.extend(sorted((_team_code_to_names or {}).get(code, set())))
+
+    deduped = []
+    seen = set()
+    for item in variants:
+        value = str(item or "").strip()
+        key = value.casefold()
+        if key and key not in seen:
+            seen.add(key)
+            deduped.append(value)
+    return deduped
+
+
+def _default_national_neutral(home_team: str, neutral=None) -> int:
+    if neutral is not None:
+        return int(neutral)
+
+    home_code = _resolve_team_code(home_team)
+    if home_code in WORLD_CUP_2026_HOST_CODES:
+        return 0
+
+    if _normalized_text(home_team) in WORLD_CUP_2026_HOST_NAMES:
+        return 0
+
+    return 1
 
 
 def _lookup_national_ranking_row(team_name: str, ranking_df: pd.DataFrame):
@@ -536,7 +662,7 @@ def _query_future_matches_pair(
     today_iso: str,
     token: str = None,
 ) -> list[dict]:
-    client = _get_request_supabase_client(token)
+    client = _get_calendar_read_client(token)
     rows = []
     for home, away in ((home_value, away_value), (away_value, home_value)):
         result = (
@@ -550,6 +676,29 @@ def _query_future_matches_pair(
         )
         rows.extend(result.data or [])
     return rows
+
+
+def _query_future_matches_tournament(
+    tournaments: list[str],
+    from_date_iso: str,
+    token: str = None,
+    to_date_iso: str = None,
+) -> list[dict]:
+    if not tournaments:
+        return []
+
+    client = _get_calendar_read_client(token)
+    query = (
+        client.table("matches_calendar")
+        .select("match_id,home_team,away_team,match_date,tournament")
+        .in_("tournament", tournaments)
+        .gte("match_date", from_date_iso)
+        .order("match_date")
+    )
+    if to_date_iso:
+        query = query.lte("match_date", to_date_iso)
+    result = query.execute()
+    return result.data or []
 
 
 def _fetch_future_matches_for_pair(
@@ -622,6 +771,129 @@ def _fetch_future_matches_for_pair(
         deduped.values(),
         key=lambda item: (item.get("match_date") or "", item.get("home_team") or "", item.get("away_team") or ""),
     )
+
+
+def _fetch_future_matches_for_mode(
+    mode: str,
+    token: str = None,
+) -> list[dict]:
+    tournament_map = {
+        "libertadores": ["Libertadores"],
+        "world_cup": ["FIFA World Cup"],
+    }
+    tournaments = tournament_map.get(str(mode or "").strip().lower())
+    if not tournaments:
+        return []
+
+    # matches_calendar stores local fixture dates while the backend clock runs in UTC.
+    # Shift the lower bound back one day so browser-side local-date filtering can decide
+    # whether a fixture is still upcoming for the user.
+    normalized_mode = str(mode or "").strip().lower()
+    if normalized_mode == "world_cup":
+        from_date_iso = "2026-06-01"
+        to_date_iso = "2026-07-31"
+    else:
+        from_date_iso = (datetime.utcnow().date() - timedelta(days=1)).isoformat()
+        to_date_iso = None
+    rows = _query_future_matches_tournament(tournaments, from_date_iso, to_date_iso=to_date_iso, token=token)
+
+    deduped = {}
+    for row in rows:
+        match_id = str(row.get("match_id") or "")
+        match_date = _to_iso_date(row.get("match_date"))
+        key = match_id or f"{row.get('home_team')}|{row.get('away_team')}|{match_date}"
+        if key in deduped:
+            continue
+        deduped[key] = {
+            "match_id": match_id,
+            "home_team": row.get("home_team"),
+            "away_team": row.get("away_team"),
+            "match_date": match_date,
+            "tournament": row.get("tournament"),
+        }
+
+    return sorted(
+        deduped.values(),
+        key=lambda item: (item.get("match_date") or "", item.get("home_team") or "", item.get("away_team") or ""),
+    )
+
+
+def _get_user_match_predictions_by_match_id(
+    user_id: str,
+    match_ids: list[str],
+    token: str = None,
+) -> dict[str, dict]:
+    normalized_user_id = _normalize_user_id(user_id)
+    if not normalized_user_id or not match_ids:
+        return {}
+
+    client = _get_request_supabase_client(token)
+    rows_by_match_id = {}
+    unique_match_ids = sorted({str(match_id) for match_id in match_ids if str(match_id or "").strip()})
+
+    for start in range(0, len(unique_match_ids), 100):
+        chunk = unique_match_ids[start:start + 100]
+        result = (
+            client.table("match_predictions")
+            .select("prediction_id,match_id,predicted_outcome,created_at")
+            .eq("user_id", normalized_user_id)
+            .in_("match_id", chunk)
+            .execute()
+        )
+        for row in result.data or []:
+            match_id = str(row.get("match_id") or "")
+            if match_id:
+                rows_by_match_id[match_id] = row
+
+    return rows_by_match_id
+
+
+def list_matches_calendar(
+    mode: str,
+    user_id: str = None,
+    token: str = None,
+    request_id: str = "-",
+) -> dict:
+    normalized_mode = str(mode or "").strip().lower()
+    if normalized_mode != "world_cup":
+        raise ValueError("mode debe ser world_cup")
+
+    matches = _fetch_future_matches_for_mode(normalized_mode, token=token)
+    predictions_by_match_id = {}
+
+    if user_id and matches:
+        try:
+            predictions_by_match_id = _get_user_match_predictions_by_match_id(
+                user_id,
+                [match.get("match_id") for match in matches],
+                token=token,
+            )
+        except Exception as exc:
+            logger.warning(
+                "matches_calendar_user_predictions_failed request_id=%s user_id=%s error=%s",
+                request_id,
+                user_id,
+                exc,
+            )
+
+    enriched_matches = []
+    for match in matches:
+        match_id = str(match.get("match_id") or "")
+        prediction = predictions_by_match_id.get(match_id) or {}
+        enriched_matches.append(
+            {
+                "match_id": match_id,
+                "home_team": match.get("home_team"),
+                "away_team": match.get("away_team"),
+                "match_date": match.get("match_date"),
+                "tournament": match.get("tournament"),
+                "predicted_outcome": prediction.get("predicted_outcome"),
+                "prediction_id": prediction.get("prediction_id"),
+                "prediction_created_at": str(prediction.get("created_at") or "") or None,
+            }
+        )
+
+    return {"mode": normalized_mode, "matches": enriched_matches}
 
 
 def _get_user_predicted_match_ids(user_id: str, token: str = None) -> set[str]:
@@ -844,6 +1116,10 @@ def _validate_calendar_row(
 
 
 def _calendar_row_exists(row: dict) -> bool:
+    return _calendar_row_match_state(row) is not None
+
+
+def _calendar_row_match_state(row: dict) -> Optional[str]:
     client = _get_admin_supabase_client()
     home_team = row.get("home_team")
     away_team = row.get("away_team")
@@ -853,7 +1129,7 @@ def _calendar_row_exists(row: dict) -> bool:
 
     if home_team_code and away_team_code:
         try:
-            by_code = (
+            by_code_exact = (
                 client.table("matches_calendar")
                 .select("match_id")
                 .eq("home_team_code", home_team_code)
@@ -862,12 +1138,24 @@ def _calendar_row_exists(row: dict) -> bool:
                 .limit(1)
                 .execute()
             )
-            if by_code.data:
-                return True
+            if by_code_exact.data:
+                return "exact"
+
+            by_code_reverse = (
+                client.table("matches_calendar")
+                .select("match_id")
+                .eq("home_team_code", away_team_code)
+                .eq("away_team_code", home_team_code)
+                .eq("match_date", match_date)
+                .limit(1)
+                .execute()
+            )
+            if by_code_reverse.data:
+                return "reverse"
         except Exception as exc:
             logger.warning("calendar_exists_by_code_failed error=%s", exc)
 
-    by_name = (
+    by_name_exact = (
         client.table("matches_calendar")
         .select("match_id")
         .eq("home_team", home_team)
@@ -876,7 +1164,35 @@ def _calendar_row_exists(row: dict) -> bool:
         .limit(1)
         .execute()
     )
-    return bool(by_name.data)
+    if by_name_exact.data:
+        return "exact"
+
+    by_name_reverse = (
+        client.table("matches_calendar")
+        .select("match_id")
+        .eq("home_team", away_team)
+        .eq("away_team", home_team)
+        .eq("match_date", match_date)
+        .limit(1)
+        .execute()
+    )
+    if by_name_reverse.data:
+        return "reverse"
+    return None
+
+
+def _calendar_payload_pair_key(row: dict) -> tuple[str, str, str]:
+    match_date = str(row.get("match_date") or "").strip()
+    home_team_code = str(row.get("home_team_code") or "").strip().upper()
+    away_team_code = str(row.get("away_team_code") or "").strip().upper()
+    if home_team_code and away_team_code:
+        team_a, team_b = sorted([home_team_code, away_team_code])
+        return match_date, team_a, team_b
+
+    home_team = str(row.get("home_team") or "").strip().casefold()
+    away_team = str(row.get("away_team") or "").strip().casefold()
+    team_a, team_b = sorted([home_team, away_team])
+    return match_date, team_a, team_b
 
 
 def _bulk_upsert_calendar_rows(rows: list[dict]) -> None:
@@ -919,6 +1235,7 @@ def upsert_matches_calendar_batch(matches: list[dict], request_id: str = "-") ->
         return summary
 
     seen_keys = set()
+    seen_pair_keys = {}
     valid_rows = []
     for index, row in enumerate(matches):
         normalized_row, error = _validate_calendar_row(
@@ -940,18 +1257,34 @@ def upsert_matches_calendar_batch(matches: list[dict], request_id: str = "-") ->
             normalized_row.get("away_team"),
             normalized_row.get("match_date"),
         )
+        pair_key = _calendar_payload_pair_key(normalized_row)
         if key in seen_keys:
             summary["skipped"] += 1
             summary["errors"].append({"row_index": index, "reason": "duplicate row in payload"})
             continue
+        if pair_key in seen_pair_keys:
+            previous_index = seen_pair_keys[pair_key]
+            summary["skipped"] += 1
+            summary["errors"].append(
+                {
+                    "row_index": index,
+                    "reason": (
+                        "duplicate fixture in payload with reversed home/away teams "
+                        f"(already seen at row_index {previous_index})"
+                    ),
+                }
+            )
+            continue
 
         seen_keys.add(key)
+        seen_pair_keys[pair_key] = index
         valid_rows.append(normalized_row)
 
     if not valid_rows:
         return summary
 
     existing_keys = set()
+    rows_to_upsert = []
     for row in valid_rows:
         key = (
             row.get("home_team_code"),
@@ -960,12 +1293,28 @@ def upsert_matches_calendar_batch(matches: list[dict], request_id: str = "-") ->
             row["away_team"],
             row["match_date"],
         )
-        if _calendar_row_exists(row):
+        match_state = _calendar_row_match_state(row)
+        if match_state == "exact":
             existing_keys.add(key)
+            rows_to_upsert.append(row)
+            continue
+        if match_state == "reverse":
+            summary["skipped"] += 1
+            summary["errors"].append(
+                {
+                    "row_index": -1,
+                    "reason": "fixture already exists on this date with reversed home/away teams",
+                }
+            )
+            continue
+        rows_to_upsert.append(row)
 
-    _bulk_upsert_calendar_rows(valid_rows)
+    if not rows_to_upsert:
+        return summary
 
-    for row in valid_rows:
+    _bulk_upsert_calendar_rows(rows_to_upsert)
+
+    for row in rows_to_upsert:
         key = (
             row.get("home_team_code"),
             row.get("away_team_code"),
@@ -1041,6 +1390,7 @@ def register_prediction(
     away_team: str,
     token: str = None,
     user_id: str = None,
+    mode: str = None,
 ):
     if _is_dev_mode():
         return
@@ -1051,6 +1401,7 @@ def register_prediction(
         "home_team": home_team,
         "away_team": away_team,
         "timestamp": datetime.utcnow().isoformat(),
+        "mode": normalize_search_bucket_mode(mode, default="national", strict=False),
     }
     normalized_user_id = _normalize_user_id(user_id or "")
     if normalized_user_id:
@@ -1060,8 +1411,14 @@ def register_prediction(
         client.table("user_predictions").insert(payload).execute()
     except Exception as exc:
         error_text = str(exc).lower()
+        should_retry = False
         if "column" in error_text and "user_id" in error_text and "user_id" in payload:
             payload.pop("user_id", None)
+            should_retry = True
+        if "column" in error_text and "mode" in error_text and "mode" in payload:
+            payload.pop("mode", None)
+            should_retry = True
+        if should_retry:
             client.table("user_predictions").insert(payload).execute()
             return
         raise
@@ -1077,7 +1434,7 @@ def predict_match_probabilities_offline(
     request_id: str = "-",
 ):
     request_id = request_id or "-"
-    if mode not in {"national", "club", "champions"}:
+    if mode not in {"national", "club", "champions", "libertadores"}:
         raise ValueError(f"Modo inválido: {mode}")
 
     if mode == "national":
@@ -1085,6 +1442,9 @@ def predict_match_probabilities_offline(
         ranking_data = assets.get("fifa_rank")
     elif mode == "club":
         assets = _load_club_assets()
+        ranking_data = assets.get("club_coefficients")
+    elif mode == "libertadores":
+        assets = _load_libertadores_assets()
         ranking_data = assets.get("club_coefficients")
     else:
         assets = _load_champions_assets()
@@ -1155,6 +1515,10 @@ def predict_outcome(
     user_id = user_id or extract_user_id_from_token(token)
     logger.info("predict_outcome_user_resolved request_id=%s", request_id)
 
+    if mode not in {"national", "club", "champions", "libertadores"}:
+        logger.warning("predict_outcome_failed_invalid_mode request_id=%s mode=%s", request_id, mode)
+        raise ValueError(f"Modo inválido: {mode}")
+
     quota_start = perf_counter()
     remaining_predictions = get_remaining_predictions(email, 15, token, user_id)
     logger.info(
@@ -1168,22 +1532,20 @@ def predict_outcome(
         raise ValueError("Límite diario de predicciones alcanzado (15)")
 
     registration_start = perf_counter()
-    register_prediction(email, home_team, away_team, token, user_id)
+    register_prediction(email, home_team, away_team, token, user_id, mode=mode)
     logger.info(
         "predict_outcome_registered_prediction request_id=%s elapsed_ms=%.2f",
         request_id,
         (perf_counter() - registration_start) * 1000.0,
     )
 
-    if mode not in {"national", "club", "champions"}:
-        logger.warning("predict_outcome_failed_invalid_mode request_id=%s mode=%s", request_id, mode)
-        raise ValueError(f"Modo inválido: {mode}")
-
     assets_start = perf_counter()
     if mode == "national":
         assets = _load_assets()
     elif mode == "club":
         assets = _load_club_assets()
+    elif mode == "libertadores":
+        assets = _load_libertadores_assets()
     else:
         assets = _load_champions_assets()
     logger.info(
@@ -1307,7 +1669,7 @@ def predict_outcome(
     return results
 
 
-def _build_national_feature_vector(home_team, away_team, feature_template_df, ranking_df):
+def _build_national_feature_vector(home_team, away_team, feature_template_df, ranking_df, neutral=None):
     import numpy as np
 
     vector = pd.DataFrame([np.zeros(len(feature_template_df.columns))], columns=feature_template_df.columns)
@@ -1350,7 +1712,7 @@ def _build_national_feature_vector(home_team, away_team, feature_template_df, ra
         vector[away_conf] = 1
 
     if "neutral" in vector.columns:
-        vector["neutral"] = int(home_info["confederation"] != away_info["confederation"])
+        vector["neutral"] = _default_national_neutral(home_team, neutral=neutral)
 
     return vector
 
@@ -1440,8 +1802,13 @@ def _calendar_team_query_values(team_name: str, mode: str) -> list[str]:
     team = str(team_name or "").strip()
     if not team:
         return []
-    if mode in {"club", "champions"}:
+    normalized_mode = str(mode or "").strip().lower()
+    if normalized_mode in {"club", "champions", "libertadores"}:
         variants = _club_calendar_team_variants(team)
+        if variants:
+            return variants
+    if normalized_mode == "national":
+        variants = _national_calendar_team_variants(team)
         if variants:
             return variants
     return [team]
@@ -1541,6 +1908,7 @@ def _build_club_feature_vector(
     away_team,
     feature_template_df,
     history_df,
+    mode="club",
     ranking_df=None,
     strict_coefficients=False,
     competition=None,
@@ -1566,7 +1934,15 @@ def _build_club_feature_vector(
 
     vector = pd.DataFrame([np.zeros(len(feature_template_df.columns))], columns=feature_template_df.columns)
 
-    competition = competition or "Champions Lg"
+    if competition:
+        competition_value = competition
+    elif mode == "champions":
+        competition_value = "Champions Lg"
+    elif mode == "libertadores":
+        competition_value = "Libertadores"
+    else:
+        competition_value = "Club Friendly"
+    competition = competition_value
     round_name = round_name or ""
     neutral_value = int(neutral) if neutral is not None else 0
 
@@ -1580,7 +1956,8 @@ def _build_club_feature_vector(
     if "neutral" in vector.columns:
         vector["neutral"] = neutral_value
     if "is_ucl_match" in vector.columns:
-        vector["is_ucl_match"] = int("champions" in str(competition).lower())
+        competition_text = str(competition).lower()
+        vector["is_ucl_match"] = int(("champions" in competition_text) or ("libertadores" in competition_text))
     if "is_knockout_round" in vector.columns:
         vector["is_knockout_round"] = _is_knockout_round(round_name)
     if "is_knockout_playoff" in vector.columns:
@@ -1599,7 +1976,7 @@ def _build_club_feature_vector(
             if away_info is None:
                 suggestions.extend(_suggest_club_names(away_team, coeff_lookup))
             suggestions = sorted({item for item in suggestions if item})
-            detail = f"Team not found in UEFA coefficients: {home_team} or {away_team}"
+            detail = f"Team not found in club coefficients: {home_team} or {away_team}"
             if suggestions:
                 detail += f". Did you mean: {', '.join(suggestions)}?"
             detail += " (you can add aliases in data/club_team_aliases.csv)"
@@ -1856,15 +2233,22 @@ def build_feature_vector(
     if mode == "national":
         if ranking_df is None:
             raise ValueError("ranking_df is required for national mode")
-        return _build_national_feature_vector(home_team, away_team, feature_template_df, ranking_df)
-    if mode in {"club", "champions"}:
+        return _build_national_feature_vector(
+            home_team,
+            away_team,
+            feature_template_df,
+            ranking_df,
+            neutral=neutral,
+        )
+    if mode in {"club", "champions", "libertadores"}:
         return _build_club_feature_vector(
             home_team,
             away_team,
             feature_template_df,
             history_df,
+            mode=mode,
             ranking_df=ranking_df,
-            strict_coefficients=(mode == "champions"),
+            strict_coefficients=(mode in {"champions", "libertadores"}),
             competition=competition,
             round_name=round_name,
             neutral=neutral,

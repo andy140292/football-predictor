@@ -14,6 +14,7 @@ try:
     from .schema import (
         MatchInput,
         RecentFormInput,
+        RecentFormResponse,
         HeadToHeadInput,
         HeadToHeadResponse,
         MatchOut,
@@ -21,22 +22,35 @@ try:
         TeamVsConfedResponse,
         MatchPredictionCreateInput,
         MatchPredictionCreateResponse,
+        MatchesCalendarResponse,
         CalendarBatchUpsertInput,
         CalendarBatchUpsertResponse,
+        MatchHistoryBatchUpsertInput,
+        MatchHistoryBatchUpsertResponse,
         ModelScorecardOut,
         ModelScorecardMatchesResponse,
+        PredictionRankingsResponse,
+        TopSearchedTeamsSnapshotOut,
     )
     from .match_service import get_recent_matches, get_head_to_head, get_team_vs_confed
+    from .matches_admin_service import upsert_manual_matches_batch
     from .predict_match import (
         predict_outcome,
         create_or_get_match_prediction,
+        list_matches_calendar,
         upsert_matches_calendar_batch,
     )
-    from .scorecard_service import get_model_scorecard, list_model_scorecard_matches
+    from .scorecard_service import (
+        get_model_scorecard,
+        list_model_scorecard_matches,
+        list_prediction_rankings,
+    )
+    from .top_search_service import get_top_searched_teams_snapshot
 except ImportError:  # pragma: no cover - fallback for direct module execution
     from src.backend.schema import (
         MatchInput,
         RecentFormInput,
+        RecentFormResponse,
         HeadToHeadInput,
         HeadToHeadResponse,
         MatchOut,
@@ -44,18 +58,30 @@ except ImportError:  # pragma: no cover - fallback for direct module execution
         TeamVsConfedResponse,
         MatchPredictionCreateInput,
         MatchPredictionCreateResponse,
+        MatchesCalendarResponse,
         CalendarBatchUpsertInput,
         CalendarBatchUpsertResponse,
+        MatchHistoryBatchUpsertInput,
+        MatchHistoryBatchUpsertResponse,
         ModelScorecardOut,
         ModelScorecardMatchesResponse,
+        PredictionRankingsResponse,
+        TopSearchedTeamsSnapshotOut,
     )
     from src.backend.match_service import get_recent_matches, get_head_to_head, get_team_vs_confed
+    from src.backend.matches_admin_service import upsert_manual_matches_batch
     from src.backend.predict_match import (
         predict_outcome,
         create_or_get_match_prediction,
+        list_matches_calendar,
         upsert_matches_calendar_batch,
     )
-    from src.backend.scorecard_service import get_model_scorecard, list_model_scorecard_matches
+    from src.backend.scorecard_service import (
+        get_model_scorecard,
+        list_model_scorecard_matches,
+        list_prediction_rankings,
+    )
+    from src.backend.top_search_service import get_top_searched_teams_snapshot
 
 
 load_dotenv()
@@ -256,6 +282,53 @@ def create_match_prediction(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/matches-calendar", response_model=MatchesCalendarResponse)
+def read_matches_calendar(
+    request: Request,
+    response: Response,
+    mode: str = "world_cup",
+    user=Depends(verify_token),
+):
+    request_id = _ensure_request_id(request)
+    response.headers["X-Request-ID"] = request_id
+    start_time = perf_counter()
+    logger.info(
+        "matches_calendar_request_received request_id=%s sub=%s mode=%s",
+        request_id,
+        user.get("sub"),
+        mode,
+    )
+    try:
+        result = list_matches_calendar(
+            mode=mode,
+            user_id=user.get("sub"),
+            token=user.get("token"),
+            request_id=request_id,
+        )
+        logger.info(
+            "matches_calendar_request_succeeded request_id=%s count=%s elapsed_ms=%.2f",
+            request_id,
+            len(result.get("matches", [])),
+            (perf_counter() - start_time) * 1000.0,
+        )
+        return result
+    except ValueError as e:
+        logger.warning(
+            "matches_calendar_request_rejected request_id=%s reason=%s elapsed_ms=%.2f",
+            request_id,
+            str(e),
+            (perf_counter() - start_time) * 1000.0,
+        )
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.exception(
+            "matches_calendar_request_failed request_id=%s elapsed_ms=%.2f",
+            request_id,
+            (perf_counter() - start_time) * 1000.0,
+        )
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.post("/admin/matches-calendar/upsert-batch", response_model=CalendarBatchUpsertResponse)
 def upsert_matches_calendar(
     request: Request,
@@ -290,6 +363,46 @@ def upsert_matches_calendar(
     except Exception as e:
         logger.exception(
             "calendar_upsert_request_failed request_id=%s elapsed_ms=%.2f",
+            request_id,
+            (perf_counter() - start_time) * 1000.0,
+        )
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/admin/matches/upsert-batch", response_model=MatchHistoryBatchUpsertResponse)
+def upsert_matches_history(
+    request: Request,
+    response: Response,
+    input: MatchHistoryBatchUpsertInput,
+    _: bool = Depends(verify_admin_key),
+):
+    request_id = _ensure_request_id(request)
+    response.headers["X-Request-ID"] = request_id
+    start_time = perf_counter()
+    logger.info(
+        "matches_history_upsert_request_received request_id=%s rows=%s",
+        request_id,
+        len(input.matches or []),
+    )
+    try:
+        payload = [
+            row.model_dump() if hasattr(row, "model_dump") else row.dict()
+            for row in (input.matches or [])
+        ]
+        result = upsert_manual_matches_batch(payload, request_id=request_id)
+        logger.info(
+            "matches_history_upsert_request_succeeded request_id=%s inserted=%s updated=%s skipped=%s errors=%s elapsed_ms=%.2f",
+            request_id,
+            result.get("inserted"),
+            result.get("updated"),
+            result.get("skipped"),
+            len(result.get("errors", [])),
+            (perf_counter() - start_time) * 1000.0,
+        )
+        return result
+    except Exception as e:
+        logger.exception(
+            "matches_history_upsert_request_failed request_id=%s elapsed_ms=%.2f",
             request_id,
             (perf_counter() - start_time) * 1000.0,
         )
@@ -412,30 +525,134 @@ def read_model_scorecard_matches(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/recent-form", response_model=list[MatchOut])
+@app.get("/top-searched-teams", response_model=TopSearchedTeamsSnapshotOut)
+def read_top_searched_teams(
+    request: Request,
+    response: Response,
+    mode: str = "national",
+    user=Depends(verify_token),
+):
+    request_id = _ensure_request_id(request)
+    response.headers["X-Request-ID"] = request_id
+    start_time = perf_counter()
+    logger.info(
+        "top_searched_teams_request_received request_id=%s sub=%s mode=%s",
+        request_id,
+        user.get("sub"),
+        mode,
+    )
+    try:
+        result = get_top_searched_teams_snapshot(mode=mode)
+        logger.info(
+            "top_searched_teams_request_succeeded request_id=%s teams=%s elapsed_ms=%.2f",
+            request_id,
+            len(result.get("teams", [])),
+            (perf_counter() - start_time) * 1000.0,
+        )
+        return result
+    except ValueError as e:
+        logger.warning(
+            "top_searched_teams_request_rejected request_id=%s reason=%s elapsed_ms=%.2f",
+            request_id,
+            str(e),
+            (perf_counter() - start_time) * 1000.0,
+        )
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.exception(
+            "top_searched_teams_request_failed request_id=%s elapsed_ms=%.2f",
+            request_id,
+            (perf_counter() - start_time) * 1000.0,
+        )
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/prediction-rankings", response_model=PredictionRankingsResponse)
+def read_prediction_rankings(
+    request: Request,
+    response: Response,
+    mode: Optional[str] = None,
+    sort_by: str = "correct_count",
+    sort_order: str = "desc",
+    page: int = 1,
+    page_size: int = 50,
+    user=Depends(verify_token),
+):
+    request_id = _ensure_request_id(request)
+    response.headers["X-Request-ID"] = request_id
+    start_time = perf_counter()
+    logger.info(
+        "prediction_rankings_request_received request_id=%s sub=%s mode=%s sort_by=%s sort_order=%s page=%s page_size=%s",
+        request_id,
+        user.get("sub"),
+        mode,
+        sort_by,
+        sort_order,
+        page,
+        page_size,
+    )
+    try:
+        result = list_prediction_rankings(
+            mode=mode,
+            sort_by=sort_by,
+            sort_order=sort_order,
+            page=page,
+            page_size=page_size,
+        )
+        logger.info(
+            "prediction_rankings_request_succeeded request_id=%s total_users=%s returned=%s elapsed_ms=%.2f",
+            request_id,
+            result.get("total_users"),
+            len(result.get("rankings", [])),
+            (perf_counter() - start_time) * 1000.0,
+        )
+        return result
+    except ValueError as e:
+        logger.warning(
+            "prediction_rankings_request_rejected request_id=%s reason=%s elapsed_ms=%.2f",
+            request_id,
+            str(e),
+            (perf_counter() - start_time) * 1000.0,
+        )
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.exception(
+            "prediction_rankings_request_failed request_id=%s elapsed_ms=%.2f",
+            request_id,
+            (perf_counter() - start_time) * 1000.0,
+        )
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/recent-form", response_model=RecentFormResponse)
 def recent_form(request: Request, response: Response, input: RecentFormInput, user=Depends(verify_token)):
     request_id = _ensure_request_id(request)
     response.headers["X-Request-ID"] = request_id
     start_time = perf_counter()
     logger.info(
-        "recent_form_request_received request_id=%s sub=%s home_team=%s away_team=%s last_matches=%s",
+        "recent_form_request_received request_id=%s sub=%s home_team=%s away_team=%s last_matches=%s mode=%s",
         request_id,
         user.get("sub"),
         input.home_team,
         input.away_team,
         input.last_matches,
+        input.mode,
     )
     try:
         result = get_recent_matches(
             home_team=input.home_team,
             away_team=input.away_team,
             last_matches=input.last_matches,
+            mode=input.mode,
             request_id=request_id,
         )
+        home_matches = len(result.get("home_matches", []))
+        away_matches = len(result.get("away_matches", []))
         logger.info(
-            "recent_form_request_succeeded request_id=%s returned_matches=%s elapsed_ms=%.2f",
+            "recent_form_request_succeeded request_id=%s home_matches=%s away_matches=%s elapsed_ms=%.2f",
             request_id,
-            len(result),
+            home_matches,
+            away_matches,
             (perf_counter() - start_time) * 1000.0,
         )
         return result
@@ -496,6 +713,15 @@ def team_vs_confed(request: Request, response: Response, input: TeamVsConfedInpu
         input.team,
         input.opponent_confederation,
     )
+    logger.info(
+        "TEAM_VS_CONFED_DEBUG request_received request_id=%s payload=%s origin=%s referer=%s user_agent=%s auth_present=%s",
+        request_id,
+        {"team": input.team, "opponent_confederation": input.opponent_confederation},
+        request.headers.get("origin"),
+        request.headers.get("referer"),
+        request.headers.get("user-agent"),
+        bool(request.headers.get("authorization")),
+    )
     try:
         result = get_team_vs_confed(
             team=input.team,
@@ -508,11 +734,22 @@ def team_vs_confed(request: Request, response: Response, input: TeamVsConfedInpu
             result.get("matches_count"),
             (perf_counter() - start_time) * 1000.0,
         )
+        logger.info(
+            "TEAM_VS_CONFED_DEBUG response_ready request_id=%s response=%s",
+            request_id,
+            result,
+        )
         return result
     except Exception as e:
         logger.exception(
             "team_vs_confed_request_failed request_id=%s elapsed_ms=%.2f",
             request_id,
             (perf_counter() - start_time) * 1000.0,
+        )
+        logger.exception(
+            "TEAM_VS_CONFED_DEBUG request_failed request_id=%s payload=%s error=%s",
+            request_id,
+            {"team": input.team, "opponent_confederation": input.opponent_confederation},
+            e,
         )
         raise HTTPException(status_code=500, detail=str(e))
