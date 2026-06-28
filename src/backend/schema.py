@@ -113,6 +113,7 @@ class CalendarMatchUpsertIn(BaseModel):
     home_team: str
     away_team: str
     match_date: str
+    tournament: Optional[str] = None
     home_team_code: Optional[str] = None
     away_team_code: Optional[str] = None
 

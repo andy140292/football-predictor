@@ -6,6 +6,7 @@ Expected CSV columns:
 - match_date (YYYY-MM-DD)
 
 Optional CSV columns:
+- tournament
 - home_team_code
 - away_team_code
 """
@@ -189,6 +190,9 @@ def read_and_validate_csv(
             match_date = _parse_iso_date(
                 str(source_row.get(normalized_to_original["match_date"], "")).strip()
             )
+            tournament = ""
+            if "tournament" in normalized_to_original:
+                tournament = str(source_row.get(normalized_to_original["tournament"], "")).strip()
 
             if not home_team:
                 errors.append(LocalValidationError(row_index=idx, reason="home_team is required"))
@@ -256,6 +260,8 @@ def read_and_validate_csv(
                 continue
 
             payload = {"home_team": home_team, "away_team": away_team, "match_date": match_date}
+            if tournament:
+                payload["tournament"] = tournament
             if home_team_code and away_team_code:
                 payload["home_team_code"] = home_team_code
                 payload["away_team_code"] = away_team_code

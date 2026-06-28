@@ -562,18 +562,28 @@ def test_create_or_get_match_prediction_creates_new_row(monkeypatch):
 
 def test_upsert_matches_calendar_batch_validates_and_summarizes(monkeypatch):
     predict_match = _load_predict_match(monkeypatch)
+    captured = {}
 
     monkeypatch.setattr(
         predict_match,
         "_calendar_row_match_state",
         lambda row: "exact" if row.get("home_team") == "Brazil" and row.get("away_team") == "Argentina" else None,
     )
-    monkeypatch.setattr(predict_match, "_bulk_upsert_calendar_rows", lambda _rows: None)
+    monkeypatch.setattr(
+        predict_match,
+        "_bulk_upsert_calendar_rows",
+        lambda rows: captured.setdefault("rows", rows),
+    )
 
     response = predict_match.upsert_matches_calendar_batch(
         [
             {"home_team": "Brazil", "away_team": "Argentina", "match_date": "2026-03-01"},
-            {"home_team": "Argentina", "away_team": "Brazil", "match_date": "2026-06-01"},
+            {
+                "home_team": "Argentina",
+                "away_team": "Brazil",
+                "match_date": "2026-06-01",
+                "tournament": "FIFA World Cup",
+            },
             {"home_team": "", "away_team": "Brazil", "match_date": "2026-06-01"},
             {"home_team": "Argentina", "away_team": "Brazil", "match_date": "2026-06-01"},
         ]
@@ -584,6 +594,15 @@ def test_upsert_matches_calendar_batch_validates_and_summarizes(monkeypatch):
     assert response["inserted"] == 1
     assert response["skipped"] == 2
     assert len(response["errors"]) == 2
+    assert captured["rows"] == [
+        {"home_team": "Brazil", "away_team": "Argentina", "match_date": "2026-03-01"},
+        {
+            "home_team": "Argentina",
+            "away_team": "Brazil",
+            "match_date": "2026-06-01",
+            "tournament": "FIFA World Cup",
+        },
+    ]
 
 
 def test_upsert_matches_calendar_batch_skips_reversed_existing_fixture(monkeypatch):
@@ -604,7 +623,12 @@ def test_upsert_matches_calendar_batch_skips_reversed_existing_fixture(monkeypat
     response = predict_match.upsert_matches_calendar_batch(
         [
             {"home_team": "Jamaica", "away_team": "DR Congo", "match_date": "2026-03-31"},
-            {"home_team": "Brazil", "away_team": "Argentina", "match_date": "2026-03-31"},
+            {
+                "home_team": "Brazil",
+                "away_team": "Argentina",
+                "match_date": "2026-03-31",
+                "tournament": "FIFA World Cup",
+            },
         ]
     )
 
@@ -616,7 +640,12 @@ def test_upsert_matches_calendar_batch_skips_reversed_existing_fixture(monkeypat
         {"row_index": -1, "reason": "fixture already exists on this date with reversed home/away teams"}
     ]
     assert captured["rows"] == [
-        {"home_team": "Brazil", "away_team": "Argentina", "match_date": "2026-03-31"}
+        {
+            "home_team": "Brazil",
+            "away_team": "Argentina",
+            "match_date": "2026-03-31",
+            "tournament": "FIFA World Cup",
+        }
     ]
 
 

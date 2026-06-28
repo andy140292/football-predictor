@@ -1081,6 +1081,7 @@ def _validate_calendar_row(
     home_team: str,
     away_team: str,
     match_date: str,
+    tournament: str = None,
     home_team_code: str = None,
     away_team_code: str = None,
 ) -> tuple[dict, str]:
@@ -1109,6 +1110,9 @@ def _validate_calendar_row(
         "away_team": away,
         "match_date": parsed_date,
     }
+    normalized_tournament = str(tournament or "").strip()
+    if normalized_tournament:
+        row["tournament"] = normalized_tournament
     if home_code and away_code:
         row["home_team_code"] = home_code
         row["away_team_code"] = away_code
@@ -1213,6 +1217,7 @@ def _bulk_upsert_calendar_rows(rows: list[dict]) -> None:
                 "home_team": row.get("home_team"),
                 "away_team": row.get("away_team"),
                 "match_date": row.get("match_date"),
+                "tournament": row.get("tournament"),
             }
             for row in rows
         ]
@@ -1242,6 +1247,7 @@ def upsert_matches_calendar_batch(matches: list[dict], request_id: str = "-") ->
             (row or {}).get("home_team"),
             (row or {}).get("away_team"),
             (row or {}).get("match_date"),
+            (row or {}).get("tournament"),
             (row or {}).get("home_team_code"),
             (row or {}).get("away_team_code"),
         )
