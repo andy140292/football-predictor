@@ -1,4 +1,8 @@
 from pathlib import Path
+import re
+
+
+MONTHLY_MATCHES_CSV_RE = re.compile(r"^matches_(\d{4})_(\d{2})\.csv$")
 
 
 def normalize_match_text(value: str) -> str:
@@ -45,13 +49,12 @@ def match_row_quality_score(row: dict) -> tuple[int, int, int, int, str]:
 
 
 def resolve_latest_matches_csv(data_dir: Path) -> Path:
-    newest_file = None
-    newest_name = ""
+    candidates = []
     for path in data_dir.glob("matches_*.csv"):
-        if path.name > newest_name:
-            newest_name = path.name
-            newest_file = path
+        match = MONTHLY_MATCHES_CSV_RE.fullmatch(path.name)
+        if match:
+            candidates.append((int(match.group(1)), int(match.group(2)), path))
 
-    if newest_file is not None:
-        return newest_file
+    if candidates:
+        return max(candidates, key=lambda item: (item[0], item[1]))[2]
     return data_dir / "matches.csv"

@@ -2,6 +2,7 @@ import os
 import re
 import sys
 import types
+import importlib
 import unicodedata
 import logging
 from difflib import get_close_matches
@@ -133,9 +134,12 @@ def _register_pickle_compat_modules():
     def _ensure_package(name: str):
         module = sys.modules.get(name)
         if module is None:
-            module = types.ModuleType(name)
-            module.__path__ = []
-            sys.modules[name] = module
+            try:
+                module = importlib.import_module(name)
+            except ModuleNotFoundError:
+                module = types.ModuleType(name)
+                module.__path__ = []
+                sys.modules[name] = module
         elif not hasattr(module, "__path__"):
             module.__path__ = []
         return module

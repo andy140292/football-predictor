@@ -4,18 +4,16 @@ import os
 import gzip
 from pathlib import Path
 try:
-    from backend.paths import DATA_DIR, HISTORICAL_DATA_DIR, RANKING_PATH
+    from backend.paths import DATA_DIR, HISTORICAL_DATA_DIR
     from prediction.feature_engineering import FeatureEngineer
     from backend.supabase_client import get_supabase_client
 except Exception:  # pragma: no cover - import path fallback
-    from backend.paths import DATA_DIR, HISTORICAL_DATA_DIR, RANKING_PATH
+    from backend.paths import DATA_DIR, HISTORICAL_DATA_DIR
     from backend.prediction.feature_engineering import FeatureEngineer
     try:
         from backend.supabase_client import get_supabase_client
     except Exception:  # pragma: no cover - import path fallback
         from src.backend.supabase_client import get_supabase_client
-
-supabase = get_supabase_client()
 
 
 def _resolve_local_matches_csv(file_path: str) -> str:
@@ -40,15 +38,30 @@ def _resolve_local_matches_csv(file_path: str) -> str:
 
     return str(Path("data") / name)
 
+
 class MatchDataPreprocessor:
-    def __init__(self, file_path, from_supabase: bool = False, verbose=False):
-        self.file_path = file_path
+    def __init__(
+        self,
+        file_path=None,
+        from_supabase: bool = False,
+        verbose=False,
+        matches_df=None,
+    ):
+        if file_path is None and matches_df is None:
+            raise ValueError("Either file_path or matches_df must be provided")
+        if file_path is not None and matches_df is not None:
+            raise ValueError("Provide file_path or matches_df, not both")
+        if from_supabase and matches_df is not None:
+            raise ValueError("from_supabase cannot be combined with matches_df")
+
+        self.file_path = "supabase:matches"
         self.verbose = verbose
+        self.matches_df = matches_df.copy() if matches_df is not None else None
         self.matches = None
 
         if from_supabase:
             self.file_path = self._download_and_extract_from_supabase(file_path)
-        else:
+        elif file_path is not None:
             self.file_path = _resolve_local_matches_csv(file_path)
 
     def log(self, msg):
@@ -57,6 +70,7 @@ class MatchDataPreprocessor:
 
     def _download_and_extract_from_supabase(self, remote_filename: str, local_dir="data"):
         os.makedirs(local_dir, exist_ok=True)
+        supabase = get_supabase_client()
 
         # Archivo .csv.gz en Supabase
         supabase_path = f"{remote_filename}.csv.gz"
@@ -77,7 +91,11 @@ class MatchDataPreprocessor:
         return local_csv_path
 
     def load_and_filter_data(self):
-        self.matches = pd.read_csv(self.file_path)
+        self.matches = (
+            self.matches_df.copy()
+            if self.matches_df is not None
+            else pd.read_csv(self.file_path)
+        )
 
         required_cols = ["date", "home_score", "away_score", "tournament"]
         missing = [col for col in required_cols if col not in self.matches.columns]

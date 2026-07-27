@@ -7,6 +7,21 @@ def _load_service():
     return importlib.reload(top_search_service)
 
 
+def test_load_national_team_keys_uses_supabase_names(monkeypatch):
+    service = _load_service()
+    monkeypatch.setattr(
+        service,
+        "fetch_national_team_names",
+        lambda: ["Argentina", "Brazil", "Curaçao"],
+    )
+    service._national_team_keys = None
+
+    keys = service._load_national_team_keys()
+
+    assert service._normalized_text("Argentina") in keys
+    assert service._normalized_text("Curaçao") in keys
+
+
 def test_build_daily_top_searched_snapshot_uses_7_day_window_for_national(monkeypatch):
     service = _load_service()
     now = datetime(2026, 3, 12, 18, 0, 0)

@@ -508,55 +508,22 @@ def test_fetch_team_vs_confed_matches_uses_national_aliases_and_dedupes(monkeypa
     ]
 
 
-def test_team_vs_confed_csv_fallback_finds_rd_congo_alias_rows(monkeypatch):
+def test_team_vs_confed_returns_empty_when_supabase_has_no_rows(monkeypatch):
     service = _load_service()
-    source_df = pd.DataFrame(
-        [
-            {
-                "date": "2026-03-25",
-                "home_team": "Bermuda",
-                "away_team": "Congo DR",
-                "home_score": 0,
-                "away_score": 2,
-                "tournament": "Friendly",
-                "home_team_confederation": "CONCACAF",
-                "away_team_confederation": "CAF",
-            },
-            {
-                "date": "2026-03-31",
-                "home_team": "Congo DR",
-                "away_team": "Jamaica",
-                "home_score": 1,
-                "away_score": 0,
-                "tournament": "FIFA World Cup qualification",
-                "home_team_confederation": "CAF",
-                "away_team_confederation": "CONCACAF",
-            },
-        ]
+    monkeypatch.setattr(service, "_matches_table", lambda: FakeQuery())
+    monkeypatch.setattr(
+        service,
+        "_national_team_name_variants",
+        lambda _team: ["RD del Congo", "RD Congo", "Congo DR", "DR Congo"],
     )
-    monkeypatch.setattr(service, "_load_national_matches_df", lambda: source_df)
+    monkeypatch.setattr(service, "_fetch_paginated_rows", lambda *_args, **_kwargs: [])
 
-    result = service._fetch_team_vs_confed_matches_from_csv(
-        ["RD del Congo", "RD Congo", "Congo DR", "DR Congo"],
+    result = service._fetch_team_vs_confed_matches(
+        "RD del Congo",
         "CONCACAF",
     )
 
-    assert result[["date", "home_team", "away_team", "home_score", "away_score"]].to_dict(orient="records") == [
-        {
-            "date": "2026-03-31",
-            "home_team": "Congo DR",
-            "away_team": "Jamaica",
-            "home_score": 1,
-            "away_score": 0,
-        },
-        {
-            "date": "2026-03-25",
-            "home_team": "Bermuda",
-            "away_team": "Congo DR",
-            "home_score": 0,
-            "away_score": 2,
-        },
-    ]
+    assert result.empty
 
 
 def test_get_team_vs_confed_ignores_incomplete_rows(monkeypatch):

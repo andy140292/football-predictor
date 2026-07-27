@@ -94,6 +94,72 @@ def test_get_model_scorecard_uses_snapshot_when_available(monkeypatch):
     assert summary["accuracy_pct"] == 66.6667
 
 
+def test_upsert_model_scorecard_snapshot_recomputes_from_evaluations(monkeypatch):
+    service = _load_service()
+    captured = {}
+
+    monkeypatch.setattr(
+        service,
+        "_fetch_model_scorecard_snapshot",
+        lambda **_: {
+            "mode": "world_cup",
+            "model_version": "2026_01_national_v1",
+            "period_start": "2026-06-11",
+            "period_end": "2026-06-18",
+            "correct_count": 11,
+            "incorrect_count": 9,
+            "total_scored": 20,
+            "accuracy_pct": 55.0,
+        },
+    )
+    monkeypatch.setattr(
+        service,
+        "_fetch_evaluation_rows",
+        lambda **_: (
+            [
+                {"is_correct": True},
+                {"is_correct": False},
+                {"is_correct": True},
+                {"is_correct": True},
+            ],
+            4,
+        ),
+    )
+
+    class FakeTable:
+        def upsert(self, payload, on_conflict):
+            captured["payload"] = payload
+            captured["on_conflict"] = on_conflict
+            return self
+
+        def execute(self):
+            return type("Result", (), {"data": []})()
+
+    class FakeClient:
+        def table(self, name):
+            captured["table"] = name
+            return FakeTable()
+
+    monkeypatch.setattr(service, "_service_role_client", lambda: FakeClient())
+
+    snapshot = service.upsert_model_scorecard_snapshot(
+        run_id="run-new",
+        mode="world_cup",
+        model_version="2026_01_national_v1",
+        period_start="2026-06-11",
+        period_end="2026-06-18",
+    )
+
+    assert snapshot["run_id"] == "run-new"
+    assert snapshot["correct_count"] == 3
+    assert snapshot["incorrect_count"] == 1
+    assert snapshot["total_scored"] == 4
+    assert snapshot["accuracy_pct"] == 75.0
+    assert captured["table"] == "model_scorecard_snapshots"
+    assert captured["payload"]["total_scored"] == 4
+    assert captured["on_conflict"] == "mode,model_version,period_start,period_end"
+
+
 def test_get_model_scorecard_uses_env_model_version_when_missing(monkeypatch):
     service = _load_service()
 
@@ -540,6 +606,87 @@ def test_list_prediction_rankings_counts_only_resolved_rows(monkeypatch):
     ]
 
 
+def test_list_prediction_rankings_supports_world_cup_mode(monkeypatch):
+    service = _load_service()
+
+    monkeypatch.setattr(
+        service,
+        "_fetch_match_prediction_rows",
+        lambda: [
+            {
+                "user_id": "user-1",
+                "email": "ana@example.com",
+                "match_id": "wc-1",
+                "predicted_outcome": "home_win",
+            },
+            {
+                "user_id": "user-1",
+                "email": "ana@example.com",
+                "match_id": "qualifier-1",
+                "predicted_outcome": "draw",
+            },
+            {
+                "user_id": "user-2",
+                "email": "bea@example.com",
+                "match_id": "wc-2",
+                "predicted_outcome": "away_win",
+            },
+        ],
+    )
+    monkeypatch.setattr(
+        service,
+        "_fetch_calendar_rows_for_prediction_rankings",
+        lambda match_ids: {
+            "wc-1": {
+                "match_id": "wc-1",
+                "tournament": "FIFA World Cup",
+                "actual_outcome": "home_win",
+            },
+            "qualifier-1": {
+                "match_id": "qualifier-1",
+                "tournament": "FIFA World Cup qualification",
+                "actual_outcome": "draw",
+            },
+            "wc-2": {
+                "match_id": "wc-2",
+                "tournament": "FIFA World Cup",
+                "actual_outcome": "home_win",
+            },
+        },
+    )
+    monkeypatch.setattr(service, "_fetch_auth_user_display_name_map", lambda: {"user-1": "Ana", "user-2": "Bea"})
+
+    world_cup = service.list_prediction_rankings(mode="world_cup")
+    national = service.list_prediction_rankings(mode="national")
+
+    assert world_cup["mode"] == "world_cup"
+    assert world_cup["total_users"] == 2
+    assert world_cup["rankings"] == [
+        {
+            "rank": 1,
+            "user_id": "user-1",
+            "display_name": "Ana",
+            "correct_count": 1,
+            "incorrect_count": 0,
+            "total_resolved_predictions": 1,
+            "accuracy_pct": 100.0,
+        },
+        {
+            "rank": 2,
+            "user_id": "user-2",
+            "display_name": "Bea",
+            "correct_count": 0,
+            "incorrect_count": 1,
+            "total_resolved_predictions": 1,
+            "accuracy_pct": 0.0,
+        },
+    ]
+    assert national["mode"] == "national"
+    assert national["total_users"] == 1
+    assert national["rankings"][0]["correct_count"] == 1
+    assert national["rankings"][0]["total_resolved_predictions"] == 1
+
+
 def test_list_prediction_rankings_sorts_and_paginates(monkeypatch):
     service = _load_service()
 
@@ -876,3 +1023,157 @@ def test_run_consensus_scorecard_backfill_supports_libertadores(monkeypatch):
     assert captured["evaluate"]["mode"] == "libertadores"
     assert captured["evaluate"]["model_version"] == "2026_01_libertadores_v1"
     assert captured["snapshot"]["mode"] == "libertadores"
+
+
+def test_evaluate_consensus_matches_uses_national_predictor_for_world_cup(monkeypatch):
+    service = _load_service()
+    captured = {}
+
+    def fake_predict_match_probabilities_offline(home_team, away_team, mode, request_id):
+        captured["prediction"] = {
+            "home_team": home_team,
+            "away_team": away_team,
+            "mode": mode,
+            "request_id": request_id,
+        }
+        return {
+            "random_forest": {"home_win": 0.7, "draw": 0.2, "away_win": 0.1},
+            "logistic_regression": {"home_win": 0.6, "draw": 0.3, "away_win": 0.1},
+            "mlp": {"home_win": 0.8, "draw": 0.1, "away_win": 0.1},
+        }
+
+    class FakeTable:
+        def upsert(self, rows, on_conflict):
+            captured["rows"] = rows
+            captured["on_conflict"] = on_conflict
+            return self
+
+        def execute(self):
+            return type("Result", (), {"data": []})()
+
+    class FakeClient:
+        def table(self, name):
+            captured["table"] = name
+            return FakeTable()
+
+    monkeypatch.setattr(service, "predict_match_probabilities_offline", fake_predict_match_probabilities_offline)
+    monkeypatch.setattr(service, "_service_role_client", lambda: FakeClient())
+
+    summary = service.evaluate_consensus_matches(
+        matches=[
+            {
+                "match_id": "wc-1",
+                "match_date": "2026-06-11",
+                "home_team": "Mexico",
+                "away_team": "South Africa",
+                "tournament": "FIFA World Cup",
+                "actual_outcome": "home_win",
+            }
+        ],
+        mode="world_cup",
+        model_version="2026_01_national_v1",
+        run_id="run-1",
+    )
+
+    assert summary == {"evaluated": 1, "skipped": 0}
+    assert captured["prediction"]["mode"] == "national"
+    assert captured["prediction"]["request_id"] == "scorecard-run-1"
+    assert captured["table"] == "consensus_match_evaluations"
+    assert captured["on_conflict"] == "mode,model_version,match_id"
+    assert captured["rows"][0]["mode"] == "world_cup"
+    assert captured["rows"][0]["match_id"] == "wc-1"
+    assert captured["rows"][0]["is_correct"] is True
+
+
+def test_run_consensus_scorecard_backfill_supports_world_cup(monkeypatch):
+    service = _load_service()
+    captured = {}
+
+    monkeypatch.setattr(service, "_resolve_model_version", lambda model_version: model_version or "2026_01_national_v1")
+
+    def fake_load_matches_for_backfill(from_date, to_date, tournaments, chunk_size=1000):
+        captured["load"] = {
+            "from_date": from_date,
+            "to_date": to_date,
+            "tournaments": tournaments,
+        }
+        return pd.DataFrame(
+            [
+                {
+                    "match_date": "2026-06-11",
+                    "home_team": "Mexico",
+                    "away_team": "South Africa",
+                    "home_score": 2,
+                    "away_score": 1,
+                    "tournament": "FIFA World Cup",
+                }
+            ]
+        )
+
+    def fake_upsert_match_results(matches_df, result_source):
+        captured["upsert"] = {
+            "rows": matches_df.to_dict(orient="records"),
+            "result_source": result_source,
+        }
+        return {"upserted": len(matches_df)}
+
+    def fake_fetch_completed_matches(from_date, to_date, tournaments, chunk_size=1000):
+        captured["completed"] = {
+            "from_date": from_date,
+            "to_date": to_date,
+            "tournaments": tournaments,
+        }
+        return [
+            {
+                "match_id": "wc-1",
+                "match_date": "2026-06-11",
+                "home_team": "Mexico",
+                "away_team": "South Africa",
+                "tournament": "FIFA World Cup",
+                "home_score": 2,
+                "away_score": 1,
+                "actual_outcome": "home_win",
+            }
+        ]
+
+    def fake_evaluate(matches, mode, model_version, run_id, chunk_size=300):
+        captured["evaluate"] = {
+            "matches": matches,
+            "mode": mode,
+            "model_version": model_version,
+            "run_id": run_id,
+        }
+        return {"evaluated": len(matches), "skipped": 0}
+
+    def fake_snapshot(run_id, mode, model_version, period_start, period_end):
+        captured["snapshot"] = {
+            "run_id": run_id,
+            "mode": mode,
+            "model_version": model_version,
+            "period_start": period_start,
+            "period_end": period_end,
+        }
+        return {"mode": mode, "model_version": model_version}
+
+    monkeypatch.setattr(service, "load_matches_for_backfill", fake_load_matches_for_backfill)
+    monkeypatch.setattr(service, "upsert_match_results", fake_upsert_match_results)
+    monkeypatch.setattr(service, "_fetch_completed_matches", fake_fetch_completed_matches)
+    monkeypatch.setattr(service, "evaluate_consensus_matches", fake_evaluate)
+    monkeypatch.setattr(service, "upsert_model_scorecard_snapshot", fake_snapshot)
+
+    summary = service.run_consensus_scorecard_backfill(
+        from_date="2026-06-11",
+        to_date="2026-06-16",
+        mode="world_cup",
+        model_version="2026_01_national_v1",
+    )
+
+    assert summary["mode"] == "world_cup"
+    assert summary["model_version"] == "2026_01_national_v1"
+    assert summary["results_upsert"] == {"upserted": 1}
+    assert summary["completed_matches"] == 1
+    assert captured["load"]["tournaments"] == {"FIFA World Cup"}
+    assert captured["completed"]["tournaments"] == {"FIFA World Cup"}
+    assert captured["upsert"]["result_source"] == "supabase.matches"
+    assert captured["evaluate"]["mode"] == "world_cup"
+    assert captured["snapshot"]["mode"] == "world_cup"

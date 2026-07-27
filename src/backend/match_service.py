@@ -10,10 +10,10 @@ import pandas as pd
 
 try:
     from .supabase_client import get_supabase_client
-    from .paths import BASE_DIR, DATA_DIR, LIBERTADORES_MATCHES_HISTORY_PATH
+    from .paths import DATA_DIR, LIBERTADORES_MATCHES_HISTORY_PATH
 except ImportError:  # pragma: no cover - fallback for direct module execution
     from src.backend.supabase_client import get_supabase_client
-    from src.backend.paths import BASE_DIR, DATA_DIR, LIBERTADORES_MATCHES_HISTORY_PATH
+    from src.backend.paths import DATA_DIR, LIBERTADORES_MATCHES_HISTORY_PATH
 
 logger = logging.getLogger("futbolconu.match_service")
 
@@ -138,56 +138,6 @@ def _rows_to_matches_df(rows: list[dict]) -> pd.DataFrame:
         if score_col in df.columns:
             df[score_col] = pd.to_numeric(df[score_col], errors="coerce")
     return df
-
-
-@lru_cache(maxsize=1)
-def _load_national_matches_df() -> pd.DataFrame:
-    required_columns = {
-        "date",
-        "home_team",
-        "away_team",
-        "home_score",
-        "away_score",
-        "tournament",
-        "home_team_confederation",
-        "away_team_confederation",
-    }
-    candidate_paths = []
-    for path in sorted(DATA_DIR.glob("matches_*.csv")):
-        if "calendar" not in path.name:
-            candidate_paths.append(path)
-    candidate_paths.extend([DATA_DIR / "matches.csv", BASE_DIR / "matches.csv"])
-
-    frames = []
-    seen_paths = set()
-    for path in candidate_paths:
-        if path in seen_paths or not path.exists():
-            continue
-        seen_paths.add(path)
-        try:
-            df = pd.read_csv(path)
-        except Exception as exc:
-            logger.warning("national_matches_csv_load_failed path=%s error=%s", path, exc)
-            continue
-        if not required_columns.issubset(df.columns):
-            continue
-        frames.append(df[list(required_columns)].copy())
-
-    if not frames:
-        return pd.DataFrame(columns=sorted(required_columns))
-
-    combined = pd.concat(frames, ignore_index=True)
-    combined["date"] = pd.to_datetime(combined["date"], errors="coerce")
-    for score_col in ("home_score", "away_score"):
-        combined[score_col] = pd.to_numeric(combined[score_col], errors="coerce")
-    combined = _only_completed_matches(combined)
-    combined = _dedupe_matches(combined)
-    logger.info(
-        "national_matches_csv_loaded rows=%s files=%s",
-        len(combined),
-        [str(path) for path in seen_paths],
-    )
-    return combined
 
 
 def _normalized_text(value: str) -> str:
@@ -672,50 +622,7 @@ def _fetch_head_to_head_matches(
             away_variants,
         )
     )
-    if not matches.empty:
-        return matches
-
-    csv_matches = _fetch_head_to_head_matches_from_csv(
-        home_variants,
-        away_variants,
-        tournaments or [],
-    )
-    logger.info(
-        "head_to_head_csv_fallback_completed request_id=%s home_team=%s away_team=%s rows=%s",
-        request_id,
-        home_team,
-        away_team,
-        len(csv_matches),
-    )
-    return csv_matches
-
-
-def _fetch_head_to_head_matches_from_csv(
-    home_variants: list[str],
-    away_variants: list[str],
-    tournaments: List[str],
-) -> pd.DataFrame:
-    source_df = _load_national_matches_df()
-    if source_df.empty:
-        return source_df
-
-    home_keys = {_normalized_text(variant) for variant in home_variants}
-    away_keys = {_normalized_text(variant) for variant in away_variants}
-    home_team_keys = source_df["home_team"].map(_normalized_text)
-    away_team_keys = source_df["away_team"].map(_normalized_text)
-    mask = (
-        (home_team_keys.isin(home_keys) & away_team_keys.isin(away_keys))
-        | (home_team_keys.isin(away_keys) & away_team_keys.isin(home_keys))
-    )
-    if tournaments:
-        mask &= source_df["tournament"].isin(tournaments)
-    return _sort_matches(
-        _dedupe_matches_with_aliases(
-            _only_completed_matches(source_df[mask].copy()),
-            home_variants,
-            away_variants,
-        )
-    )
+    return matches
 
 
 def _fetch_team_vs_confed_matches(team: str, confed: str, request_id: str = "-") -> pd.DataFrame:
@@ -821,72 +728,13 @@ def _fetch_team_vs_confed_matches(team: str, confed: str, request_id: str = "-")
             team_variants,
         )
     )
-    if not matches.empty:
-        logger.info(
-            "TEAM_VS_CONFED_DEBUG source_selected request_id=%s source=supabase rows=%s sample=%s",
-            request_id,
-            len(matches),
-            _format_matches(matches.head(3)),
-        )
-        return matches
-
-    csv_matches = _fetch_team_vs_confed_matches_from_csv(team_variants, confed, request_id=request_id)
     logger.info(
-        "team_vs_confed_csv_fallback_completed request_id=%s team=%s confed=%s rows=%s",
+        "TEAM_VS_CONFED_DEBUG source_selected request_id=%s source=supabase rows=%s sample=%s",
         request_id,
-        team,
-        confed,
-        len(csv_matches),
+        len(matches),
+        _format_matches(matches.head(3)),
     )
-    logger.info(
-        "TEAM_VS_CONFED_DEBUG source_selected request_id=%s source=csv_fallback rows=%s sample=%s",
-        request_id,
-        len(csv_matches),
-        _format_matches(csv_matches.head(3)),
-    )
-    return csv_matches
-
-
-def _fetch_team_vs_confed_matches_from_csv(
-    team_variants: list[str],
-    confed: str,
-    request_id: str = "-",
-) -> pd.DataFrame:
-    source_df = _load_national_matches_df()
-    if source_df.empty:
-        logger.info(
-            "TEAM_VS_CONFED_DEBUG csv_fallback_empty_source request_id=%s variants=%s confed=%s",
-            request_id,
-            team_variants,
-            confed,
-        )
-        return source_df
-
-    variant_keys = {_normalized_text(variant) for variant in team_variants}
-    home_team_keys = source_df["home_team"].map(_normalized_text)
-    away_team_keys = source_df["away_team"].map(_normalized_text)
-    confed = (confed or "").strip().upper()
-    home_confed = source_df["home_team_confederation"].astype(str).str.upper()
-    away_confed = source_df["away_team_confederation"].astype(str).str.upper()
-    mask = (
-        (home_team_keys.isin(variant_keys) & (away_confed == confed))
-        | (away_team_keys.isin(variant_keys) & (home_confed == confed))
-    )
-    filtered = source_df[mask & source_df["tournament"].isin(_FORM_TOURNAMENTS)].copy()
-    logger.info(
-        "TEAM_VS_CONFED_DEBUG csv_fallback_filter request_id=%s variants=%s confed=%s source_rows=%s matched_rows=%s",
-        request_id,
-        team_variants,
-        confed,
-        len(source_df),
-        len(filtered),
-    )
-    return _sort_matches(
-        _dedupe_recent_team_matches(
-            _dedupe_matches(_only_completed_matches(filtered)),
-            team_variants,
-        )
-    )
+    return matches
 
 
 def get_head_to_head(

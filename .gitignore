@@ -1,1 +1,25 @@
 .env
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Editor and operating-system files
+.DS_Store
+.vscode/
+
+# Test and local runtime output
+.coverage
+.pytest_cache/
+tmp/
+catboost_info/
+
+# Downloaded/generated datasets
+European_Leagues_Data_1993_2026/
+data/matches_[0-9][0-9][0-9][0-9]_[0-9][0-9]*.csv
+data/matches_sofascore_*.csv
+preprocessing_data/club_matches_historical_libertadores_2025_2026.csv
+preprocessing_data/libertadores_matches_calendar_*.csv
+preprocessing_data/libertadores_teams_scores_fixtures_*.csv

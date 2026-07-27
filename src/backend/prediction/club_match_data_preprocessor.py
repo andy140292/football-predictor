@@ -30,18 +30,27 @@ class ClubMatchDataPreprocessor:
 
     def __init__(
         self,
-        file_path,
+        file_path=None,
         verbose=False,
         include_uefa_coefficients=False,
         coeff_path=None,
         coeff_history_path=None,
         country_coeff_path=None,
+        matches_df=None,
     ):
-        self.file_path = (
-            f"data/{file_path}.csv"
-            if not str(file_path).startswith("data/") and not str(file_path).endswith(".csv")
-            else file_path
-        )
+        if file_path is None and matches_df is None:
+            raise ValueError("Either file_path or matches_df must be provided")
+        if file_path is not None and matches_df is not None:
+            raise ValueError("Provide file_path or matches_df, not both")
+
+        self.file_path = "supabase:libertadores_matches"
+        if file_path is not None:
+            self.file_path = (
+                f"data/{file_path}.csv"
+                if not str(file_path).startswith("data/") and not str(file_path).endswith(".csv")
+                else file_path
+            )
+        self.matches_df = matches_df.copy() if matches_df is not None else None
         self.verbose = verbose
         self.include_uefa_coefficients = include_uefa_coefficients
         self.coeff_path = coeff_path
@@ -785,7 +794,11 @@ class ClubMatchDataPreprocessor:
         return out
 
     def load_and_transform_data(self):
-        raw = pd.read_csv(self.file_path)
+        raw = (
+            self.matches_df.copy()
+            if self.matches_df is not None
+            else pd.read_csv(self.file_path)
+        )
 
         canonical_required = {"date", "home_team", "away_team", "home_score", "away_score"}
         legacy_required = {"date", "team", "opponent", "venue", "gf", "ga", "competition", "round"}

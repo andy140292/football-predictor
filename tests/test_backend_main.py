@@ -1,6 +1,40 @@
 import importlib
+import os
+from pathlib import Path
+import subprocess
+import sys
 
 from fastapi.testclient import TestClient
+
+
+def test_backend_imports_with_src_as_application_root(tmp_path):
+    project_root = Path(__file__).resolve().parents[1]
+    env = os.environ.copy()
+    env.update(
+        {
+            "PYTHONPATH": str(project_root / "src"),
+            "SUPABASE_URL": "https://example.supabase.co",
+            "SUPABASE_KEY": "test-key",
+            "SUPABASE_SERVICE_ROLE_KEY": "test-service-key",
+            "MPLCONFIGDIR": str(tmp_path / "matplotlib"),
+            "PYTHONPYCACHEPREFIX": str(tmp_path / "pycache"),
+        }
+    )
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            "import backend.main; import backend.prediction.national_match_source",
+        ],
+        cwd=tmp_path,
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert result.returncode == 0, result.stderr
 
 
 def _load_main(monkeypatch):
@@ -13,6 +47,34 @@ def _load_main_prod(monkeypatch):
     monkeypatch.setenv("API_ENV", "prod")
     import backend.main as main
     return importlib.reload(main)
+
+
+def test_application_route_inventory(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    documented_routes = {
+        (method, route.path)
+        for route in main.app.routes
+        if route.path not in {"/openapi.json", "/docs", "/docs/oauth2-redirect", "/redoc"}
+        for method in route.methods
+        if method not in {"HEAD", "OPTIONS"}
+    }
+
+    assert documented_routes == {
+        ("GET", "/healthz"),
+        ("POST", "/predict"),
+        ("POST", "/match-predictions"),
+        ("GET", "/matches-calendar"),
+        ("POST", "/admin/matches-calendar/upsert-batch"),
+        ("POST", "/admin/matches/upsert-batch"),
+        ("GET", "/model-scorecard"),
+        ("GET", "/model-scorecard/matches"),
+        ("GET", "/top-searched-teams"),
+        ("GET", "/prediction-rankings"),
+        ("POST", "/recent-form"),
+        ("POST", "/head-to-head"),
+        ("POST", "/team-vs-confed"),
+    }
 
 
 def test_healthz_returns_ok(monkeypatch):
@@ -56,6 +118,38 @@ def test_team_vs_confed_endpoint_uses_service(monkeypatch):
     response = client.post(
         "/team-vs-confed",
         json={"team": "Brazil", "opponent_confederation": "UEFA"},
+    )
+
+    assert response.status_code == 200
+    assert response.json() == payload
+
+
+def test_head_to_head_endpoint_uses_service(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    payload = {
+        "matches": [
+            {
+                "date": "2026-03-01",
+                "home_team": "Brazil",
+                "away_team": "Argentina",
+                "home_score": 1,
+                "away_score": 0,
+            }
+        ],
+        "home_form": {"team": "Brazil", "wins": 1, "draws": 0, "losses": 0, "goals": 1},
+        "away_form": {"team": "Argentina", "wins": 0, "draws": 0, "losses": 1, "goals": 0},
+    }
+    monkeypatch.setattr(main, "get_head_to_head", lambda **_: payload)
+
+    client = TestClient(main.app)
+    response = client.post(
+        "/head-to-head",
+        json={
+            "home_team": "Brazil",
+            "away_team": "Argentina",
+            "tournaments": ["Friendly"],
+        },
     )
 
     assert response.status_code == 200
@@ -548,6 +642,43 @@ def test_prediction_rankings_endpoint_uses_service(monkeypatch):
         "page": 1,
         "page_size": 5,
     }
+
+
+def test_prediction_rankings_endpoint_supports_world_cup_mode(monkeypatch):
+    main = _load_main(monkeypatch)
+
+    service_response = {
+        "mode": "world_cup",
+        "sort_by": "correct_count",
+        "sort_order": "desc",
+        "page": 1,
+        "page_size": 5,
+        "total_users": 0,
+        "rankings": [],
+    }
+    captured = {}
+
+    def fake_service(**kwargs):
+        captured.update(kwargs)
+        return service_response
+
+    monkeypatch.setattr(main, "list_prediction_rankings", fake_service)
+
+    client = TestClient(main.app)
+    response = client.get(
+        "/prediction-rankings",
+        params={
+            "mode": "world_cup",
+            "sort_by": "correct_count",
+            "sort_order": "desc",
+            "page": 1,
+            "page_size": 5,
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == service_response
+    assert captured["mode"] == "world_cup"
 
 
 def test_prediction_rankings_endpoint_rejects_invalid_input(monkeypatch):

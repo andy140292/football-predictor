@@ -1,6 +1,4 @@
 import os
-from datetime import datetime
-from datetime import timedelta
 from pathlib import Path
 
 # Si no hay APP_BASE_DIR en env, cae al root del repo (asumiendo este archivo está en src/...)
@@ -27,27 +25,6 @@ def _resolve_existing_file(filename: str, candidates: list[Path]) -> Path:
     return candidates[0] / filename
 
 
-def _resolve_latest_matches_file(target_month: str, candidates: list[Path]) -> Path:
-    preferred_name = f"matches_{target_month}.csv"
-    preferred_path = _resolve_existing_file(preferred_name, candidates)
-    if preferred_path.exists():
-        return preferred_path
-
-    newest_file = None
-    newest_name = ""
-    for directory in candidates:
-        if not directory.exists():
-            continue
-        for path in directory.glob("matches_*.csv"):
-            name = path.name
-            if name > newest_name:
-                newest_name = name
-                newest_file = path
-    if newest_file is not None:
-        return newest_file
-    return preferred_path
-
-
 DATA_DIR = _resolve_existing_dir(
     "DATA_DIR",
     [
@@ -71,11 +48,6 @@ HISTORICAL_DATA_DIR = _resolve_existing_dir(
     ],
 )
 
-month_str = (datetime.today() - timedelta(days=30)).strftime("%Y_%m")
-MATCHES_PATH = _resolve_latest_matches_file(
-    month_str,
-    [DATA_DIR, HISTORICAL_DATA_DIR],
-)
 PROCESSED_X_PATH = DATA_DIR / "processed_X.csv"
 PROCESSED_X__FULL_PATH = DATA_DIR / "processed_X_Full.csv"
 PROCESSED_y_PATH = DATA_DIR / "processed_y.csv"

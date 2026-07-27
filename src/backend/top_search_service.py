@@ -8,7 +8,8 @@ from typing import Optional
 import pandas as pd
 
 try:
-    from .paths import CLUB_COEFFICIENTS_HISTORY_PATH, MATCHES_PATH, RANKING_PATH
+    from .paths import CLUB_COEFFICIENTS_HISTORY_PATH, RANKING_PATH
+    from .prediction.national_match_source import fetch_national_team_names
     from .predict_match import (
         _build_club_coeff_lookup,
         _lookup_club_coeff_row,
@@ -17,7 +18,8 @@ try:
     )
     from .supabase_client import get_supabase_client
 except ImportError:  # pragma: no cover - fallback for direct module execution
-    from src.backend.paths import CLUB_COEFFICIENTS_HISTORY_PATH, MATCHES_PATH, RANKING_PATH
+    from src.backend.paths import CLUB_COEFFICIENTS_HISTORY_PATH, RANKING_PATH
+    from src.backend.prediction.national_match_source import fetch_national_team_names
     from src.backend.predict_match import (
         _build_club_coeff_lookup,
         _lookup_club_coeff_row,
@@ -66,14 +68,12 @@ def _load_national_team_keys() -> set[str]:
         logger.warning("top_search_national_ranking_load_failed error=%s", exc)
 
     try:
-        matches = pd.read_csv(MATCHES_PATH, usecols=["home_team", "away_team"])
-        for column in ("home_team", "away_team"):
-            for value in matches.get(column, []):
-                key = _normalized_text(value)
-                if key:
-                    names.add(key)
+        for value in fetch_national_team_names():
+            key = _normalized_text(value)
+            if key:
+                names.add(key)
     except Exception as exc:  # pragma: no cover - defensive only
-        logger.warning("top_search_matches_load_failed error=%s", exc)
+        logger.warning("top_search_supabase_team_names_load_failed error=%s", exc)
 
     _national_team_keys = names
     return _national_team_keys

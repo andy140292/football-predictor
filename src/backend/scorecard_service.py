@@ -28,7 +28,7 @@ logger = logging.getLogger("futbolconu.scorecard")
 _MATCH_RESULT_SOURCE = "supabase.matches"
 _TEAM_CODES_PATH = DATA_DIR / "fifa_country_codes.csv"
 _TEAM_ALIASES_PATH = DATA_DIR / "team_code_aliases.csv"
-_PREDICTION_RANKING_MODES = {"all", "national", "champions", "libertadores"}
+_PREDICTION_RANKING_MODES = {"all", "national", "champions", "libertadores", "world_cup"}
 _PREDICTION_RANKING_SORT_FIELDS = {
     "correct_count",
     "incorrect_count",
@@ -994,12 +994,13 @@ def evaluate_consensus_matches(
 
     payload: list[dict] = []
     skipped = 0
+    prediction_mode = "national" if mode == "world_cup" else mode
     for row in matches:
         try:
             probabilities = predict_match_probabilities_offline(
                 home_team=str(row.get("home_team")),
                 away_team=str(row.get("away_team")),
-                mode=mode,
+                mode=prediction_mode,
                 request_id=f"scorecard-{run_id}",
             )
             consensus = build_consensus_from_model_probs(probabilities)
@@ -1101,7 +1102,7 @@ def _normalize_prediction_ranking_mode(mode: Optional[str]) -> str:
     if normalized == "total":
         return "all"
     if normalized not in _PREDICTION_RANKING_MODES:
-        raise ValueError("mode must be one of: all, national, champions, libertadores")
+        raise ValueError("mode must be one of: all, national, champions, libertadores, world_cup")
     return normalized
 
 
@@ -1127,6 +1128,8 @@ def _ranking_mode_for_tournament(tournament: Optional[str]) -> str:
         return "champions"
     if "libertadores" in tournament_text:
         return "libertadores"
+    if tournament_text == "fifa world cup":
+        return "world_cup"
     return "national"
 
 
@@ -1421,6 +1424,34 @@ def _fetch_model_scorecard_snapshot(
     return rows[0] if rows else None
 
 
+def _compute_model_scorecard_from_evaluations(
+    mode: str,
+    model_version: str,
+    from_date: Optional[str] = None,
+    to_date: Optional[str] = None,
+) -> dict:
+    rows, _ = _fetch_evaluation_rows(
+        mode=mode,
+        model_version=model_version,
+        from_date=from_date,
+        to_date=to_date,
+        verdict="all",
+    )
+    total = len(rows)
+    correct = sum(1 for row in rows if bool(row.get("is_correct")))
+    incorrect = total - correct
+    return {
+        "mode": mode,
+        "model_version": model_version,
+        "from_date": from_date,
+        "to_date": to_date,
+        "correct_count": correct,
+        "incorrect_count": incorrect,
+        "total_scored": total,
+        "accuracy_pct": _compute_accuracy(correct, total),
+    }
+
+
 def get_model_scorecard(
     mode: str,
     model_version: str,
@@ -1449,26 +1480,12 @@ def get_model_scorecard(
             "accuracy_pct": float(snapshot.get("accuracy_pct") or 0.0),
         }
 
-    rows, _ = _fetch_evaluation_rows(
+    return _compute_model_scorecard_from_evaluations(
         mode=mode,
         model_version=resolved_model_version,
         from_date=normalized_from,
         to_date=normalized_to,
-        verdict="all",
     )
-    total = len(rows)
-    correct = sum(1 for row in rows if bool(row.get("is_correct")))
-    incorrect = total - correct
-    return {
-        "mode": mode,
-        "model_version": resolved_model_version,
-        "from_date": normalized_from,
-        "to_date": normalized_to,
-        "correct_count": correct,
-        "incorrect_count": incorrect,
-        "total_scored": total,
-        "accuracy_pct": _compute_accuracy(correct, total),
-    }
 
 
 def list_model_scorecard_matches(
@@ -1517,7 +1534,7 @@ def upsert_model_scorecard_snapshot(
     period_end: str,
 ) -> dict:
     resolved_model_version = _resolve_model_version(model_version)
-    summary = get_model_scorecard(
+    summary = _compute_model_scorecard_from_evaluations(
         mode=mode,
         model_version=resolved_model_version,
         from_date=period_start,
@@ -1555,8 +1572,8 @@ def run_consensus_scorecard_backfill(
         raise ValueError("from_date cannot be greater than to_date")
 
     normalized_mode = str(mode or "").strip().lower() or "national"
-    if normalized_mode not in {"national", "champions", "libertadores"}:
-        raise ValueError("mode must be one of: national, champions, libertadores")
+    if normalized_mode not in {"national", "champions", "libertadores", "world_cup"}:
+        raise ValueError("mode must be one of: national, champions, libertadores, world_cup")
 
     resolved_model_version = _resolve_model_version(model_version)
 
@@ -1565,11 +1582,13 @@ def run_consensus_scorecard_backfill(
         tournaments = set(_FORM_TOURNAMENTS)
     elif normalized_mode == "champions":
         tournaments = {"UEFA Champions League"}
-    else:
+    elif normalized_mode == "libertadores":
         tournaments = {"Libertadores"}
+    else:
+        tournaments = {"FIFA World Cup"}
 
     results_upsert = {"upserted": 0}
-    if normalized_mode == "national":
+    if normalized_mode in {"national", "world_cup"}:
         matches_df = load_matches_for_backfill(
             from_date=normalized_from,
             to_date=normalized_to,

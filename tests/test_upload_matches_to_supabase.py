@@ -1,10 +1,37 @@
 import importlib
 
+import pytest
+
+from src.utils.matches_common import resolve_latest_matches_csv
+
 
 def _load_module():
     import utils.upload_matches_to_supabase as upload_matches_to_supabase
 
     return importlib.reload(upload_matches_to_supabase)
+
+
+def test_resolve_latest_matches_csv_ignores_calendar_files(tmp_path):
+    (tmp_path / "matches_2026_05.csv").write_text("date\\n", encoding="utf-8")
+    (tmp_path / "matches_2026_06.csv").write_text("date\\n", encoding="utf-8")
+    (tmp_path / "matches_calendar_uefa_2026_07_01.csv").write_text(
+        "match_date\\n",
+        encoding="utf-8",
+    )
+
+    assert resolve_latest_matches_csv(tmp_path) == tmp_path / "matches_2026_06.csv"
+
+
+def test_load_records_reports_incompatible_csv_schema(tmp_path):
+    module = _load_module()
+    csv_path = tmp_path / "matches_calendar.csv"
+    csv_path.write_text(
+        "home_team,away_team,match_date\\nArgentina,Brazil,2026-06-01\\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="missing required columns:.*date"):
+        module.load_records(csv_path)
 
 
 def test_reconcile_skips_cosmetic_source_file_only_updates(monkeypatch):

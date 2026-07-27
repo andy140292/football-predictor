@@ -3,9 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import joblib
 import os
-from backend.paths import MATCHES_PATH, PROCESSED_X_PATH, MODEL_PATHS, PROCESSED_y_PATH, RANKING_PATH
+from backend.paths import PROCESSED_X_PATH, MODEL_PATHS, PROCESSED_y_PATH, RANKING_PATH
+from backend.prediction.national_match_source import fetch_national_team_names
 import requests
-from datetime import datetime, timedelta
 import io
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, log_loss
@@ -18,7 +18,6 @@ LOCAL_MODEL_MODE = os.getenv("PREDICT_LOCAL_MODELS", "false").lower() == "true"
 
 supabase = get_supabase_client()
 
-month_str = (datetime.today() - timedelta(days=30)).strftime("%Y_%m")
 bucket = "model-artifacts"
 
 def load_file_from_supabase(bucket: str, path: str, as_dataframe=False):
@@ -62,6 +61,12 @@ def load_trained_models():
     }
     return models, X, y
 
+
+@st.cache_data(ttl=3600)
+def load_national_team_names():
+    return fetch_national_team_names()
+
+
 def local_predict_outcome(home_team, away_team):
     models, X, _ = load_trained_models()
     fifa_rank = pd.read_csv(RANKING_PATH)
@@ -87,8 +92,7 @@ def show_predict():
         return
 
     # Equipos únicos
-    matches = pd.read_csv(MATCHES_PATH)
-    teams = sorted(set(matches["home_team"]).union(matches["away_team"]))
+    teams = load_national_team_names()
 
     st.markdown(
         """

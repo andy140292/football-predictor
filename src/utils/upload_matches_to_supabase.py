@@ -49,6 +49,23 @@ NON_SUBSTANTIVE_FIELDS = (
     "source",
     "source_file",
 )
+REQUIRED_CSV_COLUMNS = {
+    "date",
+    "home_team",
+    "away_team",
+    "home_score",
+    "away_score",
+    "tournament",
+    "city",
+    "country",
+    "neutral",
+    "home_team_confederation",
+    "away_team_confederation",
+    "home_team_fifa_rank",
+    "home_team_fifa_points",
+    "away_team_fifa_rank",
+    "away_team_fifa_points",
+}
 
 
 def _nullable_int(value: str):
@@ -103,8 +120,15 @@ def load_records(csv_path: Path) -> tuple[list[dict], int]:
     duplicates_replaced = 0
     source_file = csv_path.name
 
-    with csv_path.open(newline="", encoding="utf-8") as handle:
+    with csv_path.open(newline="", encoding="utf-8-sig") as handle:
         reader = csv.DictReader(handle)
+        columns = set(reader.fieldnames or [])
+        missing = sorted(REQUIRED_CSV_COLUMNS.difference(columns))
+        if missing:
+            raise ValueError(
+                f"CSV {csv_path} is missing required columns: {', '.join(missing)}. "
+                f"Found columns: {', '.join(sorted(columns)) or '(none)'}"
+            )
         for row in reader:
             record = parse_csv_row(row, source_file)
             fixture_key = build_fixture_identity_key(record)

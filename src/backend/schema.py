@@ -221,7 +221,7 @@ class PredictionRankingEntryOut(BaseModel):
 
 
 class PredictionRankingsResponse(BaseModel):
-    mode: Literal["all", "national", "champions", "libertadores"]
+    mode: Literal["all", "national", "champions", "libertadores", "world_cup"]
     sort_by: Literal["correct_count", "incorrect_count", "total_resolved_predictions", "accuracy_pct"]
     sort_order: Literal["asc", "desc"]
     page: int
