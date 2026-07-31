@@ -105,7 +105,7 @@ class CalendarMatchOut(BaseModel):
 
 
 class MatchesCalendarResponse(BaseModel):
-    mode: Literal["world_cup"]
+    mode: Literal["world_cup", "libertadores"]
     matches: List[CalendarMatchOut]
 
 

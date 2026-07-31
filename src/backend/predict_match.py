@@ -859,8 +859,8 @@ def list_matches_calendar(
     request_id: str = "-",
 ) -> dict:
     normalized_mode = str(mode or "").strip().lower()
-    if normalized_mode != "world_cup":
-        raise ValueError("mode debe ser world_cup")
+    if normalized_mode not in {"world_cup", "libertadores"}:
+        raise ValueError("mode debe ser world_cup o libertadores")
 
     matches = _fetch_future_matches_for_mode(normalized_mode, token=token)
     predictions_by_match_id = {}

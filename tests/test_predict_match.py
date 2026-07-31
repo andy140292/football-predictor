@@ -731,6 +731,45 @@ def test_list_matches_calendar_merges_user_predictions(monkeypatch):
     assert response["matches"][1]["predicted_outcome"] is None
 
 
+def test_list_matches_calendar_accepts_libertadores(monkeypatch):
+    predict_match = _load_predict_match(monkeypatch)
+    captured = {}
+
+    def fake_matches(mode, token=None):
+        captured.update({"mode": mode, "token": token})
+        return [
+            {
+                "match_id": "cccccccc-cccc-cccc-cccc-cccccccccccc",
+                "home_team": "Cruzeiro",
+                "away_team": "Flamengo",
+                "match_date": "2026-08-12",
+                "tournament": "Libertadores",
+            }
+        ]
+
+    monkeypatch.setattr(predict_match, "_fetch_future_matches_for_mode", fake_matches)
+
+    response = predict_match.list_matches_calendar(
+        mode="libertadores",
+        token="user-token",
+    )
+
+    assert response["mode"] == "libertadores"
+    assert response["matches"][0]["tournament"] == "Libertadores"
+    assert captured == {"mode": "libertadores", "token": "user-token"}
+
+
+def test_list_matches_calendar_rejects_unknown_mode(monkeypatch):
+    predict_match = _load_predict_match(monkeypatch)
+
+    try:
+        predict_match.list_matches_calendar(mode="champions")
+    except ValueError as exc:
+        assert str(exc) == "mode debe ser world_cup o libertadores"
+    else:
+        raise AssertionError("Expected an invalid mode error")
+
+
 def test_get_unpredicted_future_matches_champions_uses_alias_variants(monkeypatch, tmp_path):
     predict_match = _load_predict_match(monkeypatch)
 
